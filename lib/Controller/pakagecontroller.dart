@@ -258,7 +258,7 @@ var include = [];
                       width: responsive(08, context),
                     ),
                     customFonts(text:  '$m',
-                        size: 12,
+                        size: 14,
                         color: AppColors.primaryBlackColor,
                         fontWeight: FontWeight.w500,
                         context: context),

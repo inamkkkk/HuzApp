@@ -10,6 +10,7 @@ import 'package:huz/View/TransportPageWidgets/controller/transportController.dar
 import 'package:huz/View/auth/view/finish_signing_up/finish_signing_up.dart';
 import 'package:huz/View/auth/view/sign_up_with_mobile_number/signup_with_number.dart';
 import 'package:huz/View/auth/view/verify_otp_screen/verify_otp_screen.dart';
+import 'package:huz/View/hajj_umrah_guide/controller/umrah_guide_controller.dart';
 import 'package:provider/provider.dart';
 
 import 'Controller/pakagecontroller.dart';
@@ -56,6 +57,10 @@ Future<void> main() async {
           ChangeNotifierProvider.value(value: EditeProfile()),
           ChangeNotifierProvider.value(value: EditeImage()),
           ChangeNotifierProvider.value(value: transectioncontroller()),
+          ChangeNotifierProvider.value(value: IhramStepsProvider()),
+          ChangeNotifierProvider.value(value: TawafStepsProvider()),
+          ChangeNotifierProvider.value(value: SaiStepsProvider()),
+
 
 
           // ChangeNotifierProvider.value(value: transportCroller()),
@@ -92,7 +97,13 @@ Future<void> main() async {
 
            // Home(),
         theme: ThemeData(
+          drawerTheme: DrawerThemeData(
+            backgroundColor: Colors.white,
 
+          ),
+          appBarTheme: AppBarTheme(
+            color: Colors.white
+          ),
           fontFamily: GoogleFonts.cairo().fontFamily,
         ),),
       )

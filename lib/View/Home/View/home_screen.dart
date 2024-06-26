@@ -17,6 +17,9 @@ import 'package:huz/View/Details/View/detail_screen.dart';
 import 'package:huz/View/Home/View/inbox/inbox.dart';
 import 'package:huz/View/Home/View/trips/view/trips.dart';
 import 'package:huz/View/auth/controller/is_user_exist_controller.dart';
+import 'package:huz/View/hajj_umrah_guide/hajj_guide.dart';
+import 'package:huz/View/hajj_umrah_guide/model/umrah_guide.dart';
+import 'package:huz/View/hajj_umrah_guide/umra_guide_detal_screen.dart';
 import 'package:huz/View/wishlist/controller/wishlist_controller.dart';
 import 'package:huz/View/wishlist/model/wishlist_model.dart';
 import 'package:provider/provider.dart';
@@ -309,32 +312,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        user.isUser != null
-                            ? CircleAvatar(
+                        CircleAvatar(
                                 radius:
-                                    MediaQuery.of(context).size.width * 0.095,
+                                    responsive(40, context),
                                 // specify the radius of the circular container
                                 backgroundColor: Colors.grey[100],
                                 // set the background color of the container
                                 child: ClipOval(
                                   child: CachedNetworkImage(
-                                    placeholder: (context, url) => Padding(
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: SvgPicture.asset(
-                                          width: 20,
-                                          height: 20,
-                                          // fit: BoxFit.cover,
-                                          'asset/images/person.svg'),
-                                    ),
+                                    placeholder: (context, url) => Image.asset("assets/images/guest_icon.png", ),
                                     errorWidget: (context, url, error) =>
-                                        Padding(
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: SvgPicture.asset(
-                                        width: 20,
-                                        height: 20,
-                                        'asset/images/person.svg',
-                                      ),
-                                    ),
+                                        Image.asset("assets/images/guest_icon.png"),
                                     imageUrl:
                                         '${NetworkServices.ibaseUrl}${user.isUser?.userPhoto}',
                                     // replace with the URL of your image
@@ -343,10 +331,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 100,
                                   ),
                                 ),
-                              )
-                            : SizedBox(),
-                        SizedBox(
-                          height: responsive(7, context),
+                              ),
+                       SizedBox(
+                          height: user.isUser == null  ?  responsive(20, context) : responsive(20, context),
                         ),
                         Text(
                           user.isUser?.name ?? 'Guest Account',
@@ -394,6 +381,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         user.isUser != null
                             ? Get.to(SignUpWithNumber())
                             : Get.to(AccountInfo());
+                      },
+                      context: context),
+                  drawertile(
+                      text: 'Umrah Guide',
+                      ontap: () {
+                        Get.to(UmrahGuide());
                       },
                       context: context),
                   drawertile(
@@ -588,7 +581,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   : packagecontroller.package!.results!.isEmpty
                       ? Center(
                           child: Padding(
-                            padding:  EdgeInsets.only(top: responsive(120, context)),
+                            padding:  EdgeInsets.only(top: responsive(140, context)),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -1145,13 +1138,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       (index) => index == 0
                           ? customFonts(
                               text: "Includes: ",
-                              size: 10,
+                              size: 12,
                               color: AppColors.primaryBlackColor,
                               fontWeight: FontWeight.bold,
                               context: context)
                           : customFonts(
                               text: "${inlcudes[index]}",
-                              size: 10,
+                              size: 12,
                               fontWeight: FontWeight.w500,
                               color: AppColors.primaryBlackColor,
                               context: context),

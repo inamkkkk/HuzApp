@@ -102,6 +102,10 @@ flutter:
     - assets/images/
     - countryjson/
     - assets/
+    - assets/images/umrah_guide/
+        #   - images/a_dot_ham.jpeg
+    - countryjson/
+    - umra_json/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
