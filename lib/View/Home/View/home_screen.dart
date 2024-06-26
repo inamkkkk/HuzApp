@@ -378,7 +378,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   drawertile(
                       text: 'Profile',
                       ontap: () {
-                        user.isUser != null
+                        user.isUser == null
                             ? Get.to(SignUpWithNumber())
                             : Get.to(AccountInfo());
                       },
