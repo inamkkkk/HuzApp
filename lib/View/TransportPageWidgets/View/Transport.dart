@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:huz/Constatns/Constants.dart';
 import 'package:huz/TextStyles/Color.dart';
+import 'package:huz/View/Details/View/detail_screen.dart';
 import 'package:huz/View/TransportPageWidgets/controller/transportController.dart';
 import 'package:provider/provider.dart';
 
@@ -163,7 +165,7 @@ class _TransportpackageState extends State<Transportpackage> {
                         Row(
                           children: [
                             Heading4(
-                                text: 'PKR ${data?.cost} /',
+                                text: 'PKR ${formatCurrency(data?.cost.toInt())} /',
                                 context: context,
                                 center: false,
                                 color: AppColors.GlobelColor

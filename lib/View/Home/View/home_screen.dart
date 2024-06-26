@@ -7,6 +7,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:huz/Draweritems/how_it_works_screen/how_it_works_screen.dart';
+import 'package:huz/Draweritems/privay_policy_terms_conditions/privacy_policy_screen.dart';
+import 'package:huz/Draweritems/privay_policy_terms_conditions/terms_and_conditions.dart';
 import 'package:huz/TextStyles/Color.dart';
 import 'package:huz/TextStyles/styles.dart';
 import 'package:huz/View/Booking/View/payment_verification.dart';
@@ -17,6 +20,7 @@ import 'package:huz/View/wishlist/controller/wishlist_controller.dart';
 import 'package:huz/View/wishlist/model/wishlist_model.dart';
 import 'package:provider/provider.dart';
 
+import '../../../Constatns/Constants.dart';
 import '../../../Controller/pakagecontroller.dart';
 import '../../../Draweritems/Profile/View/accountinfo.dart';
 import '../../../Responsive/ResponsiveClass.dart';
@@ -288,7 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return Consumer2<pakagecontrollers, IsUserExitsController>(
         builder: (context, packagecontroller, user, child) {
-          if (packagecontroller.package == null) {
+          if (packagecontroller.package == null && packagecontroller.fromtabs ==false ) {
             packagecontroller.Getpackages('Umrah');
           }
 
@@ -310,7 +314,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CircleAvatar(
+                            user.isUser!=null ?CircleAvatar(
                               radius: MediaQuery.of(context).size.width * 0.095,
                               // specify the radius of the circular container
                               backgroundColor: Colors.grey[100],
@@ -341,12 +345,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height: 100,
                                 ),
                               ),
-                            ),
+                            ):SizedBox(),
                             SizedBox(
                               height: responsive(7, context),
                             ),
                             Text(
-                              user.isUser?.name ?? 'your name',
+                              user.isUser?.name ?? 'Guest Account',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   color: Colors.black,
@@ -360,7 +364,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(
                               height: responsive(5, context),
                             ),
-                            InkWell(
+                            user.isUser!=null ?  InkWell(
                               onTap: () async {
                                 await prefs.remove('phone');
                                 user.isUser =null;
@@ -380,19 +384,43 @@ class _HomeScreenState extends State<HomeScreen> {
                                     fontWeight: FontWeight.bold,
                                     height: 1),
                               ),
-                            ),
+                            ):SizedBox(),
                           ],
                         ),
                       ),
                       drawertile(
                           text: 'Profile',
                           ontap: () {
+                            user.isUser!=null ?Get.to(SignUpWithNumber()):
                             Get.to(AccountInfo());
                           },
                           context: context),
+                      drawertile(
+                          text: 'How It is Work',
+                          ontap: () {
+
+                            Get.to(HowItWorksScreen());
+                          },
+                          context: context),
+                      drawertile(
+                          text: 'Terms And Conditions',
+                          ontap: () {
+
+                            Get.to(TermsAndConditions());
+                          },
+                          context: context),
+                      drawertile(
+                          text: 'Privacy Polices',
+                          ontap: () {
+
+                            Get.to(PrivacyPolicy());
+                          },
+                          context: context),
+
 
                     ],
                   ),
+
                   // Column(
                   //   mainAxisAlignment: MainAxisAlignment.end,
                   //   children: [
@@ -446,9 +474,9 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: Colors.white,
             body: Consumer<pakagecontrollers>(
                 builder: (context, packagecontroller, child) {
-                  if (packagecontroller.package == null) {
-                    packagecontroller.Getpackages('Umrah');
-                  }
+                  // if (packagecontroller.package == null) {
+                  //   packagecontroller.Getpackages('Umrah');
+                  // }
 
                   return widget.selectedIndex == 0
                       ? homeButton(context, packagecontroller)
@@ -496,9 +524,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             onTap: () {
                               setState(() {
                                 isSelect = index;
+                                print(isSelect);
                               });
 
                               packagecontroller.isApiCalled=false;
+                              // packagecontroller.package =null;
+                              packagecontroller.fromtabs = true;
                               packagecontroller.notifyListeners();
                               if(index==3){
                                 packagecontroller.GetTransport();
@@ -521,35 +552,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding:  EdgeInsets.only(top: responsive(300, context)),
                 child: Container(child: Center(child: CircularProgressIndicator(color: AppColors.GlobelColor,),),),
               ):
-              selected==3?Expanded(
-                child: ListView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: responsive(20, context), vertical: responsive(30, context)),
-                    physics: AlwaysScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    primary: true,
-                    scrollDirection:Axis.vertical,
-                    itemCount: packagecontroller.transport?.results!.length,
-                    itemBuilder: (context,i){
-                      int lengt =  packagecontroller.transport!.results!.length;
+              isSelect==3?ListView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: responsive(20, context), vertical: responsive(10, context)),
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  primary: true,
+                  scrollDirection:Axis.vertical,
+                  itemCount: packagecontroller.transport?.results!.length,
+                  itemBuilder: (context,i){
+                    int lengt =  packagecontroller.transport!.results!.length;
 
-                      // if(i >= packagecontroller.length){
-                      //   return Container(
-                      //     height: responsive(100, context),
-                      //   );
-                      // } else{
+                    // if(i >= packagecontroller.length){
+                    //   return Container(
+                    //     height: responsive(100, context),
+                    //   );
+                    // } else{
 
-                      return Padding(
-                        padding:  EdgeInsets.only(bottom: i==lengt - 1? responsive(120, context):responsive(0, context)),
-                        child:
+                    return Padding(
+                      padding:  EdgeInsets.only(bottom: i==lengt - 1? responsive(120, context):responsive(0, context)),
+                      child:
 
-                        Transportpackage(
-                          index: i,
-                        ),
-                      );
-                      // }
+                      Transportpackage(
+                        index: i,
+                      ),
+                    );
+                    // }
 
-                    }),
-              ) :  packagecontroller.package!.results!.isEmpty?SizedBox():
+                  }) :  packagecontroller.package!.results!.isEmpty?SizedBox():
 
 
               // Padding(
@@ -711,7 +740,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ),
                                                 Spacer(),
                                                 customFonts(
-                                                  text: "${pkg?.packageCost}",
+                                                  text: "${formatCurrency(pkg?.packageCost.toInt())}",
                                                   size: 16,
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.white,
@@ -832,7 +861,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   rating: "4.6",
                                   startDate: pkg?.startDate,
                                   endDate: pkg?.endDate,
-                                  amount: pkg?.packageCost.toString(),
+                                  amount: formatCurrency(pkg?.packageCost.toInt()),
                                   inlcudes: packagecontroller?.allincludes[index],
                                 ),
                               

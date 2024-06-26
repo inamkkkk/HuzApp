@@ -16,6 +16,7 @@ class pakagecontrollers with ChangeNotifier {
   Pakages? package;
   var isApiCalled = false;
   var length = 0;
+  var fromtabs = false;
   List<Widget> availability = [];
 
   TransportModel? transport;
@@ -36,42 +37,10 @@ class pakagecontrollers with ChangeNotifier {
         isApiCalled = true;
         var map = jsonDecode(response.body);
         transport = TransportModel.fromJson(map);
-        // for(var avail in transport!.results){
-        //   String string = transport.results;
-        //   List<String> result = string.split(", ");
-        //   print(result);
-        //
-        //   for(var m in result){
-        //     routs.add(
-        //       Container(
-        //           width: responsive(150, context),
-        //           child: Row(
-        //             children: [
-        //               SvgPicture.asset(
-        //                 width: responsive(12, context),
-        //                 height: responsive(12, context),
-        //                 'images/include.svg',
-        //                 semanticsLabel: 'vector',
-        //                 // fit: BoxFit.fitHeight,
-        //               ),
-        //               SizedBox(
-        //                 width: responsive(08, context),
-        //               ),
-        //
-        //               Discription(
-        //                 center: false,
-        //                 text: '${m}',
-        //                 context: context,
-        //               ),
-        //               SizedBox(width: responsive(02, context),)
-        //             ],
-        //           )
-        //       ),
-        //     );
-        //   }
-        // }
+
 
         notifyListeners();
+        print(transport!.results?.length);
 
         print('transport data = "${transport?.results?[0].plateNo}');
       } else {
@@ -84,7 +53,40 @@ class pakagecontrollers with ChangeNotifier {
       notifyListeners();
     }
   }
-
+  // for(var avail in transport!.results){
+  //   String string = transport.results;
+  //   List<String> result = string.split(", ");
+  //   print(result);
+  //
+  //   for(var m in result){
+  //     routs.add(
+  //       Container(
+  //           width: responsive(150, context),
+  //           child: Row(
+  //             children: [
+  //               SvgPicture.asset(
+  //                 width: responsive(12, context),
+  //                 height: responsive(12, context),
+  //                 'images/include.svg',
+  //                 semanticsLabel: 'vector',
+  //                 // fit: BoxFit.fitHeight,
+  //               ),
+  //               SizedBox(
+  //                 width: responsive(08, context),
+  //               ),
+  //
+  //               Discription(
+  //                 center: false,
+  //                 text: '${m}',
+  //                 context: context,
+  //               ),
+  //               SizedBox(width: responsive(02, context),)
+  //             ],
+  //           )
+  //       ),
+  //     );
+  //   }
+  // }
 var include = [];
  var  exclude = [];
   List<List<String>> photes = [];
