@@ -69,10 +69,10 @@ class CustomContainer extends StatelessWidget {
               height: responsive(05, context),
             ),
             Row(
-
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  width: responsive(270, context),
+                  width: responsive(220, context),
                   child: Wrap(
                     spacing: 0.0,
 
@@ -91,7 +91,6 @@ class CustomContainer extends StatelessWidget {
                     ),
                   ),
                 ),
-                Spacer(),
                 customFonts(text: "PKR $amount", size: 16, fontWeight: FontWeight.w700, color: AppColors.GlobelColor, context: context),
 
               ],

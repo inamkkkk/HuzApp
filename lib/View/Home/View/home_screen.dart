@@ -633,84 +633,99 @@ class _HomeScreenState extends State<HomeScreen> {
                               hotelimage = "https://hajjumrah.co/madinah/${hotelname}_image1.jpg";
                             }
 
-                            return Padding(
-                                padding: EdgeInsets.only(right: responsive(10, context)),
-                                child: Container(
-                                  child: Stack(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(responsive(6, context)),
-                                        child: Container(
-                                          width: responsive(322, context),
-                                          // height: responsive(200, context),
+                            return GestureDetector(
+                              onTap: () {
 
-                                          child: CachedNetworkImage(
-                                            imageUrl: hotelimage,
-                                            fit: BoxFit.cover,
-                                            width: double.infinity,
-                                            height: double.infinity,
-                                            placeholder: (context, url) => Image.asset(
-                                              'images/placeholder-image.png',
-                                              fit: BoxFit.cover,
-                                            ),
-                                            errorWidget: (context, url, error) =>  Image.asset(
-                                              'images/placeholder-image.png',
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                packagecontroller.details =null;
 
-                                      Positioned(
-                                        bottom: responsive(10, context),
-                                        child: Container(
-                                          width: responsive(322, context),
-                                          color: Colors.black.withOpacity(0.30),
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: responsive(10, context),
-                                            vertical: responsive(5, context),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                children: [
-                                                  customFonts(
-                                                    text: pkg?.packageName,
-                                                    size: 13,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
-                                                    context: context,
-                                                  ),
-                                                  customFonts(
 
-                                                    text: "${formatDateString(pkg?.startDate)} to ${formatDateString(pkg?.endDate)}",
-                                                    size: 11,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
-                                                    context: context,
-                                                  ),
-                                                ],
-                                              ),
-                                              Spacer(),
-                                              customFonts(
-                                                text: "${pkg?.packageCost}",
-                                                size: 16,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                                context: context,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
+                                packagecontroller.notifyListeners();
 
-                                    ],
-                                  ),
+                                Get.to(() => DetailScreen(
+                                  token: pkg?.huzToken,
                                 ));
+                              },
+                              child: Padding(
+                                  padding: EdgeInsets.only(right: responsive(10, context)),
+                                  child: Container(
+                                    child: Stack(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(responsive(6, context)),
+                                          child: Container(
+                                            width: responsive(322, context),
+                                            // height: responsive(200, context),
+
+                                            child: CachedNetworkImage(
+                                              imageUrl: hotelimage,
+                                              fit: BoxFit.cover,
+                                              width: double.infinity,
+                                              height: double.infinity,
+                                              placeholder: (context, url) => Image.asset(
+                                                'images/placeholder-image.png',
+                                                fit: BoxFit.cover,
+                                              ),
+                                              errorWidget: (context, url, error) =>  Image.asset(
+                                                'images/placeholder-image.png',
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+
+                                        Positioned(
+                                          bottom: responsive(10, context),
+                                          right:0,
+                                          left:0,
+                                          child: Container(
+                                            width: responsive(322, context),
+                                            color: Colors.black.withOpacity(0.30),
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: responsive(15, context),
+                                              vertical: responsive(5, context),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                  children: [
+                                                    customFonts(
+                                                      text: pkg?.packageName,
+                                                      size: 13,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.white,
+                                                      context: context,
+                                                    ),
+                                                    customFonts(
+
+                                                      text: "${formatDateString(pkg?.startDate)} to ${formatDateString(pkg?.endDate)}",
+                                                      size: 11,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.white,
+                                                      context: context,
+                                                    ),
+                                                  ],
+                                                ),
+                                                Spacer(),
+                                                customFonts(
+                                                  text: "${pkg?.packageCost}",
+                                                  size: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                  context: context,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+
+                                      ],
+                                    ),
+                                  )),
+                            );
                           }),
                     ),
                   ),
@@ -936,6 +951,7 @@ class _HomeScreenState extends State<HomeScreen> {
           borderRadius: BorderRadius.circular(responsive(6, context)),
           border: Border.all(color: const Color(0xFFDEDEDE))),
       height: responsive(128, context),
+      width: responsive(382, context),
       child: Row(
         children: [
           Stack(
@@ -994,8 +1010,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          SizedBox(
-            width: responsive(250, context),
+          Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: responsive(10, context),
@@ -1053,7 +1068,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   //         context: context),
                   //   ),
                   // ),
-
+            
                   SizedBox(
                     width: responsive(300, context),
                     child: Row(

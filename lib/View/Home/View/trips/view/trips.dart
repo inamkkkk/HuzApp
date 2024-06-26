@@ -416,6 +416,10 @@ class statusContainer extends StatelessWidget {
       'containerColor': Color(0xFFFFA500),
       'textColor': Color(0xFFFFFFFF),
     },
+    'Confirm': {
+      'containerColor': Color(0xFFFFA500),
+      'textColor': Color(0xFFFFFFFF),
+    },
   };
 
   // Function to get colors based on status

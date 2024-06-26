@@ -85,7 +85,7 @@ class Bookingedite with ChangeNotifier{
       "start_date": sdate,
       "end_date":edate,
       "total_price":price,
-      "special_request": "hellooooo !!!/....",
+      "special_request": specialreq ?? "N/A",
       "payment_type": 'Bank'
     });
     request.headers.addAll(headers);

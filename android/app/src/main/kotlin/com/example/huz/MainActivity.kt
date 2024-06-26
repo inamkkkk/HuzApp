@@ -1,4 +1,4 @@
-package com.example.huz
+package com.example.huzapp
 
 import io.flutter.embedding.android.FlutterActivity
 

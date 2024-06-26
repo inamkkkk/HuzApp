@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http ;
 import 'package:huz/utils/servecies.dart';
@@ -25,6 +27,40 @@ class transectioncontroller with ChangeNotifier{
       notifyListeners();
     }
   }
+
+
+  Future<bool> uploadtransectionbynumber({sessiontoken,bookingnumber,id,amount}) async {
+    print(amount);
+    Loading();
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': '${NetworkServices.token}',
+    };
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            '${NetworkServices.bookingurl}pay_booking_amount_by_transaction_number/'));
+    request.body = json.encode({
+      "session_token": "$sessiontoken",
+      "booking_number": "$bookingnumber",
+      "transaction_number": "$id",
+      "transaction_amount": double.parse("$amount"),
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200||response.statusCode == 201) {
+      print(await response.stream.bytesToString());
+      return true;
+    } else {
+      print(await response.stream.bytesToString());
+      return false;
+      print(response.reasonPhrase);
+    }
+  }
+
+
   Future<bool> uploadtransection({sessiontoken,bookingnumber,amount}) async {
     Loading();
     var headers = {

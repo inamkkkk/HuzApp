@@ -154,9 +154,22 @@ class _WishListScreenState extends State<WishListScreen> {
     return Stack(
       clipBehavior: Clip.none,
       children: [
+        Positioned(
+          right: responsive(5, context),
+          bottom: 0,
+          top: 0,
+          child: Opacity(
+            opacity: 0.1,
+            child: SvgPicture.asset(
+              "images/heart_icon_round.svg",
+              height: responsive(96, context),
+            ),
+          ),
+        ),
         Container(
           padding: EdgeInsets.all(responsive(5, context)),
           decoration: BoxDecoration(
+            color: Colors.transparent,
               borderRadius: BorderRadius.circular(responsive(6, context)),
               border: Border.all(color: const Color(0xFFDEDEDE))),
           height: responsive(128, context),
@@ -210,111 +223,94 @@ class _WishListScreenState extends State<WishListScreen> {
                   ),
                 ],
               ),
-              Stack(
-                alignment: Alignment.center,
-                clipBehavior: Clip.none,
-                children: [
-                  Positioned(
-                    right: responsive(-5, context),
-                    child: Opacity(
-                      opacity: 0.1,
-                      child: SvgPicture.asset(
-                        "images/heart_icon_round.svg",
-                        height: responsive(96, context),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: responsive(250, context),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: responsive(10, context),
-                          vertical: responsive(5, context)),
-                      child: Column(
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: responsive(10, context),
+                      vertical: responsive(5, context)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              customFonts(
-                                  text: packageName,
-                                  size: 13,
+                          customFonts(
+                              text: packageName,
+                              size: 13,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primaryBlackColor
+                                  .withOpacity(0.90),
+                              context: context),
+                          customFonts(
+                              text: "$startDate to $endDate",
+                              size: 11,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.primaryBlackColor,
+                              context: context),
+                        ],
+                      ),
+                      Wrap(
+                        spacing: 0.0,
+                        children: List.generate(
+                          includeList.length,
+                          (index) => index == 0
+                              ? customFonts(
+                                  text: "Includes: ",
+                                  size: 10,
+                                  color: AppColors.primaryBlackColor,
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.primaryBlackColor
-                                      .withOpacity(0.90),
-                                  context: context),
-                              customFonts(
-                                  text: "$startDate to $endDate",
-                                  size: 11,
+                                  context: context)
+                              : customFonts(
+                                  text: "${includeList[index]}",
+                                  size: 10,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.primaryBlackColor,
                                   context: context),
-                            ],
-                          ),
-                          Wrap(
-                            spacing: 0.0,
-                            children: List.generate(
-                              includeList.length,
-                              (index) => index == 0
-                                  ? customFonts(
-                                      text: "Includes: ",
-                                      size: 10,
-                                      color: AppColors.primaryBlackColor,
-                                      fontWeight: FontWeight.bold,
-                                      context: context)
-                                  : customFonts(
-                                      text: "${includeList[index]}",
-                                      size: 10,
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColors.primaryBlackColor,
-                                      context: context),
-                            ),
-                          ),
-                          // Wrap(
-                          //   spacing: 10,
-                          //   children: List.generate(
-                          //     7,
-                          //         (index) =>  customFonts(
-                          //         text: "Dinner",
-                          //         size: 10,
-                          //         fontWeight: FontWeight.w500,
-                          //         color: AppColors.primaryBlackColor,
-                          //         context: context),
-                          //   ),
-                          // ),
-
+                        ),
+                      ),
+                      // Wrap(
+                      //   spacing: 10,
+                      //   children: List.generate(
+                      //     7,
+                      //         (index) =>  customFonts(
+                      //         text: "Dinner",
+                      //         size: 10,
+                      //         fontWeight: FontWeight.w500,
+                      //         color: AppColors.primaryBlackColor,
+                      //         context: context),
+                      //   ),
+                      // ),
+                              
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          customFonts(
+                              text: "PKR $amount",
+                              size: 16,
+                              fontWeight: FontWeight.bold,
+                              color: const Color(0xFF484848),
+                              context: context),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              customFonts(
-                                  text: "PKR $amount",
-                                  size: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: const Color(0xFF484848),
-                                  context: context),
-                              Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    "images/star.svg",
-                                  ),
-                                  horizontalSpace(5, context),
-                                  customFonts(
-                                      text: rating,
-                                      size: 16,
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColors.primaryBlackColor
-                                          .withOpacity(0.9),
-                                      context: context),
-                                ],
+                              SvgPicture.asset(
+                                "images/star.svg",
                               ),
+                              horizontalSpace(5, context),
+                              customFonts(
+                                  text: rating,
+                                  size: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.primaryBlackColor
+                                      .withOpacity(0.9),
+                                  context: context),
                             ],
                           ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ],
           ),

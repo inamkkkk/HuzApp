@@ -61,24 +61,69 @@ class _PaymentVerificationState extends State<PaymentVerification> {
 
           return InkWell(
             onTap: (){
-              transection.uploadtransection(sessiontoken:user.isUser?.sessionToken,bookingnumber: booking.booking?.bookingNumber,amount: booking.booking?.packageCost).then((value) {
-                if(value == true){
-                  endLoading();
-                  transection.imageFileList = [];
-                  transection.filePaths = [];
-                  transection.notifyListeners();
-                  booking.Blist =[];
-                  booking.bListsapi = false;
-                  booking.notifyListeners();
-                  Get.to(() => HomeScreen(
-                    selectedIndex: 2,
-                  ));
-                }
-                else {
-                  endLoading();
-                  showSnackbar(context, 'An error Occured');
-                }
-              });
+
+              if(transection.filePaths.isNotEmpty && transferIDController.text == null||transferIDController.text == ""){
+                transection.uploadtransection(sessiontoken:user.isUser?.sessionToken,bookingnumber: booking.booking?.bookingNumber,amount: booking.booking?.packageCost).then((value) {
+                  if(value == true){
+                    endLoading();
+                    transection.imageFileList = [];
+                    transection.filePaths = [];
+                    transection.notifyListeners();
+                    booking.Blist = [];
+                    booking.bListsapi = false;
+                    booking.notifyListeners();
+                    Get.to(() => HomeScreen(
+                      selectedIndex: 2,
+                    ));
+                  }
+                  else {
+                    endLoading();
+                    showSnackbar(context, 'An error Occured');
+                  }
+                });
+              } else if(transection.filePaths.isEmpty && transferIDController.text != null){
+
+                transection.uploadtransectionbynumber(sessiontoken:user.isUser?.sessionToken,bookingnumber: booking.booking?.bookingNumber,amount: booking.booking?.packageCost,id: transferIDController.text).then((value) {
+                  if(value == true){
+                    endLoading();
+                    transection.imageFileList = [];
+                    transection.filePaths = [];
+                    transection.notifyListeners();
+                    booking.Blist = [];
+                    booking.bListsapi = false;
+                    booking.notifyListeners();
+                    Get.to(() => HomeScreen(
+                      selectedIndex: 2,
+                    ));
+                  }
+                  else {
+                    endLoading();
+                    showSnackbar(context, 'An error Occured');
+                  }
+                });
+              } else {
+                showSnackbar(context, 'Please Select one Either Transection id or transection photes');
+              }
+
+
+              // transection.uploadtransection(sessiontoken:user.isUser?.sessionToken,bookingnumber: booking.booking?.bookingNumber,amount: booking.booking?.packageCost).then((value) {
+              //   if(value == true){
+              //     endLoading();
+              //     transection.imageFileList = [];
+              //     transection.filePaths = [];
+              //     transection.notifyListeners();
+              //     booking.Blist =[];
+              //     booking.bListsapi = false;
+              //     booking.notifyListeners();
+              //     Get.to(() => HomeScreen(
+              //       selectedIndex: 2,
+              //     ));
+              //   }
+              //   else {
+              //     endLoading();
+              //     showSnackbar(context, 'An error Occured');
+              //   }
+              // });
             },
             child: Container(
                 height: responsive(52, context),

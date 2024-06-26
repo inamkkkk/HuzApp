@@ -986,6 +986,7 @@ class _HotelContainerState extends State<HotelContainer> {
             borderRadius: BorderRadius.circular(responsive(6, context)),
             border: Border.all(color: const Color(0xFFDEDEDE))),
         height: responsive(128, context),
+        width: responsive(382, context),
         child: Row(
           children: [
             Stack(
@@ -1040,8 +1041,7 @@ class _HotelContainerState extends State<HotelContainer> {
                 )
               ],
             ),
-            Container(
-              width: responsive(276, context),
+            Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: responsive(10, context),
