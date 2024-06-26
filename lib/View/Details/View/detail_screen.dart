@@ -162,7 +162,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
           ),
         ),
-        body: packages.isApiCalled == false && packages.details == null
+        body: packages.isApiCalled == false
             ? Container(
           height: MediaQuery.sizeOf(context).height,
           child: const Center(
@@ -202,7 +202,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               Headertitle(
                                   context,
                                   packages.details?.packageName,
-                                  "${formatDateString(packages.details?.startDate)} to${formatDateString(packages.details?.endDate)}",
+                                  "${formatDateString(packages.details?.startDate)} to ${formatDateString(packages.details?.endDate)}",
                                   packages.details?.packageCost,
                                   (){
                                     // isFav = toggle(wishController.list, pkg?.huzToken, true);
@@ -236,7 +236,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               ),
                               customFonts(
                                   text: packages.details?.description,
-                                  size: 12,
+                                  size: 14,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.primaryBlackColor,
                                   context: context),
@@ -274,7 +274,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                         (index) => index == 0
                                         ? customFonts(
                                         text: "Includes: ",
-                                        size: 12,
+                                        size: 14,
                                         color: AppColors
                                             .primaryBlackColor,
                                         fontWeight: FontWeight.bold,
@@ -282,7 +282,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                         : customFonts(
                                         text:
                                         "${packages.include[index]}",
-                                        size: 12,
+                                        size: 14,
                                         fontWeight: FontWeight.w500,
                                         color: AppColors
                                             .primaryBlackColor,
@@ -376,13 +376,12 @@ class _DetailScreenState extends State<DetailScreen> {
                         //     context: context),
                         // verticalSpace(5, context),
                         Wrap(
-                          spacing: 04.0,
+                          spacing: responsive(5.0, context),
                           // Adjust spacing between elements
                           // runSpacing: .0,
-
                           children: [
                             SizedBox(
-                                width: responsive(120, context),
+                                width: responsive(140, context),
                                 child: Row(
                                   children: [
                                     SvgPicture.asset(
@@ -398,18 +397,18 @@ class _DetailScreenState extends State<DetailScreen> {
                                     customFonts(
                                         text:
                                         '${packages.details?.airlineDetail?[0].ticketType} Ticket',
-                                        size: 12,
+                                        size: 14,
                                         color:
                                         AppColors.primaryBlackColor,
                                         fontWeight: FontWeight.w500,
                                         context: context),
                                     SizedBox(
-                                      width: responsive(02, context),
+                                      width: responsive(08, context),
                                     )
                                   ],
                                 )),
                             SizedBox(
-                                width: responsive(170, context),
+                                width: responsive(150, context),
                                 child: Row(
                                   children: [
                                     SvgPicture.asset(
@@ -423,18 +422,15 @@ class _DetailScreenState extends State<DetailScreen> {
                                       // fit: BoxFit.fitHeight,
                                     ),
                                     SizedBox(
-                                      width: responsive(08, context),
+                                      width: responsive(8, context),
                                     ),
                                     customFonts(
                                         text: '${'Return flight'}',
-                                        size: 12,
+                                        size: 14,
                                         color:
                                         AppColors.primaryBlackColor,
                                         fontWeight: FontWeight.w500,
                                         context: context),
-                                    SizedBox(
-                                      width: responsive(02, context),
-                                    )
                                   ],
                                 )),
                           ],
@@ -588,17 +584,17 @@ class _DetailScreenState extends State<DetailScreen> {
                                                 center: false,
                                                 context: context,
                                                 text:
-                                                'Mecca & Madina Ziyarah',
+                                                'Reviews & Rating',
                                               ),
                                               Container(
-                                                child: Wrap(
-                                                  spacing: 10.0,
-                                                  // Adjust spacing between elements
-                                                  // runSpacing: 5.0,
-
-                                                  children:
-                                                  packages.ziarat,
-                                                ),
+                                                // child: Wrap(
+                                                //   spacing: 10.0,
+                                                //   // Adjust spacing between elements
+                                                //   // runSpacing: 5.0,
+                                                //
+                                                //   children:
+                                                //
+                                                // ),
                                               ),
                                             ],
                                           ),
@@ -754,7 +750,7 @@ Widget Headertitle(context, title, subtitle, amount, onTapFav, icon) {
           ),
           customFonts(
               text: subtitle,
-              size: 12,
+              size: 14,
               fontWeight: FontWeight.w500,
               color: AppColors.primaryBlackColor,
               context: context),
@@ -1061,7 +1057,7 @@ class _HotelContainerState extends State<HotelContainer> {
                             context: context),
                         customFonts(
                             text: widget.roomType,
-                            size: 11,
+                            size: 13,
                             fontWeight: FontWeight.w500,
                             color: AppColors.primaryBlackColor,
                             context: context),
@@ -1072,7 +1068,7 @@ class _HotelContainerState extends State<HotelContainer> {
                       children: [
                         customFonts(
                             text: "Includes: ",
-                            size: 10,
+                            size: 12,
                             color: AppColors.primaryBlackColor,
                             fontWeight: FontWeight.bold,
                             context: context),
@@ -1083,7 +1079,7 @@ class _HotelContainerState extends State<HotelContainer> {
                               : false,
                           child: customFonts(
                               text: "Air Condition - ",
-                              size: 10,
+                              size: 12,
                               color: AppColors.primaryBlackColor,
                               fontWeight: FontWeight.w500,
                               context: context),
@@ -1097,7 +1093,7 @@ class _HotelContainerState extends State<HotelContainer> {
                                 : false,
                             child: customFonts(
                                 text: "Attached Bathroom - ",
-                                size: 10,
+                                size: 12,
                                 color: AppColors.primaryBlackColor,
                                 fontWeight: FontWeight.w500,
                                 context: context)),
@@ -1108,7 +1104,7 @@ class _HotelContainerState extends State<HotelContainer> {
                                 : false,
                             child: customFonts(
                                 text: "Elevator - ",
-                                size: 10,
+                                size: 12,
                                 color: AppColors.primaryBlackColor,
                                 fontWeight: FontWeight.w500,
                                 context: context)),
@@ -1119,7 +1115,7 @@ class _HotelContainerState extends State<HotelContainer> {
                                 : false,
                             child: customFonts(
                                 text: "Laundry - ",
-                                size: 10,
+                                size: 12,
                                 color: AppColors.primaryBlackColor,
                                 fontWeight: FontWeight.w500,
                                 context: context)),
@@ -1130,7 +1126,7 @@ class _HotelContainerState extends State<HotelContainer> {
                                 : false,
                             child: customFonts(
                                 text: "Television - ",
-                                size: 10,
+                                size: 12,
                                 color: AppColors.primaryBlackColor,
                                 fontWeight: FontWeight.w500,
                                 context: context)),
@@ -1141,7 +1137,7 @@ class _HotelContainerState extends State<HotelContainer> {
                                 : false,
                             child: customFonts(
                                 text: "English Toilet - ",
-                                size: 10,
+                                size: 12,
                                 color: AppColors.primaryBlackColor,
                                 fontWeight: FontWeight.w500,
                                 context: context)),
@@ -1152,7 +1148,7 @@ class _HotelContainerState extends State<HotelContainer> {
                                 : false,
                             child: customFonts(
                                 text: "Indian Toilet - ",
-                                size: 10,
+                                size: 12,
                                 color: AppColors.primaryBlackColor,
                                 fontWeight: FontWeight.w500,
                                 context: context)),
@@ -1165,7 +1161,7 @@ class _HotelContainerState extends State<HotelContainer> {
                                 : false,
                             child: customFonts(
                                 text: "Shuttle Services - ",
-                                size: 10,
+                                size: 12,
                                 color: AppColors.primaryBlackColor,
                                 fontWeight: FontWeight.w500,
                                 context: context)),
@@ -1178,7 +1174,7 @@ class _HotelContainerState extends State<HotelContainer> {
                                 : false,
                             child: customFonts(
                                 text: "Amentites - ",
-                                size: 10,
+                                size: 12,
                                 color: AppColors.primaryBlackColor,
                                 fontWeight: FontWeight.w500,
                                 context: context)),
@@ -1189,7 +1185,7 @@ class _HotelContainerState extends State<HotelContainer> {
                                 : false,
                             child: customFonts(
                                 text: "Wifi",
-                                size: 10,
+                                size: 12,
                                 color: AppColors.primaryBlackColor,
                                 fontWeight: FontWeight.w500,
                                 context: context)),
