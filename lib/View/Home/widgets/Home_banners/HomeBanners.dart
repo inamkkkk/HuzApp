@@ -1,12 +1,16 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:huz/Constatns/Constants.dart';
+
 
 import '../../../../Responsive/ResponsiveClass.dart';
 import '../../../../TextStyles/Color.dart';
 import '../../../../TextStyles/styles.dart';
 import '../../../Details/View/Details.dart';
+import '../../../Details/View/detail_screen.dart';
 
 class PageBuilder extends StatefulWidget {
   PageBuilder({
@@ -42,7 +46,7 @@ class _PageBuilderState extends State<PageBuilder> {
             offset: currentPage == 0
                 ? Offset(responsive(-20, context), 0)
                 : currentPage == widget.total-1
-                ? Offset(responsive(-20, context), 0)
+                ? Offset(responsive(20, context), 0)
                 : Offset(0, 0),
             child: PageView.builder(
                 physics: BouncingScrollPhysics(),
@@ -73,89 +77,100 @@ class _PageBuilderState extends State<PageBuilder> {
 
                   return Padding(
                       padding: EdgeInsets.only(right: responsive(10, context)),
-                      child: AnimatedContainer(
-                        duration: Duration(milliseconds: 250),
-                        margin: EdgeInsets.only(
-                            top: currentPage == index
-                                ? 0
-                                : responsive(20, context)),
-                        child: Stack(
-                          children: [
-                            ClipRRect(
-                              borderRadius:
-                              BorderRadius.circular(responsive(6, context)),
-                              child: Container(
-                                // height: responsive(200, context),
+                      child: GestureDetector(
+                        onTap: (){
+                          widget.package.details = null;
+                          widget.package.isApiCalled = false;
+                          widget.package.notifyListeners();
 
-                                child: CachedNetworkImage(
-                                  imageUrl: hotelimage,
-                                  fit: BoxFit.cover,
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  placeholder: (context, url) => Image.asset(
-                                    'images/placeholder-image.png',
+                          Get.to(() => DetailScreen(
+                            token: pkg?.huzToken,
+                          ));
+                        },
+                        child: AnimatedContainer(
+                          duration: Duration(milliseconds: 250),
+                          margin: EdgeInsets.only(
+                              top: currentPage == index
+                                  ? 0
+                                  : responsive(20, context)),
+                          child: Stack(
+                            children: [
+                              ClipRRect(
+                                borderRadius:
+                                BorderRadius.circular(responsive(6, context)),
+                                child: Container(
+                                  // height: responsive(200, context),
+
+                                  child: CachedNetworkImage(
+                                    imageUrl: hotelimage,
                                     fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    placeholder: (context, url) => Image.asset(
+                                      'images/placeholder-image.png',
+                                      fit: BoxFit.cover,
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(
+                                          'images/placeholder-image.png',
+                                          fit: BoxFit.cover,
+                                        ),
                                   ),
-                                  errorWidget: (context, url, error) =>
-                                      Image.asset(
-                                        'images/placeholder-image.png',
-                                        fit: BoxFit.cover,
+                                ),
+                              ),
+                              Positioned(
+                                bottom: responsive(10, context),
+                                left:responsive(0, context),
+                                right:responsive(0, context),
+                                child: Container(
+                                  width: responsive(322, context),
+                                  color: Colors.black.withOpacity(0.30),
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: responsive(15, context),
+                                    vertical: responsive(5, context),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          customFonts(
+                                            text: pkg?.packageName,
+                                            size: 13,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            context: context,
+                                          ),
+                                          customFonts(
+                                            text:
+                                            "${formatDateString(pkg?.startDate)} to ${formatDateString(pkg?.endDate)}",
+                                            size: 11,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            context: context,
+                                          ),
+                                        ],
                                       ),
+                                      Spacer(),
+                                      customFonts(
+                                        text: "${formatCurrency(pkg?.packageCost.toInt())}",
+                                        size: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        context: context,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            Positioned(
-                              bottom: responsive(10, context),
-                              left:responsive(0, context),
-                              right:responsive(0, context),
-                              child: Container(
-                                width: responsive(322, context),
-                                color: Colors.black.withOpacity(0.30),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: responsive(15, context),
-                                  vertical: responsive(5, context),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        customFonts(
-                                          text: pkg?.packageName,
-                                          size: 13,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          context: context,
-                                        ),
-                                        customFonts(
-                                          text:
-                                          "${formatDateString(pkg?.startDate)} to ${formatDateString(pkg?.endDate)}",
-                                          size: 11,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          context: context,
-                                        ),
-                                      ],
-                                    ),
-                                    Spacer(),
-                                    customFonts(
-                                      text: "${formatCurrency(pkg?.packageCost.tpInt())}",
-                                      size: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      context: context,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ));
                 }),

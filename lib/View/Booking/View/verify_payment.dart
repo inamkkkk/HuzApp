@@ -149,7 +149,7 @@ class _VerifyPaymentScreenState extends State<VerifyPaymentScreen> {
 
                           // Price summery container
                           PriceSummery(
-                            price:formatCurrency(booking.price.toInt())  ?? formatCurrency(booking.booking?.totalPrice.toInt()),
+                            price:formatCurrency(booking.price == null ? booking.booking?.totalPrice.toInt() : booking.price.toInt()),
                           ),
 
                           verticalSpace(10, context),
