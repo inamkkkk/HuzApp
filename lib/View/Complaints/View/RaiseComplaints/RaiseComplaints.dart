@@ -9,7 +9,10 @@ import 'package:flutter_sound/public/flutter_sound_recorder.dart';
 import 'package:flutter_sound/public/tau.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:huz/Loading/loading.dart';
 import 'package:huz/TextStyles/styles.dart';
+import 'package:huz/View/Booking/Controller/BookingediteController/BookingEditeController.dart';
+import 'package:huz/Widgets/snackbar.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 
@@ -28,6 +31,8 @@ import '../../../../Constatns/Constants.dart';
 import '../../../../Responsive/ResponsiveClass.dart';
 import '../../../../TextStyles/AppFonts.dart';
 import '../../../../TextStyles/Color.dart';
+import '../../../auth/controller/is_user_exist_controller.dart';
+import '../../Controller/Controller/ComplaintController.dart';
 import '../../Widgets/Header.dart';
 import '../../Widgets/textcontroller.dart';
 
@@ -224,268 +229,286 @@ class _raisComplaintState extends State<raisComplaint> {
   @override
   Widget build(BuildContext context) {
     MediaQueryData queryData = MediaQuery.of(context);
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: appBarTitle(context: context, text: "Raise Complaint"), 
-        ),
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              if(isVisible == true && isSuccess == false) Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: isSuccess == false ?  ErrorMesssage(isVisible: isVisible, message: message, onTap:(){
-                  setState(() {
-                    isVisible = false;
-                  });
-                }) :  SuccessMesssage(isVisible: isVisible, message: message, onTap:(){
-                  setState(() {
-                    isVisible = false;
-                  });
-                }),
-              ),
-              Container(
-                color: AppColors.lightBrownColor,
-                height: responsive(47, context),
-                padding: EdgeInsets.symmetric(
-                    vertical: responsive(10, context)),
-                alignment: Alignment.center,
-                child: Text(
-                  'Transparency leads to trust.',
-                  style: TextStyle(
-                      fontSize: responsive(14, context),
-                      fontFamily: AppFonts.poppinsMedium),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: responsive(40, context)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: responsive(20, context),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: responsive(0, context),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+    return Consumer3<IsUserExitsController,Complaintscontroller,Bookingedite>(builder: (context, user,complaints,booking, child) {
 
-                        children: [
-                          SizedBox(
-                            height: responsive(20, context),
-                          ),
-                          const ManageBankHeaderText(
-                              headerText: 'Your cause'),
-                          Text(
-                            'Describe your needs detail',
-                            style: TextStyle(
-                              fontFamily: AppFonts.poppinsRegular,
-                              color: Colors.black,
-                              fontSize: responsive(12,context),
-                            ),
-                            textAlign: TextAlign.left,
-                          ),
-                        ],
-                      ),
+      return SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: appBarTitle(context: context, text: "Raise Complaint"),
+            ),
+            backgroundColor: Colors.white,
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  if(isVisible == true && isSuccess == false) Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: isSuccess == false ?  ErrorMesssage(isVisible: isVisible, message: message, onTap:(){
+                      setState(() {
+                        isVisible = false;
+                      });
+                    }) :  SuccessMesssage(isVisible: isVisible, message: message, onTap:(){
+                      setState(() {
+                        isVisible = false;
+                      });
+                    }),
+                  ),
+                  Container(
+                    color: AppColors.lightBrownColor,
+                    height: responsive(47, context),
+                    padding: EdgeInsets.symmetric(
+                        vertical: responsive(10, context)),
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Transparency leads to trust.',
+                      style: TextStyle(
+                          fontSize: responsive(14, context),
+                          fontFamily: AppFonts.poppinsMedium),
                     ),
-                    SizedBox(
-                      height: responsive(20, context),
-                    ),
-                    Form(
-                      key: _globalKey,
-                      child: Column(
-                        children: [
-                          TextFieldMasked(
-                            fillColor: AppColors.lightBrownColor,
-                            isValidated: isTitleValidated,
-                            inputFormatter: [titlemask],
-                            myController: titleController,
-                            focusNode: titleFocusNode,
-                            onFieldSubmittedValue: (value) {},
-                            onValidator: (value) {
-                              return null;
-                            },
-                            keyBoardType: TextInputType.text,
-                            hint: 'Your Cause',
-                            obscureText: false,
-                            enable: true,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: responsive(40, context)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: responsive(20, context),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: responsive(0, context),
                           ),
-                          SizedBox(
-                            height: responsive(13, context),
-                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
 
-                          Container(
-                            height: 250,
-                            alignment: Alignment.topLeft,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: AppColors.lightBrownColor,
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(responsive(5, context)),
-                                topLeft: Radius.circular(responsive(5, context)),
+                            children: [
+                              SizedBox(
+                                height: responsive(20, context),
                               ),
-                            ),
-                            child: TextFormField(
-                              focusNode: yourSituationFocusNode,
-                              controller: yourSituationController,
-                              textAlignVertical: TextAlignVertical.center,
-                              textAlign: TextAlign.start,
-                              maxLines: 15,
-                              onFieldSubmitted: (value) {},
-                              validator: (value) {
-                                return null;
-                              },
-                              keyboardType: TextInputType.text,
-                              style: TextStyle(
-                                  fontFamily: AppFonts.poppinsMedium,
-                                  fontSize: responsive(
-                                      15, context)),
-                              cursorColor: AppColors.GlobelColor,
-                              decoration: InputDecoration(
-
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: responsive(15, context),
-                                  vertical: responsive(10, context),
+                              const ManageBankHeaderText(
+                                  headerText: 'Your cause'),
+                              Text(
+                                'Describe your needs detail',
+                                style: TextStyle(
+                                  fontFamily: AppFonts.poppinsRegular,
+                                  color: Colors.black,
+                                  fontSize: responsive(12,context),
                                 ),
-                                hintText: 'describe your compaign in words.',
-                                hintStyle: TextStyle(
-                                  fontFamily: AppFonts.poppinsMedium,
-                                  fontSize: responsive(15, context),
-                                  color: const Color(0xffB1B1B1),
-                                ),
-                                border: InputBorder.none,
+                                textAlign: TextAlign.left,
                               ),
-                            ),
+                            ],
                           ),
-                          Container(
-                            height: 2,
-                            color:  borderColor,
-                            width: double.infinity,
-                          ),
-                          SizedBox(
-                            height: responsive(13, context),
-                          ),
-                          Container(
-                            width: responsive(364, context),
-                            height: responsive(54, context),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(responsive(5, context)),
-                                topLeft: Radius.circular(responsive(5, context)),
+                        ),
+                        SizedBox(
+                          height: responsive(20, context),
+                        ),
+                        Form(
+                          key: _globalKey,
+                          child: Column(
+                            children: [
+                              TextFieldMasked(
+                                fillColor: AppColors.lightBrownColor,
+                                isValidated: isTitleValidated,
+                                inputFormatter: [titlemask],
+                                myController: titleController,
+                                focusNode: titleFocusNode,
+                                onFieldSubmittedValue: (value) {},
+                                onValidator: (value) {
+                                  return null;
+                                },
+                                keyBoardType: TextInputType.text,
+                                hint: 'Your Cause',
+                                obscureText: false,
+                                enable: true,
                               ),
-                              color : Color.fromRGBO(242, 242, 242, 1),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  if(_isRecording) Text(_recordingTime),
-                                  if(_isRecording == false) Text(timeToShow),
-                                  Container(
-                                    decoration: const BoxDecoration(
-                                      color : Color.fromRGBO(242, 242, 242, 1),
-                                    ),
-                                    width: responsive(170, context),
-                                    height: responsive(45, context),
+                              SizedBox(
+                                height: responsive(13, context),
+                              ),
 
-                                    child: Visibility(
-                                      visible: _isPlayingRecordedAudio,
-                                      child: AudioProgressBars(
-                                        progressPercentage: 100,
-                                        listOfHeights: values,
-                                        width: responsive(170, context),
-                                        initalColor: AppColors.GlobelColor,
-                                        backgroundColor: const Color.fromRGBO(242, 242, 242, 1),
-                                        progressColor: AppColors.GlobelColor,
-                                        timeInMilliSeconds: totalDuration,
-                                        isHorizontallyAnimated: true,
-                                        isVerticallyAnimated: false,
-                                      ),
-                                    ),
+                              Container(
+                                height: 250,
+                                alignment: Alignment.topLeft,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: AppColors.lightBrownColor,
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(responsive(5, context)),
+                                    topLeft: Radius.circular(responsive(5, context)),
                                   ),
+                                ),
+                                child: TextFormField(
+                                  focusNode: yourSituationFocusNode,
+                                  controller: yourSituationController,
+                                  textAlignVertical: TextAlignVertical.center,
+                                  textAlign: TextAlign.start,
+                                  maxLines: 15,
+                                  onFieldSubmitted: (value) {},
+                                  validator: (value) {
+                                    return null;
+                                  },
+                                  keyboardType: TextInputType.text,
+                                  style: TextStyle(
+                                      fontFamily: AppFonts.poppinsMedium,
+                                      fontSize: responsive(
+                                          15, context)),
+                                  cursorColor: AppColors.GlobelColor,
+                                  decoration: InputDecoration(
 
-                                  InkWell(
-                                      onTap: _isPlayingRecordedAudio == true ? _stopAudio : _playAudio,
-                                      child: Visibility(
-                                          visible: !isplaybutton,
-                                          child: _isPlayingRecordedAudio == true ? const Icon(Icons.pause) :const Icon(Icons.play_arrow_rounded))),
-                                  InkWell(
-                                      onTap: _isRecording ? _stopRecording : _startRecording,
-
-                                      child: _isRecording == true ? const Icon(Icons.stop) :const Icon(Icons.mic)),
-                                ],
+                                    contentPadding: EdgeInsets.symmetric(
+                                      horizontal: responsive(15, context),
+                                      vertical: responsive(10, context),
+                                    ),
+                                    hintText: 'describe your compaign in words.',
+                                    hintStyle: TextStyle(
+                                      fontFamily: AppFonts.poppinsMedium,
+                                      fontSize: responsive(15, context),
+                                      color: const Color(0xffB1B1B1),
+                                    ),
+                                    border: InputBorder.none,
+                                  ),
+                                ),
                               ),
-                            ),
+                              Container(
+                                height: 2,
+                                color:  borderColor,
+                                width: double.infinity,
+                              ),
+                              SizedBox(
+                                height: responsive(13, context),
+                              ),
+                              // Container(
+                              //   width: responsive(364, context),
+                              //   height: responsive(54, context),
+                              //   decoration: BoxDecoration(
+                              //     borderRadius: BorderRadius.only(
+                              //       topRight: Radius.circular(responsive(5, context)),
+                              //       topLeft: Radius.circular(responsive(5, context)),
+                              //     ),
+                              //     color : Color.fromRGBO(242, 242, 242, 1),
+                              //   ),
+                              //   child: Padding(
+                              //     padding: const EdgeInsets.symmetric(horizontal: 10),
+                              //     child: Row(
+                              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              //       children: [
+                              //         if(_isRecording) Text(_recordingTime),
+                              //         if(_isRecording == false) Text(timeToShow),
+                              //         Container(
+                              //           decoration: const BoxDecoration(
+                              //             color : Color.fromRGBO(242, 242, 242, 1),
+                              //           ),
+                              //           width: responsive(170, context),
+                              //           height: responsive(45, context),
+                              //
+                              //           child: Visibility(
+                              //             visible: _isPlayingRecordedAudio,
+                              //             child: AudioProgressBars(
+                              //               progressPercentage: 100,
+                              //               listOfHeights: values,
+                              //               width: responsive(170, context),
+                              //               initalColor: AppColors.GlobelColor,
+                              //               backgroundColor: const Color.fromRGBO(242, 242, 242, 1),
+                              //               progressColor: AppColors.GlobelColor,
+                              //               timeInMilliSeconds: totalDuration,
+                              //               isHorizontallyAnimated: true,
+                              //               isVerticallyAnimated: false,
+                              //             ),
+                              //           ),
+                              //         ),
+                              //
+                              //         InkWell(
+                              //             onTap: _isPlayingRecordedAudio == true ? _stopAudio : _playAudio,
+                              //             child: Visibility(
+                              //                 visible: !isplaybutton,
+                              //                 child: _isPlayingRecordedAudio == true ? const Icon(Icons.pause) :const Icon(Icons.play_arrow_rounded))),
+                              //         InkWell(
+                              //             onTap: _isRecording ? _stopRecording : _startRecording,
+                              //
+                              //             child: _isRecording == true ? const Icon(Icons.stop) :const Icon(Icons.mic)),
+                              //       ],
+                              //     ),
+                              //   ),
+                              //
+                              //
+                              // ),
+                              // SizedBox(
+                              //   height: responsive(20, context),
+                              // ),
+                              PrimaryButton(
+                                btnText: 'SUBMIT',
+                                onPressed: () async {
+                                  if (_globalKey.currentState!.validate()) {
+                                    // title validation
+                                    if (titleController.text.isEmpty) {
+                                      setState(() {
+                                        isTitleValidated = false;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        isTitleValidated = true;
+                                      });
+                                    }
+                                    // is your Situtaion validation
+                                    if (yourSituationController.text.isEmpty) {
+                                      setState(() {
+                                        isYourSituationValidated = true;
+                                        // borderColor = Colors.red;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        isYourSituationValidated = true;
+                                      });
+                                    }
+
+                                    if(_isRecording){
+                                      isSuccess = false;
+                                      isVisible = true;
+                                      message = 'Recording is in progress';
+                                      setState(() {
+
+                                      });
+                                    }
+
+                                    if (isTitleValidated == true &&
+                                        isYourSituationValidated == true && _isRecording == false)
+                                    {
+                     complaints.RaiseComplaint(
+                       token:  user.isUser?.sessionToken,
+                       number: booking.booking?.bookingNumber,
+                       title:  titleController.text,
+                       message: yourSituationController.text,
+                     ).then((value) {
+                     if(value == true){
+                         endLoading();
+                         Get.back();
+                     }
+                     else {
+                      showSnackbar(context, complaints.cmessage);
+                     }
+                     }
+                     );
+                                      debugPrint('requesting data');
 
 
+                                    }
+                                  }
+                                },
+                                width: double.maxFinite,
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            height: responsive(20, context),
-                          ),
-                          PrimaryButton(
-                            btnText: 'SUBMIT',
-                            onPressed: () async {
-                              if (_globalKey.currentState!.validate()) {
-                                // title validation
-                                if (titleController.text.isEmpty) {
-                                  setState(() {
-                                    isTitleValidated = false;
-                                  });
-                                } else {
-                                  setState(() {
-                                    isTitleValidated = true;
-                                  });
-                                }
-                                // is your Situtaion validation
-                                if (yourSituationController.text.isEmpty) {
-                                  setState(() {
-                                    isYourSituationValidated = true;
-                                    // borderColor = Colors.red;
-                                  });
-                                } else {
-                                  setState(() {
-                                    isYourSituationValidated = true;
-                                  });
-                                }
-
-                                if(_isRecording){
-                                  isSuccess = false;
-                                  isVisible = true;
-                                  message = 'Recording is in progress';
-                                  setState(() {
-
-                                  });
-                                }
-
-                                if (isTitleValidated == true &&
-                                    isYourSituationValidated == true && _isRecording == false)
-                                {
-
-                                  debugPrint('requesting data');
-
-
-                                }
-                              }
-                            },
-                            width: double.maxFinite,
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      }
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:http/http.dart' as http;
 
+import '../../../../Loading/loading.dart';
 import '../../../../utils/servecies.dart';
 import '../../Model/GetComplaints/GetComplaints.dart';
 import '../../Model/Model.dart';
@@ -17,7 +18,39 @@ class Complaintscontroller with ChangeNotifier{
   GetComplaintsModel? Complaintsbystatus ;
   var isliststatusapiiscalled = false;
   complaintcounts? count;
-GetComplaintsModel? Complaints ;
+  var cmessage = "";
+  GetComplaintsModel? Complaints ;
+  var request = http.MultipartRequest('POST', Uri.parse('https://hajjumrah.org/bookings/raise_complaint_booking_wise/'));
+
+
+  Future<bool> RaiseComplaint({var token,number,title,message}) async {
+    Loading();
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': NetworkServices.token,
+    };
+    var request = http.MultipartRequest('POST', Uri.parse('${NetworkServices.bookingurl}raise_complaint_booking_wise/'));
+
+    request.fields.addAll({
+      'session_token': '${token}',
+      'booking_number': '${number}',
+      'complaint_title': title,
+      'complaint_message': message
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      return true;
+    }
+    else {
+      var data = jsonDecode(await response.stream.bytesToString());
+      cmessage = data['message'];
+      return false;
+    }
+  }
 
   Future<void> getcomplaintscount({var token}) async {
     String apiUrl = '${NetworkServices.bookingurl}get_total_complaints_count/?'; // replace with your API URL// replace with your session token
