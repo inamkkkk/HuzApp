@@ -103,7 +103,7 @@ class _PaymentVerificationState extends State<PaymentVerification> {
                   }
                   else {
                     endLoading();
-                    showSnackbar(context, 'An error Occured');
+                    showSnackbar(context, transection.trasectionmessage);
                   }
                 });
               } else {

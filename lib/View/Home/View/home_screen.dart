@@ -34,6 +34,7 @@ import '../../../utils/servecies.dart';
 import '../../TransportPageWidgets/View/Transport.dart';
 import '../../auth/view/sign_up_with_mobile_number/signup_with_number.dart';
 import '../../wishlist/view/wishlist.dart';
+import '../widgets/Home_banners/HomeBanners.dart';
 import '../widgets/Searchwidget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -641,7 +642,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                             Padding(
                               padding: EdgeInsets.only(
-                                  left: responsive(20, context)),
+                                  left: responsive(19.5, context)),
                               child: customFonts(
                                   text: "Recommended Packages",
                                   size: 18,
@@ -649,172 +650,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   context: context),
                             ),
                             verticalSpace(20, context),
+                            PageBuilder(
+                                total: packagecontroller.package!.results!.length,
+                                package: packagecontroller,
+                                pageController: pageController,
+                                tabList: tabList,
+                                isSelect: isSelect),
+                            verticalSpace(20, context),
 
-                            SizedBox(
-                              height: responsive(190, context),
-                              child: Transform.translate(
-                                offset: currentPage == 0
-                                    ? Offset(responsive(-45, context), 0)
-                                    : currentPage ==
-                                            packagecontroller.length - 1
-                                        ? Offset(responsive(20, context), 0)
-                                        : Offset(responsive(5, context), 0),
-                                child: PageView.builder(
-                                    physics: BouncingScrollPhysics(),
-                                    itemCount: packagecontroller
-                                        .package?.results?.length,
-                                    clipBehavior: Clip.none,
-                                    // onPageChanged: (page) {
-                                    //   setState(() {
-                                    //     currentPage = page;
-                                    //   });
-                                    // },
-                                    controller: pageController,
-                                    itemBuilder: (context, index) {
-                                      var pkg = packagecontroller
-                                          .package?.results?[index];
-                                      var hotelimage;
-
-                                      if (tabList[isSelect] == 'Umrah') {
-                                        String hotelname = pkg
-                                            ?.hotelInfoDetail?[1].hotelName
-                                            .replaceAll(' ', '_');
-                                        hotelimage =
-                                            "https://hajjumrah.co/makkah/${hotelname}_image1.jpg";
-                                      } else {
-                                        String hotelname = pkg
-                                            ?.hotelInfoDetail?[1].hotelName
-                                            .replaceAll(' ', '_');
-                                        hotelimage =
-                                            "https://hajjumrah.co/madinah/${hotelname}_image1.jpg";
-                                      }
-
-                                      return GestureDetector(
-                                        onTap: () {
-                                          packagecontroller.details = null;
-
-                                          packagecontroller.notifyListeners();
-
-                                          Get.to(() => DetailScreen(
-                                                token: pkg?.huzToken,
-                                              ));
-                                        },
-                                        child: Padding(
-                                            padding: EdgeInsets.only(
-                                                right: responsive(10, context)),
-                                            child: Container(
-                                              child: Stack(
-                                                children: [
-                                                  ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            responsive(
-                                                                6, context)),
-                                                    child: Container(
-                                                      width: responsive(
-                                                          322, context),
-                                                      // height: responsive(200, context),
-
-                                                      child: CachedNetworkImage(
-                                                        imageUrl: hotelimage,
-                                                        fit: BoxFit.cover,
-                                                        width: double.infinity,
-                                                        height: double.infinity,
-                                                        placeholder:
-                                                            (context, url) =>
-                                                                Image.asset(
-                                                          'images/placeholder-image.png',
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                        errorWidget: (context,
-                                                                url, error) =>
-                                                            Image.asset(
-                                                          'images/placeholder-image.png',
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Positioned(
-                                                    bottom:
-                                                        responsive(10, context),
-                                                    right: 0,
-                                                    left: 0,
-                                                    child: Container(
-                                                      width: responsive(
-                                                          322, context),
-                                                      color: Colors.black
-                                                          .withOpacity(0.30),
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                        horizontal: responsive(
-                                                            15, context),
-                                                        vertical: responsive(
-                                                            5, context),
-                                                      ),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceEvenly,
-                                                            children: [
-                                                              customFonts(
-                                                                text: pkg
-                                                                    ?.packageName,
-                                                                size: 13,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .white,
-                                                                context:
-                                                                    context,
-                                                              ),
-                                                              customFonts(
-                                                                text:
-                                                                    "${formatDateString(pkg?.startDate)} to ${formatDateString(pkg?.endDate)}",
-                                                                size: 11,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .white,
-                                                                context:
-                                                                    context,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          Spacer(),
-                                                          customFonts(
-                                                            text:
-                                                                "${formatCurrency(pkg?.packageCost.toInt())}",
-                                                            size: 16,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: Colors.white,
-                                                            context: context,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            )),
-                                      );
-                                    }),
-                              ),
-                            ),
+                           
 
                             // Recommended packages
                             // recommendedPackages(
