@@ -69,6 +69,7 @@ class _TripsState extends State<Trips> {
             booking.getbookings(user.isUser?.sessionToken);
           }
           return Scaffold(
+
           backgroundColor: Colors.white,
           body: booking.Blist.isEmpty && booking.bListsapi == true ? SizedBox(
               height: double.infinity,

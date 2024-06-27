@@ -91,7 +91,7 @@ class _DetailComplaintState extends State<DetailComplaint> {
               clipBehavior: Clip.none,
               children: [
                 Container(
-                  color: AppColors.grayboxcolor,
+                  color: const Color(0xFFF2F2F2),
                   height: responsive(62, context),
                 ),
                 Positioned(
@@ -123,21 +123,16 @@ class _DetailComplaintState extends State<DetailComplaint> {
                                   color:
                                       AppColors.textSecondary.withOpacity(0.9),
                                   context: context),
-                              textPoppins(
-                                  text: widget.companyName,
-                                  size: 12,
-                                  fontWeight: FontWeight.w300,
-                                  color:
-                                      AppColors.textSecondary.withOpacity(0.9),
-                                  context: context)
                             ],
                           ),
                           Container(
+
                             padding: EdgeInsets.symmetric(
                               horizontal: responsive(10, context),
                               vertical: responsive(3.5, context),
                             ),
                             decoration: BoxDecoration(
+
                               borderRadius:
                                   BorderRadius.circular(responsive(4, context)),
                               color: Color(0xFFFF9F43).withOpacity(0.13),
@@ -225,10 +220,10 @@ class _DetailComplaintState extends State<DetailComplaint> {
                               children: [
                                 textPoppins(
                                     text: "Raised date & time",
-                                    size: 10,
+                                    size: 12,
                                     fontWeight: FontWeight.w300,
                                     color: AppColors.textSecondary
-                                        .withOpacity(0.5),
+                                        .withOpacity(0.8),
                                     context: context),
                                 Row(
                                   children: [
@@ -268,8 +263,8 @@ class _DetailComplaintState extends State<DetailComplaint> {
                             textPoppins(
                                 text: "Complaint Message",
                                 fontWeight: FontWeight.w300,
-                                size: 10,
-                                color: AppColors.textSecondary.withOpacity(0.5),
+                                size: 12,
+                                color: AppColors.textSecondary.withOpacity(0.8),
                                 context: context),
                             verticalSpace( 5, context),
                             Container(

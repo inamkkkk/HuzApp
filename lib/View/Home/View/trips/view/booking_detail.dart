@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:huz/Loading/loading.dart';
 import 'package:huz/View/Booking/Widgets/progress_widget.dart';
+import 'package:huz/View/Complaints/Controller/Controller/ComplaintController.dart';
+import 'package:huz/View/Complaints/View/view/Complaints/Complaints.dart';
 import 'package:huz/View/Details/View/detail_screen.dart';
 import 'package:huz/Widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';
@@ -44,10 +47,23 @@ class _BookingDetailState extends State<BookingDetail> {
       ) : const SizedBox(),
 
       appBar: AppBar(
+        backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
-        flexibleSpace: CustomAppBar(
-          title: "Booking Detail",
-        ),
+        title: appBarTitle(context: context, text: "Booking Detail"),
+        centerTitle: true,
+        leading: Consumer3<IsUserExitsController, Bookingedite, Complaintscontroller>(
+            builder: (context, user, booking, complaint, child) {
+            return GestureDetector(
+              onTap:  (){
+                Get.back();
+              },
+              child: Padding(
+                padding:  EdgeInsets.all(responsive(20, context)),
+                child: SvgPicture.asset(  "images/arrow_back.svg", height: responsive(18, context), width: responsive(27.22, context),),
+              ),
+            );
+          }
+        ) ,
       ),
       body: Consumer2<IsUserExitsController, Bookingedite>(
           builder: (context, user, booking, child) {
@@ -450,8 +466,8 @@ class _BookingDetailState extends State<BookingDetail> {
                       children: [
                         customFonts(
                             text: "Start date & End date",
-                            size: 10,
-                            color: AppColors.primaryBlackColor.withOpacity(0.5),
+                            size: 12,
+                            color: AppColors.primaryBlackColor.withOpacity(0.8),
                             context: context),
                         Row(
                           children: [
@@ -484,8 +500,8 @@ class _BookingDetailState extends State<BookingDetail> {
                       children: [
                         customFonts(
                             text: "Adults & child",
-                            size: 10,
-                            color: AppColors.primaryBlackColor.withOpacity(0.5),
+                            size: 12,
+                            color: AppColors.primaryBlackColor.withOpacity(0.8),
                             context: context),
                         Row(
                           children: [
@@ -515,8 +531,8 @@ class _BookingDetailState extends State<BookingDetail> {
                   children: [
                     customFonts(
                         text: "Special Request",
-                        size: 10,
-                        color: AppColors.primaryBlackColor.withOpacity(0.5),
+                        size: 12,
+                        color: AppColors.primaryBlackColor.withOpacity(0.8),
                         context: context),
                     customFonts(
                         text: "$specialRequest",

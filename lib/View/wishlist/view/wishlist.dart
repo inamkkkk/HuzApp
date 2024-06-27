@@ -9,8 +9,11 @@ import 'package:huz/View/Details/View/detail_screen.dart';
 import 'package:huz/View/Home/View/home_screen.dart';
 import 'package:huz/View/wishlist/controller/wishlist_controller.dart';
 import 'package:huz/Widgets/custom_app_bar.dart';
+import 'package:provider/provider.dart';
 
+import '../../../Controller/pakagecontroller.dart';
 import '../../../TextStyles/Color.dart';
+import '../../auth/controller/is_user_exist_controller.dart';
 import '../model/wishlist_model.dart';
 
 class WishListScreen extends StatefulWidget {
@@ -46,101 +49,113 @@ class _WishListScreenState extends State<WishListScreen> {
   @override
   Widget build(BuildContext context) {
     return wishListController.list.isEmpty
-        ? Scaffold(
-      backgroundColor: Color(0xFFF2F2F2),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "images/wishlist_icon.png",
-                  height: responsive(170, context),
-                  width: responsive(170, context),
-                  fit: BoxFit.cover,
-                ),
-                verticalSpace(20, context),
-                customFonts(
-                    text: "No Wishlist",
-                    size: 14,
-                    color: Colors.black,
-                    context: context)
-              ],
-            ),
-          ),
-        )
-        : Column(
-            children: [
-              Container(
-                padding:
-                    EdgeInsets.symmetric(horizontal: responsive(20, context)),
-                height: responsive(49, context),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        color: Color(0xFFF2F2F2),
-                        width: responsive(2, context))),
-                child: Row(
+        ?  Consumer2<pakagecontrollers, IsUserExitsController>(
+        builder: (context, packagecontroller, user, child) {
+            return Scaffold(
+                  backgroundColor: Color(0xFFF2F2F2),
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SvgPicture.asset(
-                      "images/heart_icon_round.svg",
-                      height: responsive(17, context),
+                    Image.asset(
+                      "images/wishlist_icon.png",
+                      height: responsive(170, context),
+                      width: responsive(170, context),
+                      fit: BoxFit.cover,
                     ),
-                    horizontalSpace(14, context),
+                    verticalSpace(20, context),
                     customFonts(
-                        text:
-                            "${wishListController.list.length} packages added in Wishlist.",
-                        size: 18,
-                        color: AppColors.GlobelColor,
+                        text: "No Wishlist",
+                        size: 14,
+                        color: Colors.black,
                         context: context)
                   ],
                 ),
               ),
-              Expanded(
-                  child: ListView.builder(
-                      padding: EdgeInsets.all(responsive(20, context)),
-                      itemCount: wishListController.list.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding:
-                              EdgeInsets.only(bottom: responsive(20, context)),
-                          child: GestureDetector(
-                            onTap: () {
-                              Get.to(() => DetailScreen(
+            );
+          }
+        )
+        : Consumer2<pakagecontrollers, IsUserExitsController>(
+        builder: (context, packagecontroller, user, child) {
+            return Column(
+                children: [
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: responsive(20, context)),
+                    height: responsive(49, context),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: Color(0xFFF2F2F2),
+                            width: responsive(2, context))),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          "images/heart_icon_round.svg",
+                          height: responsive(17, context),
+                        ),
+                        horizontalSpace(14, context),
+                        customFonts(
+                            text:
+                                "${wishListController.list.length} packages added in Wishlist.",
+                            size: 18,
+                            color: AppColors.GlobelColor,
+                            context: context)
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                      child: ListView.builder(
+                          padding: EdgeInsets.all(responsive(20, context)),
+                          itemCount: wishListController.list.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding:
+                                  EdgeInsets.only(bottom: responsive(20, context)),
+                              child: GestureDetector(
+                                onTap: () {
+                                  packagecontroller.details = null;
+                                  packagecontroller.isApiCalled = false;
+                                  packagecontroller.notifyListeners();
+
+                                  Get.to(() => DetailScreen(
                                     token: wishListController.list[index].id,
                                   ));
-                            },
-                            child: packagesContainer(
-                                onClose: () {
-                                  if (wishListController.list.isNotEmpty) {
-                                    for (var m in wishListController.list) {
-                                      if (m.id ==
-                                          wishListController.list[index].id) {
-                                        _removeTask(
-                                            wishListController.list[index]);
-                                      }
-                                    }
-                                  }
-
-                                  _removeTask(wishListController.list[index]);
-                                  print("**************** clicked");
                                 },
-                                image: wishListController.list[index].packageImage,
-                                includeList:
-                                    wishListController.list[index].incldues,
-                                packageName:
-                                    wishListController.list[index].packageName,
-                                startDate: formatDateString(
-                                    wishListController.list[index].startDate),
-                                endDate: formatDateString(
-                                    wishListController.list[index].endDate),
-                                amount: wishListController.list[index].cost,
-                                rating: ""),
-                          ),
-                        );
-                      })),
-            ],
-          );
+                                child: packagesContainer(
+                                    onClose: () {
+                                      if (wishListController.list.isNotEmpty) {
+                                        for (var m in wishListController.list) {
+                                          if (m.id ==
+                                              wishListController.list[index].id) {
+                                            _removeTask(
+                                                wishListController.list[index]);
+                                          }
+                                        }
+                                      }
+
+                                      _removeTask(wishListController.list[index]);
+                                      print("**************** clicked");
+                                    },
+                                    image: wishListController.list[index].packageImage,
+                                    includeList:
+                                        wishListController.list[index].incldues,
+                                    packageName:
+                                        wishListController.list[index].packageName,
+                                    startDate: formatDateString(
+                                        wishListController.list[index].startDate),
+                                    endDate: formatDateString(
+                                        wishListController.list[index].endDate),
+                                    amount: wishListController.list[index].cost,
+                                    rating: ""),
+                              ),
+                            );
+                          })),
+                ],
+              );
+          }
+        );
   }
 
   Widget packagesContainer(

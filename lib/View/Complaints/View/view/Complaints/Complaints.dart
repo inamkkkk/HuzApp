@@ -60,40 +60,40 @@ class _ComplaintsState extends State<Complaints> {
       ),
       body: SingleChildScrollView(
         child: Consumer2<IsUserExitsController,Complaintscontroller>(builder: (context, user,complaints, child) {
-          if(complaints.Complaintsbystatus == null){
-            complaints.GetComplaintsbystatus(token: user.isUser?.sessionToken,);
-          }
+
           return Container(
               child: Padding(
-                padding: EdgeInsets.only(top: responsive(10, context)),
+                padding: EdgeInsets.only(top: responsive(4, context)),
                 child: Stack(
                   alignment: Alignment.topCenter,
                   children: [
-                    complaints.isliststatusapiiscalled == false? Padding(
+                    // complaints.isliststatusapiiscalled == false? Padding(
+                    //   padding:  EdgeInsets.only(top: responsive(400, context)),
+                    //   child: Container(
+                    //     height: responsive(30, context),
+                    //     width: responsive(30, context),
+                    //     child: CircularProgressIndicator(color: AppColors.GlobelColor,),
+                    //   ),
+                    complaints.result.isEmpty ?Padding(
                       padding:  EdgeInsets.only(top: responsive(400, context)),
                       child: Container(
-                        height: responsive(30, context),
-                        width: responsive(30, context),
-                        child: CircularProgressIndicator(color: AppColors.GlobelColor,),
+                        child: textPoppins(text: 'No Complaints',  size: 15, context: context),
                       ),
-                    ) :complaints.isliststatusapiiscalled == true  && complaints.Complaintsbystatus!.count ==0 ?Padding(
-                      padding:  EdgeInsets.only(top: responsive(400, context)),
-                      child: Container(
-                        child: textPoppins(text: 'No Complaints in ${tabnames[selected]}',  size: 15, context: context),
-                      ),
-                    ): Padding(
-                      padding: EdgeInsets.only(top: responsive(40, context)),
+                    ):
+
+                    Padding(
+                      padding: EdgeInsets.only(top: responsive(0, context)),
                       child: Container(
                         color: Colors.white,
                         width: MediaQuery.sizeOf(context).width,
                         height: MediaQuery.sizeOf(context).height,
                         child: Padding(
-                            padding: EdgeInsets.only(top: responsive(49, context)),
+                            padding: EdgeInsets.only(top: responsive(20, context)),
                             child: ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
-                                itemCount: complaints.Complaintsbystatus?.results?.length,
+                                itemCount: complaints.result?.length,
                                 itemBuilder: (context, index) {
-                                  var data = complaints.Complaintsbystatus?.results?[index];
+                                  var data = complaints.result?[index];
                                   return GestureDetector(
                                       onTap: () {
                                         Get.to(() => DetailComplaint(
@@ -130,41 +130,41 @@ class _ComplaintsState extends State<Complaints> {
                     ),
 
                     // Top scroll tap bar
-                    SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      child: Padding(
-                        padding:
-                            EdgeInsets.only(top: responsiveHeight(15, context)),
-                        child: Row(
-                          children: [
-                            for (int i = 0; i < imageslist.length; i++)
-                              InkWell(
-                                onTap: () async {
-                                  selected = i;
-                                  complaints.Complaintsbystatus =null;
-                                  complaints.isliststatusapiiscalled = false;
-                                  complaints.notifyListeners();
-                                  setState(() {});
-                                },
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: responsive(15, context),
-                                      right: i == imageslist.length - 1
-                                          ? responsive(20, context)
-                                          : 0.0),
-                                  child: CustomTab(
-                                    count: complaints.list.isNotEmpty?"${complaints.list[i]}":listed[i],
-                                    url: imageslist[i],
-                                    text: tabnames[i],
-                                    isSelected: i == selected, // Set isSelected to true for the initially selected tab
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // SingleChildScrollView(
+                    //   physics: const BouncingScrollPhysics(),
+                    //   scrollDirection: Axis.horizontal,
+                    //   child: Padding(
+                    //     padding:
+                    //         EdgeInsets.only(top: responsiveHeight(15, context)),
+                    //     child: Row(
+                    //       children: [
+                    //         for (int i = 0; i < imageslist.length; i++)
+                    //           InkWell(
+                    //             onTap: () async {
+                    //               selected = i;
+                    //               complaints.result =[];
+                    //               complaints.isliststatusapiiscalled = false;
+                    //               complaints.notifyListeners();
+                    //               setState(() {});
+                    //             },
+                    //             child: Padding(
+                    //               padding: EdgeInsets.only(
+                    //                   left: responsive(15, context),
+                    //                   right: i == imageslist.length - 1
+                    //                       ? responsive(20, context)
+                    //                       : 0.0),
+                    //               child: CustomTab(
+                    //                 count: complaints.list.isNotEmpty?"${complaints.list[i]}":listed[i],
+                    //                 url: imageslist[i],
+                    //                 text: tabnames[i],
+                    //                 isSelected: i == selected, // Set isSelected to true for the initially selected tab
+                    //               ),
+                    //             ),
+                    //           ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

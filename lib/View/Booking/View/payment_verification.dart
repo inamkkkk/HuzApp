@@ -284,7 +284,7 @@ class _PaymentVerificationState extends State<PaymentVerification> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       InkWell(
-                                        onTap: pickImage,
+                                        // onTap: pickImage,
                                         child: Container(
                                           padding: EdgeInsets.all(
                                               responsive(10, context)),

@@ -449,7 +449,8 @@ class _HomeScreenState extends State<HomeScreen> {
           automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
           flexibleSpace: CustomAppBar(
-            isHome: true,
+            isHome: widget.selectedIndex ==2? false : true,
+            isComplaint: widget.selectedIndex ==2 ? true : false,
             onPress: () {
               _scaffoldKey.currentState?.openDrawer();
             },

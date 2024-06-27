@@ -21,7 +21,6 @@ import 'SplashScreen.dart';
 import 'View/Booking/Controller/BookingediteController/BookingEditeController.dart';
 import 'View/Booking/Controller/BookingediteController/UploadTransectionsController/transectioncontroller.dart';
 import 'View/Booking/View/RequestToBook.dart';
-import 'View/Complaints/Controller/ComplaintsConrtoller.dart';
 import 'View/Complaints/Controller/Controller/ComplaintController.dart';
 import 'View/Details/View/Details.dart';
 import 'View/Home/View/Home.dart';
@@ -64,7 +63,6 @@ Future<void> main() async {
           ChangeNotifierProvider.value(value: IhramStepsProvider()),
           ChangeNotifierProvider.value(value: TawafStepsProvider()),
           ChangeNotifierProvider.value(value: SaiStepsProvider()),
-          ChangeNotifierProvider.value(value: complaintController()),
           ChangeNotifierProvider.value(value: Complaintscontroller()),
 
 
@@ -92,9 +90,9 @@ Future<void> main() async {
           // VerifyPaymentScreen(),
 
 
-       // home: const SplashScreen(),
+       home: const SplashScreen(),
         //   HomeScreen(),
-          home: RatingScreen(),
+        //   home: RatingScreen(),
         // Home(),
 
         // const SplashScreen(),
