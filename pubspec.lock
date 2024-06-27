@@ -249,6 +249,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
+  custom_rating_bar:
+    dependency: "direct main"
+    description:
+      name: custom_rating_bar
+      sha256: e4fd8385a09e1dfc74080e816525fa97da9208ccc47512ac0ee5c9e97a96680f
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5"
   dart_style:
     dependency: transitive
     description:
@@ -792,7 +800,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.9.0"
-
+  just_audio:
+    dependency: "direct main"
+    description:
+      name: just_audio
+      sha256: "5abfab1d199e01ab5beffa61b3e782350df5dad036cb8c83b79fa45fc656614e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.38"
+  just_audio_platform_interface:
+    dependency: transitive
+    description:
+      name: just_audio_platform_interface
+      sha256: "0243828cce503c8366cc2090cefb2b3c871aa8ed2f520670d76fd47aa1ab2790"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.3.0"
+  just_audio_web:
+    dependency: transitive
+    description:
+      name: just_audio_web
+      sha256: "0edb481ad4aa1ff38f8c40f1a3576013c3420bf6669b686fe661627d49bc606c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.11"
   leak_tracker:
     dependency: transitive
     description:
@@ -817,7 +848,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-
   lints:
     dependency: transitive
     description:

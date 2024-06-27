@@ -5,6 +5,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:huz/IntroScreen.dart';
+import 'package:huz/Rating/rating.dart';
 import 'package:huz/View/Booking/View/verify_payment.dart';
 import 'package:huz/View/TransportPageWidgets/controller/transportController.dart';
 import 'package:huz/View/auth/view/finish_signing_up/finish_signing_up.dart';
@@ -91,9 +92,9 @@ Future<void> main() async {
           // VerifyPaymentScreen(),
 
 
-       home: const SplashScreen(),
+       // home: const SplashScreen(),
         //   HomeScreen(),
-
+          home: RatingScreen(),
         // Home(),
 
         // const SplashScreen(),
