@@ -19,6 +19,26 @@ class AppColors {
   static const primaryBlackColor = Color(0xFF4B465C);
 
   static const lightblack = Color(0xff5A546F);
+  static const primaryGreenColor = Color(0xFF00936C);
+  static const lightBlackColor = Color(0xFF2D2D2D);
+  static const blackColor = Color(0xFF121212);
+
+  static Color missingred = Color(0xFFFF9F43).withOpacity(0.13);
+  static Color darkmisingred = Color(0xFFFF9F43);
+  static const whiteColor = Colors.white;
+  static const yellowcolor = Color(0xfffECBB10);
+
+  static const Color primaryColor = Color(0XFF00936C);
+  static const Color primaryfade = Color(0XFFE6F4F0);
+
+  static const Color textColorBlack = Colors.black;
+  static const Color textSecondary = Color(0XFF4B465C);
+  // static const Color textPrimaryColor = Color(0XFF6C6060);
+  static const Color cardColorBlue = Color(0XFF3E76BB);
+  static  Color agencyContainerColor = const Color(0XFF3E76BB).withOpacity(0.15);
+  static  Color packagesContainerColor = const Color(0XFF00936C).withOpacity(0.10);
+  static  Color borderColor = const Color(0xFFF2F2F2);
+
 }
 
 class heading {
