@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  audio_progress_bars
   file_selector_windows
   geolocator_windows
   permission_handler_windows

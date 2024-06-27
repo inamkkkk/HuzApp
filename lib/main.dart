@@ -20,6 +20,7 @@ import 'SplashScreen.dart';
 import 'View/Booking/Controller/BookingediteController/BookingEditeController.dart';
 import 'View/Booking/Controller/BookingediteController/UploadTransectionsController/transectioncontroller.dart';
 import 'View/Booking/View/RequestToBook.dart';
+import 'View/Complaints/Controller/ComplaintsConrtoller.dart';
 import 'View/Details/View/Details.dart';
 import 'View/Home/View/Home.dart';
 import 'test/home_new.dart';
@@ -61,6 +62,8 @@ Future<void> main() async {
           ChangeNotifierProvider.value(value: IhramStepsProvider()),
           ChangeNotifierProvider.value(value: TawafStepsProvider()),
           ChangeNotifierProvider.value(value: SaiStepsProvider()),
+          ChangeNotifierProvider.value(value: complaintController()),
+
 
 
 

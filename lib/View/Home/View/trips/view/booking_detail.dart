@@ -13,6 +13,7 @@ import '../../../../../TextStyles/Color.dart';
 import '../../../../../TextStyles/styles.dart';
 import '../../../../Booking/Controller/BookingediteController/BookingEditeController.dart';
 import '../../../../Booking/Widgets/docswwidget.dart';
+import '../../../../Complaints/View/RaiseComplaints/RaiseComplaints.dart';
 import '../../../../auth/controller/is_user_exist_controller.dart';
 import 'UploadUserDocs.dart';
 
@@ -32,9 +33,16 @@ class _BookingDetailState extends State<BookingDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: isPaymentConfirm || isActive
-          ? bottomWidget(onTapReview: () {}, onTapComplaint: () {})
-          : const SizedBox(),
+
+      bottomNavigationBar: isPaymentConfirm || isActive ? bottomWidget(
+        onTapReview: (){
+          
+        },
+        onTapComplaint: (){
+         Get.to(raisComplaint());
+        }
+      ) : const SizedBox(),
+
       appBar: AppBar(
         automaticallyImplyLeading: false,
         flexibleSpace: CustomAppBar(
