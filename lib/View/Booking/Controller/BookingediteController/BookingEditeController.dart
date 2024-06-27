@@ -56,7 +56,7 @@ class Bookingedite with ChangeNotifier{
 
     // Parse the string to DateTime
     DateFormat dateFormat = DateFormat('dd MMM yyyy');
-    print(initialstartdate);
+    print("special req = $specialreq");
     print(startDate);
     DateTime dateTime1 = dateFormat.parse(startDate??initialstartdate);
     DateTime dateTime2 = dateFormat.parse(endDate??initialenddate);
@@ -85,7 +85,7 @@ class Bookingedite with ChangeNotifier{
       "start_date": sdate,
       "end_date":edate,
       "total_price":price,
-      "special_request": specialreq != null ? specialreq : "N/A",
+      "special_request": specialreq,
       "payment_type": 'Bank'
     });
     request.headers.addAll(headers);

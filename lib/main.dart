@@ -85,8 +85,7 @@ Future<void> main() async {
           // VerifyPaymentScreen(),
 
 
-       home: HomeScreenNew(),
-       // const SplashScreen(),
+       home: const SplashScreen(),
         //   HomeScreen(),
 
         // Home(),

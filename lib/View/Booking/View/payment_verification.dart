@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:huz/Constatns/Constants.dart';
 import 'package:huz/View/Details/View/Details.dart';
 import 'package:huz/View/Home/View/Home.dart';
 import 'package:huz/View/Home/View/home_screen.dart';
@@ -61,11 +62,15 @@ class _PaymentVerificationState extends State<PaymentVerification> {
 
           return InkWell(
             onTap: (){
+   if(transection.filePaths.isEmpty&& transferIDController.text.isEmpty){
+     showSnackbar(context, 'Please Select one Either Transection id or transection photes');
 
-              if(transection.filePaths.isNotEmpty && transferIDController.text == null||transferIDController.text == ""){
+   }
+              if(transection.filePaths.isNotEmpty && transferIDController.text.isEmpty){
                 transection.uploadtransection(sessiontoken:user.isUser?.sessionToken,bookingnumber: booking.booking?.bookingNumber,amount: booking.booking?.packageCost).then((value) {
                   if(value == true){
                     endLoading();
+                    booking.price = null;
                     transection.imageFileList = [];
                     transection.filePaths = [];
                     transection.notifyListeners();
@@ -78,10 +83,10 @@ class _PaymentVerificationState extends State<PaymentVerification> {
                   }
                   else {
                     endLoading();
-                    showSnackbar(context, 'An error Occured');
+                    showSnackbar(context, transection.trasectionmessage);
                   }
                 });
-              } else if(transection.filePaths.isEmpty && transferIDController.text != null){
+              } else if(transection.filePaths.isEmpty && transferIDController.text.isNotEmpty){
 
                 transection.uploadtransectionbynumber(sessiontoken:user.isUser?.sessionToken,bookingnumber: booking.booking?.bookingNumber,amount: booking.booking?.packageCost,id: transferIDController.text).then((value) {
                   if(value == true){
@@ -199,7 +204,7 @@ class _PaymentVerificationState extends State<PaymentVerification> {
 
                           // Price summery container
                           PriceSummery(
-                            price: booking.booking?.totalPrice,
+                            price: formatCurrency(booking.booking?.totalPrice.toInt()),
                           ),
                           SizedBox(
                             height: responsive(10, context),

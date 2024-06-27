@@ -21,7 +21,7 @@ class HowItWorksScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.lightBrownColor,
       appBar: AppBar(
-        title: appBarTitle(context: context, text: "Privacy Policy"),
+        title: appBarTitle(context: context, text: "How it is Work"),
         centerTitle: true,
       ),
       body: Padding(
@@ -32,7 +32,7 @@ class HowItWorksScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'How MyCause works.',
+                'How Huz works.',
                 style: TextStyle(
                     fontSize: getWidth(18),
                     fontFamily: AppFonts.poppinsMedium),
@@ -41,7 +41,7 @@ class HowItWorksScreen extends StatelessWidget {
                 height: getWidth(3),
               ),
               Text(
-                'Users can create a campaign request by following these steps.',
+                'Users can create a Booking request by following these steps.',
                 style: TextStyle(
                   fontFamily: AppFonts.poppinsRegular,
                   fontSize: getWidth(12),
@@ -52,23 +52,23 @@ class HowItWorksScreen extends StatelessWidget {
               ),
               const HowItWorksCard(
                 path: '1.svg',
-                headText: 'Generate Request',
-                bodyText: 'Users can initiate a request to cover the grocery expenses required to feed their families.',
+                headText: 'Create a Booking Request',
+                bodyText: 'Users can initiate a request to book their hajj or umrah package ',
               ),
               const HowItWorksCard(
                 path: '2.svg',
-                headText: 'Request Approval',
-                bodyText: 'After the request is submitted on MyCause, the request will be thoroughly reviewed.',
+                headText: 'Transerfer payment  ',
+                bodyText: 'Once you have booked your package successfully you have to transfer package payment to company account',
               ),
               const HowItWorksCard(
                 path: '3.svg',
-                headText: 'Receive Donations',
-                bodyText: 'Approved requests will be displayed on the application/site so that campaign can be started.',
+                headText: 'Submite Documents ',
+                bodyText: 'Once you have wired payment you have to sumbmit your documents e.g Passport and Cnic ',
               ),
               const HowItWorksCard(
                 path: '4.svg',
-                headText: 'Collect Ration',
-                bodyText: "Once the campaign has been successfully completed, rations will be delivered to the respective address.",
+                headText: 'Request Approval and collect your document',
+                bodyText: "After carefull review by huz team we well approve your request once your request is approved you will recive you traveling document eg eVisa , Airline Tickets etc ",
               ),
             ],
           ),

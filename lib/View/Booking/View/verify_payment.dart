@@ -14,6 +14,7 @@ import 'package:huz/View/auth/view/user_location_screen/EditeLocation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import '../../../Constatns/Constants.dart';
 import '../../../Controller/pakagecontroller.dart';
 import '../../../Loading/loading.dart';
 import '../../../Responsive/ResponsiveClass.dart';
@@ -148,7 +149,7 @@ class _VerifyPaymentScreenState extends State<VerifyPaymentScreen> {
 
                           // Price summery container
                           PriceSummery(
-                            price: booking.price ?? booking.booking?.totalPrice,
+                            price:formatCurrency(booking.price.toInt())  ?? formatCurrency(booking.booking?.totalPrice.toInt()),
                           ),
 
                           verticalSpace(10, context),

@@ -19,6 +19,7 @@ import 'package:huz/Widgets/primary_button.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../../Constatns/Constants.dart';
 import '../../../Controller/pakagecontroller.dart';
 import '../../../TextStyles/Color.dart';
 import '../../../TextStyles/styles.dart';
@@ -203,7 +204,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                   context,
                                   packages.details?.packageName,
                                   "${formatDateString(packages.details?.startDate)} to ${formatDateString(packages.details?.endDate)}",
-                                  packages.details?.packageCost,
+                                formatCurrency(packages.details?.packageCost.toInt()),
                                   (){
                                     // isFav = toggle(wishController.list, pkg?.huzToken, true);
                                     // if (isFav) {
@@ -219,6 +220,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                     //     cost: pkg?.packageCost,
                                     //   );
                                     // }
+
                                   },
                                 SvgPicture.asset(
                                   "images/Shape.svg",
@@ -758,7 +760,7 @@ Widget Headertitle(context, title, subtitle, amount, onTapFav, icon) {
             height: responsive(2, context),
           ),
           customFonts(
-              text: "PKR ${amount.toStringAsFixed(0)}",
+              text: "PKR ${amount}",
               size: 16,
               fontWeight: FontWeight.bold,
               color: const Color(0xFF484848),

@@ -12,6 +12,8 @@ class transectioncontroller with ChangeNotifier{
   List<String> filePaths = [
   ];
 
+  var trasectionmessage = "";
+
   void pickImages() async {
     filePaths.clear();
     final List<XFile>? selectedImages = await ImagePicker().pickMultiImage();
@@ -51,10 +53,14 @@ class transectioncontroller with ChangeNotifier{
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200||response.statusCode == 201) {
+
+
       print(await response.stream.bytesToString());
       return true;
     } else {
-      print(await response.stream.bytesToString());
+
+      var data = jsonDecode(await response.stream.bytesToString());
+      trasectionmessage = data['message'];
       return false;
       print(response.reasonPhrase);
     }
@@ -93,7 +99,8 @@ class transectioncontroller with ChangeNotifier{
     print(await response.stream.bytesToString());
     return true;
     } else {
-    print('Upload failed: ${await response.stream.bytesToString()}');
+      var data = jsonDecode(await response.stream.bytesToString());
+      trasectionmessage = data['message'];
     return false;
     }
   }

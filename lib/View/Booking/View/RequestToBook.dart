@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:huz/Responsive/ResponsiveClass.dart';
 import 'package:huz/View/Booking/View/verify_payment.dart';
@@ -17,6 +18,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
+import '../../../Constatns/Constants.dart';
 import '../../../Controller/pakagecontroller.dart';
 import '../../../Loading/loading.dart';
 import '../../../TextStyles/AppFonts.dart';
@@ -107,7 +109,7 @@ class _RequestToBookState extends State<RequestToBook> {
           builder: (context, user, otp, booking, pkg, child) {
             return booking.isOpened ? SizedBox() :  GestureDetector(
                 onTap: () {
-                  booking.specialreq = specialreqcontroller.text == null ? "N/A" :  specialreqcontroller.text == "" ? "N/A" : specialreqcontroller.text;
+                  booking.specialreq = specialreqcontroller.text == null ? "N/A" :  specialreqcontroller.text == "" ? "N/A" : specialreqcontroller.isNull?specialreqcontroller.text=='N/A':specialreqcontroller.text;
                   booking.paymathod = _selectedMethod;
                   booking.phonenumber = "${code}${phoneNumberController.text}";
                   booking.notifyListeners();
@@ -205,7 +207,7 @@ class _RequestToBookState extends State<RequestToBook> {
                               .format(DateTime.parse(pkg.details?.startDate)),
                           endDate: DateFormat('dd MMM yyyy')
                               .format(DateTime.parse(pkg.details?.endDate)),
-                          amount: pkg.details?.packageCost.toString(),
+                          amount: formatCurrency(pkg?.details?.packageCost.toInt()),
                         ),
                         SizedBox(
                           height: responsive(10, context),
@@ -237,7 +239,7 @@ class _RequestToBookState extends State<RequestToBook> {
                             context: context),
                         verticalSpace(10, context),
                         PriceSummery(
-                          price: booking.price ?? pkg?.details?.packageCost,
+                          price: formatCurrency(booking.price.toInt()) ?? formatCurrency(pkg?.details?.packageCost.toInt()),
                         ),
                         SizedBox(
                           height: responsive(10, context),
