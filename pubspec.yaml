@@ -73,6 +73,7 @@ dependencies:
   timeago: ^3.3.0
   just_audio: ^0.9.38
   audio_video_progress_bar: ^2.0.3
+  custom_rating_bar: ^2.0.5
 
 
 
