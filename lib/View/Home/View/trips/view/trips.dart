@@ -109,8 +109,8 @@ class _TripsState extends State<Trips> {
                           startDate: formatDateString(booking.Blist[index].startDate),
                           endDate: formatDateString(booking.Blist[index].endDate),
                           bookingNumber: booking.Blist[index].bookingNumber,
-                          adults: booking.adults,
-                          childs: booking.childrens,
+                          adults: booking.Blist[index].adults,
+                          childs: booking.Blist[index].child,
                           infents: 0,
                           onTap: (){
                             if(booking.Blist[index].bookingStatus == "Initialize" ){

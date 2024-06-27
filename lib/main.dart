@@ -22,6 +22,7 @@ import 'View/Booking/Controller/BookingediteController/UploadTransectionsControl
 import 'View/Booking/View/RequestToBook.dart';
 import 'View/Details/View/Details.dart';
 import 'View/Home/View/Home.dart';
+import 'test/home_new.dart';
 import 'View/Home/View/home_screen.dart';
 import 'View/auth/Controller/LocationListController/Locations.dart';
 import 'View/auth/Controller/SaveAddController/SaveAddController.dart';
@@ -84,7 +85,8 @@ Future<void> main() async {
           // VerifyPaymentScreen(),
 
 
-       home: const SplashScreen(),
+       home: HomeScreenNew(),
+       // const SplashScreen(),
         //   HomeScreen(),
 
         // Home(),

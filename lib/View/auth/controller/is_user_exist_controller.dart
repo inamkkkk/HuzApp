@@ -166,7 +166,7 @@ class IsUserExitsController with ChangeNotifier{
 
 
 
-      Get.to(
+      Get.offAll(
           HomeScreen()
       );
 

@@ -46,27 +46,29 @@ class _WishListScreenState extends State<WishListScreen> {
   @override
   Widget build(BuildContext context) {
     return wishListController.list.isEmpty
-        ? Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Color(0xFFF2F2F2),
-            child: Padding(
-              padding: EdgeInsets.all(responsive(140, context)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    "images/wishlist_icon.png",
-                  ),
-                  verticalSpace(40, context),
-                  customFonts(
-                      text: "No Wishlist",
-                      size: 12,
-                      color: Colors.black,
-                      context: context)
-                ],
-              ),
-            ))
+        ? Scaffold(
+      backgroundColor: Color(0xFFF2F2F2),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  "images/wishlist_icon.png",
+                  height: responsive(170, context),
+                  width: responsive(170, context),
+                  fit: BoxFit.cover,
+                ),
+                verticalSpace(20, context),
+                customFonts(
+                    text: "No Wishlist",
+                    size: 14,
+                    color: Colors.black,
+                    context: context)
+              ],
+            ),
+          ),
+        )
         : Column(
             children: [
               Container(

@@ -107,7 +107,7 @@ class _RequestToBookState extends State<RequestToBook> {
           builder: (context, user, otp, booking, pkg, child) {
             return booking.isOpened ? SizedBox() :  GestureDetector(
                 onTap: () {
-                  booking.specialreq = specialreqcontroller.text;
+                  booking.specialreq = specialreqcontroller.text == null ? "N/A" :  specialreqcontroller.text == "" ? "N/A" : specialreqcontroller.text;
                   booking.paymathod = _selectedMethod;
                   booking.phonenumber = "${code}${phoneNumberController.text}";
                   booking.notifyListeners();
