@@ -741,7 +741,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: GestureDetector(
                                         onTap: () {
                                           packagecontroller.details = null;
-
+                                          packagecontroller.isApiCalled = false;
                                           packagecontroller.notifyListeners();
 
                                           Get.to(() => DetailScreen(

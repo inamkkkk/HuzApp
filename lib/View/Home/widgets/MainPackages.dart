@@ -17,6 +17,7 @@ import '../../../TextStyles/Color.dart';
 import '../../../TextStyles/styles.dart';
 import '../../../utils/servecies.dart';
 import '../../Details/View/Details.dart';
+import '../../Details/View/detail_screen.dart';
 
 class MainPackages extends StatefulWidget {
   var url, title, subtitle, amount,rating,start,end;

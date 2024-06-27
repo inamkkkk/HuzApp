@@ -1,5 +1,4 @@
-import 'dart:async';
-import 'dart:math';
+
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -12,10 +11,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:huz/Responsive/ResponsiveClass.dart';
 import 'package:huz/TextStyles/AppFonts.dart';
 import 'package:huz/View/Booking/View/RequestToBook.dart';
-import 'package:huz/View/Home/View/home_screen.dart';
-import 'package:huz/View/auth/view/finish_signing_up/finish_signing_up.dart';
-import 'package:huz/View/auth/view/sign_up_with_mobile_number/signup_with_number.dart';
-import 'package:huz/Widgets/primary_button.dart';
+
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -203,8 +199,8 @@ class _DetailScreenState extends State<DetailScreen> {
                               Headertitle(
                                   context,
                                   packages.details?.packageName,
-                                  "${formatDateString(packages.details?.startDate)} to ${formatDateString(packages.details?.endDate)}",
-                                formatCurrency(packages.details?.packageCost.toInt()),
+                                  "${formatDateString(packages.details?.startDate ?? "2023-01-01T00:00")} to ${formatDateString(packages.details?.endDate ?? "2023-01-01T00:00")}",
+                                formatCurrency(packages.details?.packageCost.toInt() ?? 0),
                                   (){
                                     // isFav = toggle(wishController.list, pkg?.huzToken, true);
                                     // if (isFav) {
@@ -237,7 +233,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                 height: responsive(3, context),
                               ),
                               customFonts(
-                                  text: packages.details?.description,
+                                  text: packages.details?.description ?? "",
                                   size: 14,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.primaryBlackColor,
@@ -742,7 +738,7 @@ Widget Headertitle(context, title, subtitle, amount, onTapFav, icon) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           customFonts(
-              text: title,
+              text: title ?? "",
               size: 18,
               fontWeight: FontWeight.bold,
               color: AppColors.primaryBlackColor.withOpacity(0.9),

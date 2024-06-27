@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:huz/View/Home/View/home_screen.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
 import '../../../Responsive/ResponsiveClass.dart';
@@ -99,7 +100,7 @@ class _OtpPopUpState extends State<OtpPopUp> {
             ),
             onCodeSubmitted: (value) {
               // std.getSchools('${widget.num}');
-              Get.offAll(Home());
+              Get.offAll(HomeScreen());
               if (widget.code == '+90002') {
                 // otp.match(value,context,widget.num);
               } else //SigninController.verifyOTP(value,widget.num,context);

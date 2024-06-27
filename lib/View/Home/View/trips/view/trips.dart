@@ -21,6 +21,7 @@ import '../../../../../TextStyles/styles.dart';
 import '../../../../Booking/Controller/BookingediteController/BookingEditeController.dart';
 import '../../../../Booking/View/verify_payment.dart';
 import '../../../../Details/View/Details.dart';
+import '../../../../Details/View/detail_screen.dart';
 import '../../../../auth/controller/is_user_exist_controller.dart';
 import '../../../../auth/controller/otp_message_controller.dart';
 
