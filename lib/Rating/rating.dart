@@ -19,7 +19,8 @@ import '../View/auth/controller/is_user_exist_controller.dart';
 import 'Controller/RatingController.dart';
 
 class RatingAndReviewScreen extends StatefulWidget {
-  const RatingAndReviewScreen({super.key});
+  
+  const RatingAndReviewScreen({super.key,});
 
   @override
   State<RatingAndReviewScreen> createState() => _RatingAndReviewScreenState();
@@ -74,6 +75,7 @@ class _RatingAndReviewScreenState extends State<RatingAndReviewScreen> {
                   children: [
                     // ********* Huz concierge
                     ratingBar(
+                        
                         title: "Huz Concierge",
                         rating: 0.0,
                         onChanged: (value) {
@@ -85,9 +87,10 @@ class _RatingAndReviewScreenState extends State<RatingAndReviewScreen> {
 
                     // ********* Huz support
                     ratingBar(
+                        
                         title: "Huz Support",
                         rating: 0.0,
-                        onChanged: (value) {
+                        onChanged:  (value) {
                           support = value;
                         },
                         context: context),
@@ -95,6 +98,7 @@ class _RatingAndReviewScreenState extends State<RatingAndReviewScreen> {
 
                     // ********* Huz platform
                     ratingBar(
+                        
                         title: "Huz Platform",
                         rating: 0.0,
                         onChanged: (value) {
@@ -105,6 +109,7 @@ class _RatingAndReviewScreenState extends State<RatingAndReviewScreen> {
 
                     // ********* Huz service quality
                     ratingBar(
+                        
                         title: "Huz Service Quality",
                         rating: 0.0,
                         onChanged: (value) {
@@ -115,9 +120,10 @@ class _RatingAndReviewScreenState extends State<RatingAndReviewScreen> {
 
                     // ********* Huz response
                     ratingBar(
+                        
                         title: "Huz Response",
                         rating: 0.0,
-                        onChanged: (value) {
+                        onChanged:  (value) {
                           response = value;
                         },
                         context: context),
@@ -125,6 +131,7 @@ class _RatingAndReviewScreenState extends State<RatingAndReviewScreen> {
 
                     // ********* Partner total
                     ratingBar(
+                        
                         title: "Partner Total Stars",
                         rating: 0.0,
                         onChanged: (value) {
@@ -149,10 +156,10 @@ class _RatingAndReviewScreenState extends State<RatingAndReviewScreen> {
               ),
               verticalSpace(10, context),
               // commentBox(context),
-
               addComment(),
               verticalSpace(10, context),
-              // commentBox(context),
+             // huzcomentbox(context)
+
 
               addComment2(),
 
@@ -241,7 +248,7 @@ class _RatingAndReviewScreenState extends State<RatingAndReviewScreen> {
                   context: context)),
           verticalSpace(5, context),
           customFonts(
-              text: huzComment,
+              text: partnerComment,
               size: 15,
               color: Colors.black,
               textAlign: TextAlign.justify,

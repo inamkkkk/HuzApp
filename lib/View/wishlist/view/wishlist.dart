@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 
 import '../../../Controller/pakagecontroller.dart';
 import '../../../TextStyles/Color.dart';
+import '../../../Widgets/snackbar.dart';
 import '../../auth/controller/is_user_exist_controller.dart';
 import '../model/wishlist_model.dart';
 
@@ -131,6 +132,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                               wishListController.list[index].id) {
                                             _removeTask(
                                                 wishListController.list[index]);
+                                            showSnackbar(context, 'Removed from wishlist successfully');
                                           }
                                         }
                                       }
