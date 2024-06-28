@@ -44,7 +44,7 @@ class CustomAppBar extends StatelessWidget {
           onTap: ontap,
           child: Padding(
             padding:  EdgeInsets.all(responsive(20, context)),
-            child: SvgPicture.asset( isHome ?  "images/menu_icon.svg" : "images/arrow_back.svg", height: responsive(18, context), width: responsive(27.22, context),),
+            child: SvgPicture.asset( isHome  || isComplaint?  "images/menu_icon.svg" : "images/arrow_back.svg", height: responsive(18, context), width: responsive(27.22, context),),
           ),
         ),
       ) ,
