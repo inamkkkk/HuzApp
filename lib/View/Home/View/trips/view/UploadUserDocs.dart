@@ -61,6 +61,8 @@ class _UploadRequiredDocsState extends State<UploadRequiredDocs> {
 
               // booking.Blist =[];
               booking.getbookingdetail(user.isUser?.sessionToken, booking.booking?.bookingNumber).then((value) {
+
+
                 endLoading();
                 booking.imageFileList = [];
                 booking.filePaths = [];

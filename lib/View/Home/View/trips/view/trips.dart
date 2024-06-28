@@ -85,18 +85,10 @@ class _TripsState extends State<Trips> {
           ): booking.bListsapi == false? Container(child: Center(child: CircularProgressIndicator(color: AppColors.GlobelColor,))): Padding(
 
 
-            padding:  EdgeInsets.all(responsive(20, context)),
+            padding:  EdgeInsets.symmetric(horizontal:responsive(20, context)),
             child: Column(
               children: [
-                // Row(children: [
-                //   Expanded(child: Divider(color:Color(0xFF373737))),
-                //   // Padding(
-                //   //   padding:  EdgeInsets.symmetric(horizontal: responsive(40, context)),
-                //   //   child: customFonts(text: "15 Dec 2023", size: 12, color: Color(0xFF373737), context: context),
-                //   // ),
-                //   Expanded(child: Divider(color:Color(0xFF373737))),
-                // ],),
-                verticalSpace(10, context),
+
                 Expanded(
                   child: ListView.builder(
                     itemCount: booking.Blist.length,
@@ -118,12 +110,13 @@ class _TripsState extends State<Trips> {
                             if(booking.Blist[index].bookingStatus == "Initialize" ){
                               booking.booking = null;
                               booking.getbookingdetail(user.isUser?.sessionToken, booking.Blist[index].bookingNumber).then((value){
+                                endLoading();
                                if(value = true){
-                                 endLoading();
+
                                  Get.to(VerifyPaymentScreen());
                                }else {
-                                 endLoading();
-                                 showSnackbar(context, 'Error while retrieving ');
+
+                                 showSnackbar(context, booking.bmessage);
                                }
                               }
                               );
@@ -131,9 +124,10 @@ class _TripsState extends State<Trips> {
                             } else {
                               booking.booking = null;
                               booking.getbookingdetail(user.isUser?.sessionToken, booking.Blist[index].bookingNumber).then((value){
+                                endLoading();
                                 if(value = true){
 
-                                  endLoading();
+
 
                                   Get.to(()=> BookingDetail());
 

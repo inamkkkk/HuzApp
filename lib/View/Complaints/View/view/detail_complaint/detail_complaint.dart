@@ -477,13 +477,7 @@ class _NetworkAudioPlayerState extends State<NetworkAudioPlayer> {
   @override
   void initState() {
     super.initState();
-    // _audioPlayer = AudioPlayer();
-    // _audioPlayer.onDurationChanged.listen((Duration d) {
-    //   setState(() => duration = d);
-    // });
-    // _audioPlayer.onAudioPositionChanged.listen((Duration p) {
-    //   setState(() => position = p);
-    // });
+
   }
 
   @override
@@ -492,38 +486,6 @@ class _NetworkAudioPlayerState extends State<NetworkAudioPlayer> {
     super.dispose();
   }
 
-  // void play() async {
-  //   // int result = await _audioPlayer.play(audioUrl);
-  //   if (result == 1) {
-  //     setState(() {
-  //       isPlaying = true;
-  //       isPaused = false;
-  //       isStopped = false;
-  //     });
-  //   }
-  // }
-  //
-  // void pause() async {
-  //   int result = await _audioPlayer.pause();
-  //   if (result == 1) {
-  //     setState(() {
-  //       isPlaying = false;
-  //       isPaused = true;
-  //     });
-  //   }
-  // }
-  //
-  // void stop() async {
-  //   int result = await _audioPlayer.stop();
-  //   if (result == 1) {
-  //     setState(() {
-  //       isPlaying = false;
-  //       isPaused = false;
-  //       isStopped = true;
-  //       position = Duration();
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

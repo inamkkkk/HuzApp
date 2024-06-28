@@ -12,12 +12,13 @@ import 'package:huz/View/auth/view/finish_signing_up/finish_signing_up.dart';
 import 'package:huz/View/auth/view/sign_up_with_mobile_number/signup_with_number.dart';
 import 'package:huz/View/auth/view/verify_otp_screen/verify_otp_screen.dart';
 import 'package:huz/View/hajj_umrah_guide/controller/umrah_guide_controller.dart';
-import 'package:huz/voice_note_test/voice_note_test.dart';
+
 import 'package:provider/provider.dart';
 
 import 'Controller/pakagecontroller.dart';
 import 'Draweritems/Profile/Controllers/EditeProfileController/EditeProfileController.dart';
 import 'Draweritems/Profile/Controllers/EditeProfileImage/EditeProfileimageController.dart';
+import 'Rating/Controller/RatingController.dart';
 import 'SplashScreen.dart';
 import 'View/Booking/Controller/BookingediteController/BookingEditeController.dart';
 import 'View/Booking/Controller/BookingediteController/UploadTransectionsController/transectioncontroller.dart';
@@ -50,6 +51,7 @@ Future<void> main() async {
       MultiProvider(
         providers: [
 
+          ChangeNotifierProvider.value(value: ratingcotroller()),
           ChangeNotifierProvider.value(value: pakagecontrollers()),
           ChangeNotifierProvider.value(value: LocationController()),
           ChangeNotifierProvider.value(value: OtpMessageControllerss()),

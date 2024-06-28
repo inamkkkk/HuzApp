@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 
 import 'package:http/http.dart' as http;
@@ -23,34 +24,43 @@ class Complaintscontroller with ChangeNotifier{
   var request = http.MultipartRequest('POST', Uri.parse('https://hajjumrah.org/bookings/raise_complaint_booking_wise/'));
 
 
-  Future<bool> RaiseComplaint({var token,number,title,message}) async {
-    Loading();
-    final Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'Authorization': NetworkServices.token,
-    };
-    var request = http.MultipartRequest('POST', Uri.parse('${NetworkServices.bookingurl}raise_complaint_booking_wise/'));
+  Future<bool> RaiseComplaint({var token,number,title,message,audio}) async {
 
-    request.fields.addAll({
-      'session_token': '${token}',
-      'booking_number': '${number}',
-      'complaint_title': title,
-      'complaint_message': message
-    });
-    request.headers.addAll(headers);
+    try{
+      Loading();
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': NetworkServices.token,
+      };
+      var request = http.MultipartRequest('POST', Uri.parse('${NetworkServices.bookingurl}raise_complaint_booking_wise/'));
 
-    http.StreamedResponse response = await request.send();
+      request.fields.addAll({
+        'session_token': '${token}',
+        'booking_number': '${number}',
+        'complaint_title': title,
+        'complaint_message': message
+      });
+      if(audio != null)
+        request.files.add(await http.MultipartFile.fromPath('audio_message', audio));
+      request.headers.addAll(headers);
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      print(await response.stream.bytesToString());
-      return true;
-    }
-    else {
-      var data = jsonDecode(await response.stream.bytesToString());
-      print(data);
-      cmessage = data['message'];
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print(await response.stream.bytesToString());
+        return true;
+      }
+      else {
+        var data = jsonDecode(await response.stream.bytesToString());
+        print(data);
+        cmessage = data['message'];
+        return false;
+      }
+    }catch(e){
+      cmessage = e.toString();
       return false;
     }
+
   }
 
   Future<void> getcomplaintscount({var token}) async {

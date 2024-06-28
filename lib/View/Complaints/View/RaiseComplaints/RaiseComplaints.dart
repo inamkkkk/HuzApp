@@ -34,7 +34,6 @@ import '../../../../Constatns/Constants.dart';
 import '../../../../Responsive/ResponsiveClass.dart';
 import '../../../../TextStyles/AppFonts.dart';
 import '../../../../TextStyles/Color.dart';
-import '../../../../voice_note_test/voice_note_test.dart';
 import '../../../auth/controller/is_user_exist_controller.dart';
 import '../../Controller/Controller/ComplaintController.dart';
 import '../../Widgets/Header.dart';
@@ -100,9 +99,9 @@ class _raisComplaintState extends State<raisComplaint> {
       });
       await _audioRecorder.openRecorder();
       await _audioRecorder.startRecorder(
-        toFile: 'tau_file.mp4',
+        toFile:'audio_file.aac',
         codec: Codec.aacMP4,
-        audioSource: theSource,
+        // audioSource: theSource,
       );
       path = await _audioRecorder.getRecordURL(path: _filePath);
 
@@ -129,39 +128,49 @@ class _raisComplaintState extends State<raisComplaint> {
   Timer? playerTimer;
   final FlutterSoundPlayer _audioPlayer = FlutterSoundPlayer();
   // final String _filePath = 'audio_file.mp4';
-  final String _filePath = 'audio_file.mp3';
+  final String _filePath = 'audio_file.aac';
   int progressMilliSeconds = 0;
   var totalDuration = 0;
   void _playAudio() async {
-    totalDuration = Duration(hours: hours, minutes: minutes, seconds: sec).inMilliseconds;
 
-    debugPrint('total progress $totalDuration   ${progressMilliSeconds}');
+    // try {
+      totalDuration =
+          Duration(hours: hours, minutes: minutes, seconds: sec).inMilliseconds;
 
-    playerTimer  = Timer.periodic( const Duration(milliseconds: 1), (Timer timer) {
+      debugPrint('total progress $totalDuration   ${progressMilliSeconds}');
+
+      playerTimer =
+          Timer.periodic(const Duration(milliseconds: 1), (Timer timer) {
+            setState(() {
+              progressMilliSeconds = timer.tick;
+            });
+
+            if (progressMilliSeconds >= totalDuration) {
+              _audioPlayer.stopPlayer();
+              progressMilliSeconds = 0;
+              _stopAudio();
+              setState(() {
+                playerTimer?.cancel();
+              });
+            }
+          });
+
+      // await _audioPlayer.openPlayer();
+
+      print('path is $path');
+      Uri uri = Uri.parse(path);
+      await _audioPlayer.openPlayer();
+      // await _audioPlayer.startPlayer(fromURI: _filePath);
+      await _audioPlayer.startPlayer(fromURI: _filePath);
       setState(() {
-        progressMilliSeconds = timer.tick;
-
+        _isPlayingRecordedAudio = true;
       });
 
-      if(progressMilliSeconds >= totalDuration){
-        _audioPlayer.stopPlayer();
-        progressMilliSeconds = 0;
-        _stopAudio();
-        setState(() {
-          playerTimer?.cancel();
-        });
-      }
-    });
-
-    await _audioPlayer.openPlayer();
-    // await _audioPlayer.startPlayer(fromURI: _filePath);
-    await _audioPlayer.startPlayer(fromURI: 'tau_file.mp4');
-    setState(() {
-      _isPlayingRecordedAudio = true;
-    });
-
-    print('path is $path');
-    print('Playing recorded:  $_isPlayingRecordedAudio');
+      print('path is $path');
+      print('Playing recorded:  $_isPlayingRecordedAudio');
+    // }catch(e){
+    //   print('recording error is :$e');
+    // }
   }
   double duration = 0;
   void getRecordingDuration(String filePath) async {
@@ -355,10 +364,11 @@ class _raisComplaintState extends State<raisComplaint> {
                                   textAlignVertical: TextAlignVertical.center,
                                   textAlign: TextAlign.start,
                                   maxLines: 15,
+
                                   onFieldSubmitted: (value) {},
                                   validator: (value) {
-                                    return null;
-                                  },
+                              return null;
+                              },
                                   keyboardType: TextInputType.text,
                                   style: TextStyle(
                                       fontFamily: AppFonts.poppinsMedium,
@@ -383,7 +393,7 @@ class _raisComplaintState extends State<raisComplaint> {
                               ),
                               Container(
                                 height: 2,
-                                color:  borderColor,
+                                color:  isYourSituationValidated?borderColor: Colors.red,
                                 width: double.infinity,
                               ),
                               SizedBox(
@@ -432,12 +442,12 @@ class _raisComplaintState extends State<raisComplaint> {
 
                                       InkWell(
                                           onTap: (){
-                                            _isPlayingRecordedAudio == true ? _stopAudio : _playAudio;
+                                            _isPlayingRecordedAudio == true ? _stopAudio() : _playAudio();
                                             print("Is Playing record audio: $_isPlayingRecordedAudio and stop audio $_stopAudio  and plau audio : $_playAudio");
                                           },
                                           child: Visibility(
-                                              // visible: !isplaybutton,
-                                              visible: true,
+                                             visible: !isplaybutton,
+                                              // visible: true,
                                               child: _isPlayingRecordedAudio == true ? const Icon(Icons.pause) :const Icon(Icons.play_arrow_rounded))),
                                       InkWell(
                                           onTap: _isRecording ? _stopRecording : _startRecording,
@@ -469,7 +479,7 @@ class _raisComplaintState extends State<raisComplaint> {
                                     // is your Situtaion validation
                                     if (yourSituationController.text.isEmpty) {
                                       setState(() {
-                                        isYourSituationValidated = true;
+                                        isYourSituationValidated = false;
                                         // borderColor = Colors.red;
                                       });
                                     } else {
@@ -486,6 +496,9 @@ class _raisComplaintState extends State<raisComplaint> {
 
                                       });
                                     }
+                                    if(isYourSituationValidated == false && path == null){
+                                      showSnackbar(context, 'Please fill your complaint box or record a voice note or both');
+                                    }
 
                                     if (isTitleValidated == true &&
                                         isYourSituationValidated == true && _isRecording == false)
@@ -495,6 +508,7 @@ class _raisComplaintState extends State<raisComplaint> {
                        number: booking.booking?.bookingNumber,
                        title:  titleController.text,
                        message: yourSituationController.text,
+                       audio: path,
                      ).then((value) {
                        endLoading();
                      if(value == true){

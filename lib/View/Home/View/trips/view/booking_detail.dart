@@ -11,6 +11,7 @@ import 'package:huz/View/Details/View/detail_screen.dart';
 import 'package:huz/Widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../Rating/rating.dart';
 import '../../../../../Responsive/ResponsiveClass.dart';
 import '../../../../../TextStyles/Color.dart';
 import '../../../../../TextStyles/styles.dart';
@@ -39,7 +40,7 @@ class _BookingDetailState extends State<BookingDetail> {
 
       bottomNavigationBar: isPaymentConfirm || isActive ? bottomWidget(
         onTapReview: (){
-          
+         Get.to(RatingAndReviewScreen());
         },
         onTapComplaint: (){
          Get.to(raisComplaint());

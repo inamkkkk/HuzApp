@@ -8,6 +8,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import 'package:huz/Model/Details.dart';
 import 'package:huz/View/Booking/View/payment_verification.dart';
+import 'package:huz/Widgets/snackbar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -31,6 +32,7 @@ class Bookingedite with ChangeNotifier{
   var specialreq,phonenumber,paymathod;
   var editemessage = "error" ;
   var edite= false;
+  var bmessage = "";
 
   void updatedate({var startdate, enddate}){
     startDate = startdate;
@@ -183,41 +185,41 @@ class Bookingedite with ChangeNotifier{
 
   }
   Future<void> getbookings (sessiontoken) async {
+    try {
+      var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': '${NetworkServices.token}'};
+      var request = http.Request('GET', Uri.parse('${NetworkServices
+          .bookingurl}get_all_booking_by_user/?session_token=$sessiontoken'));
+      request.headers.addAll(headers);
+      http.StreamedResponse response = await request.send();
 
-    var headers = {
-      'Content-Type': 'application/json',
-      'Authorization': '${NetworkServices.token}'};
-    var request = http.Request('GET', Uri.parse('${NetworkServices.bookingurl}get_all_booking_by_user/?session_token=$sessiontoken'));
-    request.headers.addAll(headers);
-    http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        bListsapi = true;
+        final data = jsonDecode(await response.stream.bytesToString());
+        List<BookingsList> lists = [];
+        for (var m in data) {
+          lists.add(BookingsList.fromJson(m));
+        }
+        Blist = lists;
+        print(data);
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      bListsapi = true;
-      final data = jsonDecode(await response.stream.bytesToString());
-      List<BookingsList> lists = [];
-      for(var m in data){
-        lists.add(BookingsList.fromJson(m));
+        notifyListeners();
       }
-      Blist = lists;
-      print(data);
+      else {
+        print(response.statusCode);
+        bListsapi = true;
+        final data = jsonDecode(await response.stream.bytesToString());
 
-      notifyListeners();
+        print(data);
+        notifyListeners();
 
-
+        print(response.reasonPhrase);
+      }
+    }catch(e){
+   bmessage = e.toString();
 
     }
-    else {
-
-      print(response.statusCode);
-      bListsapi = true;
-      final data = jsonDecode(await response.stream.bytesToString());
-
-      print(data);
-      notifyListeners();
-
-      print(response.reasonPhrase);
-    }
-
   }
   Future<bool> deleteBooking (sessiontoken,bookingNumber) async {
     Loading();
@@ -246,6 +248,7 @@ class Bookingedite with ChangeNotifier{
 
   }
   Future<bool> getbookingdetail (sessiontoken,bookingNumber) async {
+    try{
     Loading();
     var headers = {
       'Content-Type': 'application/json',
@@ -267,9 +270,21 @@ class Bookingedite with ChangeNotifier{
     }
     else {
       final data = jsonDecode(await response.stream.bytesToString());
+      print(response.statusCode);
       print(data);
+      print('erroe is ');
+      try{
+        bmessage = data;
+
+      } catch(e){
+        print(e);
+      }
       return false;
       print(response.reasonPhrase);
+    }}catch(e){
+      print('erroe is $e');
+      bmessage = e.toString();
+      return false;
     }
   }
 

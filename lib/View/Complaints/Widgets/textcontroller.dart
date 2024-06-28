@@ -21,7 +21,7 @@ class TextFieldMasked extends StatelessWidget {
     this.inputFormatter,
     this.readOnly = false,
     this.isSuffixAvailable = false,
-    this.isValidated= true,
+    this. isValidated= true,
     this.fillColor = Colors.white,
   }) : super(key: key);
   var onchange;
