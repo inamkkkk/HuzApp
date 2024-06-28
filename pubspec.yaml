@@ -74,6 +74,7 @@ dependencies:
   just_audio:
   audio_video_progress_bar: ^2.0.3
   flutter_rating_bar:
+  custom_rating_bar: ^2.0.5
 
 
 
