@@ -503,7 +503,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              verticalSpace(30, context),
+              verticalSpace(10, context),
 
               // Search bar
               Padding(
