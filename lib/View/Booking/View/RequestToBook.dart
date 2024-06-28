@@ -181,8 +181,8 @@ class _RequestToBookState extends State<RequestToBook> {
                           height: responsive(10, context),
                         ),
                         bookingdetail(
-                          // isFlex: pkg.details?.isPackageOpenForOtherDate,
-                          isFlex: true,
+                          isFlex: pkg.details?.isPackageOpenForOtherDate,
+                          // isFlex: true,
 
 
 

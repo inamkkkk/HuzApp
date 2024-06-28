@@ -1,25 +1,22 @@
-import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+
 import 'package:google_fonts/google_fonts.dart';
-import 'package:huz/View/Details/View/detail_screen.dart';
-import 'package:intl/intl.dart';
+import 'package:huz/View/Booking/Widgets/custom_bottom_sheet.dart';
+
 import 'package:provider/provider.dart';
 
-import '../../../Controller/pakagecontroller.dart';
+
 import '../../../Responsive/ResponsiveClass.dart';
 import '../../../TextStyles/Color.dart';
 import '../../../TextStyles/styles.dart';
-import '../../../Widgets/date_picker/date_picker.dart';
+
 import '../Controller/BookingediteController/BookingEditeController.dart';
 
 class bookingdetail extends StatefulWidget {
-
   var startdate,
       isFlex,
       packageName,
@@ -30,23 +27,28 @@ class bookingdetail extends StatefulWidget {
       infent,
       descriptions;
 
-  bookingdetail(
-      {super.key,
-        required this.isFlex,
-        required this.startdate,
-        this.enddate,
-        this.combineNights,
-        this.packageName,
-        this.adults,
-        this.child,
-        this.infent,
-        this.descriptions,
-
-      });
+  bookingdetail({
+    super.key,
+    required this.isFlex,
+    required this.startdate,
+    this.enddate,
+    this.combineNights,
+    this.packageName,
+    this.adults,
+    this.child,
+    this.infent,
+    this.descriptions,
+  });
 
   @override
   State<bookingdetail> createState() => _bookingdetailState();
 }
+
+
+int adultCount = 1;
+int childCount = 0;
+
+var startdate, enddate;
 
 class _bookingdetailState extends State<bookingdetail> {
   @override
@@ -88,14 +90,14 @@ class _bookingdetailState extends State<bookingdetail> {
                               context: context,
                               enableDrag: false,
                               builder: (context) {
-                                return bottomSheet(
-                                    startDate: widget.startdate,
-                                    endDate: widget.enddate,
-                                    adults: widget.adults,
-                                    childs: widget.child,
-                                    infent: widget.infent,
-                                    contexts: context,
-                                    isFlexible: widget.isFlex);
+                                return CustomBottomSheet(
+                                  isFromEdit: false,
+                                  isFlexible: widget.isFlex,
+                                  startDate: widget.startdate,
+                                  endDate: widget.enddate,
+                                  adults: widget.adults,
+                                  childs: widget.child,
+                                );
                               });
                         },
                         child: Container(
@@ -106,7 +108,7 @@ class _bookingdetailState extends State<bookingdetail> {
                               horizontal: responsive(6, context)),
                           decoration: BoxDecoration(
                               borderRadius:
-                              BorderRadius.circular(responsive(6, context)),
+                                  BorderRadius.circular(responsive(6, context)),
                               border: Border.all(
                                 color: Color(0xFFBBBBBB),
                               )),
@@ -226,14 +228,16 @@ class _bookingdetailState extends State<bookingdetail> {
                                 text: "${widget.packageName} - ",
                                 size: 14,
                                 fontWeight: FontWeight.w500,
-                                color: AppColors.primaryBlackColor.withOpacity(0.9),
+                                color: AppColors.primaryBlackColor
+                                    .withOpacity(0.9),
                                 context: context),
                             customFonts(
                                 text:
-                                '${widget.combineNights} nights with ${widget.child + widget.adults + widget.infent} members',
+                                    '${widget.combineNights} nights with ${widget.child + widget.adults + widget.infent} members',
                                 size: 14,
                                 fontWeight: FontWeight.bold,
-                                color: AppColors.primaryBlackColor.withOpacity(0.9),
+                                color: AppColors.primaryBlackColor
+                                    .withOpacity(0.9),
                                 context: context),
                           ],
                         )
@@ -249,433 +253,14 @@ class _bookingdetailState extends State<bookingdetail> {
     );
   }
 
-  var initialdate = DateTime.now();
-  var startdate, enddate;
-  int adultCount = 1;
-  int childCount = 0;
-  int infentCount = 0;
-
-
-
-  Widget bottomSheet(
-      {
-        required bool isFlexible,
-        required String startDate,
-        required String endDate,
-        required int adults,
-        required int childs,
-        required int infent,
-        required BuildContext contexts}) {
-    var startdate1 ;
-    var enddate2;
-    num price = 0;
-    return Container(
-      height: MediaQuery.of(context).size.height / responsive(isFlexible ? 2.8 : 3.3, context),
-      width: MediaQuery.of(contexts).size.width,
-      decoration: BoxDecoration(
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 20,
-            )
-          ],
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(
-              top: Radius.circular(responsive(20, contexts)))),
-      child: Consumer2<Bookingedite, pakagecontrollers>(
-          builder: (context, booking, pkg, child) {
-            if(price==0){
-              price = booking.price;
-            }
-            return Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: responsive(10, context),
-                      vertical: responsive(03, context)),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            booking.isOpened = false;
-                            booking.notifyListeners();
-                            Navigator.pop(contexts);
-                          },
-                          icon: Icon(Icons.close)),
-                      SizedBox(
-                        width: responsive(10, contexts),
-                      ),
-                      customFonts(
-                          text: "Edit your trip",
-                          size: 18,
-                          fontWeight: FontWeight.w600,
-                          context: contexts),
-                    ],
-                  ),
-                ),
-                Divider(
-                  height: responsive(2, contexts),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: responsive(25, contexts),
-                        vertical: responsive(widget.isFlex ? 30 : 10, contexts)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-
-                        isFlexible ? InkWell(
-                          onTap: () {
-                            print("Date clicked");
-
-                            showDialog(
-                              barrierColor: Colors.transparent,
-                                context: context, builder: (_){
-                              return  Padding(
-                                padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height*0.45),
-                                child: CustomDatePicker(
-                                  title: 'Select Date',
-                                  submite: (value){
-                                    Navigator.pop(context);
-                                  },
-                                  endDate: DateFormat('dd MMM yyyy').parse(endDate),
-                                  mindate:DateFormat('dd MMM yyyy').parse(startDate),
-                                  initialdate: DateFormat('dd MMM yyyy').parse(startDate),
-                                  onselectchanged: (date) {
-                                    String formattedDate = DateFormat('dd MMM yyyy')
-                                        .format(date.value.startDate!);
-                                    print(formattedDate);
-                                    String edate= DateFormat('dd MMM yyyy').format(date.value.endDate);
-                                    print(formattedDate);
-                                    startdate1 = edate;
-                                    enddate2 = formattedDate;
-                                    booking.isedite = true;
-
-
-                                    setState(() {
-                                      startdate = formattedDate;
-                                      enddate = edate;
-                                    });
-                                  },
-                                ),
-                              );
-                            });
-
-
-
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InkWell(
-
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    customFonts(
-                                        text: "Start Date",
-                                        size: 15,
-                                        fontWeight: FontWeight.bold,
-                                        context: context),
-                                    customFonts(
-                                        text: startdate ?? startDate,
-                                        size: 15,
-                                        context: context),
-                                  ],
-                                ),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  customFonts(
-                                      text: "End Date",
-                                      size: 15,
-                                      fontWeight: FontWeight.bold,
-                                      context: context),
-                                  customFonts(
-                                      text: enddate ?? endDate,
-                                      size: 15,
-                                      context: context),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ) : SizedBox(),
-                        SizedBox(height: responsive(20, context),),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                customFonts(
-                                    text: "Adults",
-                                    size: 15,
-                                    fontWeight: FontWeight.bold,
-                                    context: context),
-                                customFonts(
-                                    text: "Age 13+", size: 13, context: context),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    if (adultCount > 1) {
-                                      adultCount--;
-                                      price =
-                                          price - booking.subtractprice;
-
-                                    }
-                                    // booking.adults = adultCount;
-                                    booking.isedite = true;
-
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    height: responsive(42, context),
-                                    width: responsive(42, context),
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(color: Colors.black12)),
-                                    child: SvgPicture.asset(
-                                      "images/minus.svg",
-                                      height: responsive(2, context),
-                                      width: responsive(2, context),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: responsive(15, context),
-                                ),
-                                customFonts(
-                                    text: adultCount.toString(),
-                                    size: 15,
-                                    context: context),
-                                SizedBox(
-                                  width: responsive(15, context),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      if (adultCount >= 1) {
-                                        adultCount++;
-                                        price =
-                                            price + booking.subtractprice;
-                                        print(price);
-                                      }
-                                    });
-                                    // booking.adults = adultCount;
-                                    booking.isedite = true;
-
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    height: responsive(42, context),
-                                    width: responsive(42, context),
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(color: Colors.black12)),
-                                    child: SvgPicture.asset(
-                                      "images/plus.svg",
-                                      height: responsive(12, context),
-                                      width: responsive(12, context),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                        SizedBox(height: responsive(25, context),),
-
-                        // SizedBox(height: responsive(20, context),),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                customFonts(
-                                    text: "Children",
-                                    size: 15,
-                                    fontWeight: FontWeight.bold,
-                                    context: context),
-                                customFonts(
-                                    text: "Age 2-12+", size: 13, context: context),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      if (childCount > 0) {
-                                        childCount--;
-                                        price =
-                                            price- booking.subtractprice;
-                                      }
-                                    });
-                                    // booking.childrens = childCount;
-                                    booking.isedite = true;
-
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    height: responsive(42, context),
-                                    width: responsive(42, context),
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(color: Colors.black12)),
-                                    child: SvgPicture.asset(
-                                      "images/minus.svg",
-                                      height: responsive(2, context),
-                                      width: responsive(2, context),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: responsive(15, context),
-                                ),
-                                customFonts(
-                                    text: childCount.toString(),
-                                    size: 15,
-                                    context: context),
-                                SizedBox(
-                                  width: responsive(15, context),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      if (childCount >= 0) {
-                                        childCount++;
-                                        price =
-                                            price + booking.subtractprice;
-
-                                      }
-                                    });
-
-                                    booking.isedite = true;
-
-                                  },
-
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    height: responsive(42, context),
-                                    width: responsive(42, context),
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(color: Colors.black12)),
-                                    child: SvgPicture.asset(
-                                      "images/plus.svg",
-                                      height: responsive(12, context),
-                                      width: responsive(12, context),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                        // SizedBox(height: responsive(20, context),),
-                      ],
-                    ),
-                  ),
-                ),
-                Divider(
-                  height: responsive(2, context),
-                ),
-                SizedBox(
-                  height: responsive(05, context),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      right: responsive(20, context),
-                      left: responsive(05, context)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // GestureDetector(
-                      //   onTap: () {},
-                      //   child: Container(
-                      //       padding: EdgeInsets.symmetric(
-                      //           horizontal: responsive(20, context)),
-                      //       decoration: BoxDecoration(
-                      //           color: Colors.transparent,
-                      //           borderRadius:
-                      //           BorderRadius.circular(responsive(5, context))),
-                      //       height: responsive(60, context),
-                      //       alignment: Alignment.center,
-                      //       child: customFonts(
-                      //           text: "Clear",
-                      //           size: 15,
-                      //           isUnderLine: true,
-                      //           context: context)),
-                      // ),
-                      Spacer(),
-                      GestureDetector(
-                        onTap: () {
-                          var newNights;
-
-                          int daysBetween(DateTime from, DateTime to) {
-                            from = DateTime(from.year, from.month, from.day);
-                            to = DateTime(to.year, to.month, to.day);
-                            return (to.difference(from).inHours / 24).round();
-                          }
-
-                          DateFormat format = DateFormat("dd MMM yyyy");
-
-                          setState(() {
-                            newNights = daysBetween(format.parse(booking.startDate??booking.initialstartdate),
-                                format.parse(booking.endDate??booking.initialenddate));
-                            booking.combineNights = newNights;
-                            booking.startDate = startDate;
-                            booking.endDate = endDate;
-                            booking.isOpened = false;
-                            booking.adults = adultCount;
-                            booking.childrens = childCount;
-                            booking.price = price;
-
-                            booking.notifyListeners();
-                            Get.back();
-                          });
-                        },
-                        child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: responsive(25, context),
-                            vertical: responsive(04, context)),
-                            decoration: BoxDecoration(
-                                color: AppColors.GlobelColor,
-                                borderRadius:
-                                BorderRadius.circular(responsive(5, context))),
-                            height: responsive(40, context),
-                            alignment: Alignment.center,
-                            child: customFonts(
-                                text: "Save",
-                                size: 15,
-                                color: Colors.white,
-                                context: context)),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            );
-          }),
-    );
-  }
-
   Row addGuests(
       {bool isAdult = false,
-        bool isChild = false,
-        bool isInfent = false,
-        required var count,
-        required Function minus,
-        required Function add,
-        required BuildContext context}) {
+      bool isChild = false,
+      bool isInfent = false,
+      required var count,
+      required Function minus,
+      required Function add,
+      required BuildContext context}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -686,8 +271,8 @@ class _bookingdetailState extends State<bookingdetail> {
                 text: isAdult
                     ? "Adults"
                     : isChild
-                    ? "Children"
-                    : "Infent",
+                        ? "Children"
+                        : "Infent",
                 size: 15,
                 fontWeight: FontWeight.bold,
                 context: context),
@@ -695,8 +280,8 @@ class _bookingdetailState extends State<bookingdetail> {
                 text: isAdult
                     ? "Age 13+"
                     : isChild
-                    ? "Age 2-12+"
-                    : "Age 0-1",
+                        ? "Age 2-12+"
+                        : "Age 0-1",
                 size: 13,
                 context: context),
           ],
@@ -756,10 +341,10 @@ class PriceSummery extends StatelessWidget {
 
   PriceSummery(
       {super.key,
-        required this.price,
-        this.enddate,
-        this.meccanights,
-        this.descriptions});
+      required this.price,
+      this.enddate,
+      this.meccanights,
+      this.descriptions});
 
   @override
   Widget build(BuildContext context) {
@@ -854,9 +439,9 @@ class RoundedBorderTextField extends StatelessWidget {
             fontSize: responsive(14, context),
             color: AppColors.primaryBlackColor.withOpacity(0.9),
             fontFamily: GoogleFonts.cairo(
-                textStyle: TextStyle(
-                  // fontWeight: FontWeight.bold
-                ))
+                    textStyle: TextStyle(
+                        // fontWeight: FontWeight.bold
+                        ))
                 .fontFamily,
             fontWeight: FontWeight.w600,
           ),
@@ -882,3 +467,7 @@ class RoundedBorderTextField extends StatelessWidget {
     );
   }
 }
+
+
+
+
