@@ -13,6 +13,8 @@ import 'package:huz/Loading/loading.dart';
 import 'package:huz/TextStyles/styles.dart';
 import 'package:huz/View/Booking/Controller/BookingediteController/BookingEditeController.dart';
 import 'package:huz/Widgets/snackbar.dart';
+import 'package:just_audio/just_audio.dart';
+
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 
@@ -27,14 +29,18 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../../../../widgets/error_message_popup/error_message.dart';
 
 import '../../../../../widgets/primary_button.dart';
+
 import '../../../../Constatns/Constants.dart';
 import '../../../../Responsive/ResponsiveClass.dart';
 import '../../../../TextStyles/AppFonts.dart';
 import '../../../../TextStyles/Color.dart';
+import '../../../../voice_note_test/voice_note_test.dart';
 import '../../../auth/controller/is_user_exist_controller.dart';
 import '../../Controller/Controller/ComplaintController.dart';
 import '../../Widgets/Header.dart';
 import '../../Widgets/textcontroller.dart';
+
+
 
 
 
@@ -94,8 +100,9 @@ class _raisComplaintState extends State<raisComplaint> {
       });
       await _audioRecorder.openRecorder();
       await _audioRecorder.startRecorder(
-        toFile: 'audio_file.mp3',
-        codec: Codec.mp3,
+        toFile: 'tau_file.mp4',
+        codec: Codec.aacMP4,
+        audioSource: theSource,
       );
       path = await _audioRecorder.getRecordURL(path: _filePath);
 
@@ -121,7 +128,8 @@ class _raisComplaintState extends State<raisComplaint> {
   bool _isPlayingRecordedAudio = false;
   Timer? playerTimer;
   final FlutterSoundPlayer _audioPlayer = FlutterSoundPlayer();
-  final String _filePath = 'audio_file.mp3'; // Replace with your actual file path
+  // final String _filePath = 'audio_file.mp4';
+  final String _filePath = 'audio_file.mp3';
   int progressMilliSeconds = 0;
   var totalDuration = 0;
   void _playAudio() async {
@@ -146,12 +154,14 @@ class _raisComplaintState extends State<raisComplaint> {
     });
 
     await _audioPlayer.openPlayer();
-    await _audioPlayer.startPlayer(fromURI: _filePath);
+    // await _audioPlayer.startPlayer(fromURI: _filePath);
+    await _audioPlayer.startPlayer(fromURI: 'tau_file.mp4');
     setState(() {
       _isPlayingRecordedAudio = true;
     });
 
     print('path is $path');
+    print('Playing recorded:  $_isPlayingRecordedAudio');
   }
   double duration = 0;
   void getRecordingDuration(String filePath) async {
@@ -168,6 +178,7 @@ class _raisComplaintState extends State<raisComplaint> {
     });
   }
   Future<void> _stopRecording() async {
+
 
     if (timer != null ) {
       debugPrint('in timer');
@@ -288,7 +299,7 @@ class _raisComplaintState extends State<raisComplaint> {
                                 height: responsive(20, context),
                               ),
                               const ManageBankHeaderText(
-                                  headerText: 'Your cause'),
+                                  headerText: 'Your Complaint'),
                               Text(
                                 'Describe your needs detail',
                                 style: TextStyle(
@@ -319,7 +330,7 @@ class _raisComplaintState extends State<raisComplaint> {
                                   return null;
                                 },
                                 keyBoardType: TextInputType.text,
-                                hint: 'Your Cause',
+                                hint: 'Complaint Title',
                                 obscureText: false,
                                 enable: true,
                               ),
@@ -360,7 +371,7 @@ class _raisComplaintState extends State<raisComplaint> {
                                       horizontal: responsive(15, context),
                                       vertical: responsive(10, context),
                                     ),
-                                    hintText: 'describe your compaign in words.',
+                                    hintText: 'Describe your complaint in words.',
                                     hintStyle: TextStyle(
                                       fontFamily: AppFonts.poppinsMedium,
                                       fontSize: responsive(15, context),
@@ -378,64 +389,69 @@ class _raisComplaintState extends State<raisComplaint> {
                               SizedBox(
                                 height: responsive(13, context),
                               ),
-                              // Container(
-                              //   width: responsive(364, context),
-                              //   height: responsive(54, context),
-                              //   decoration: BoxDecoration(
-                              //     borderRadius: BorderRadius.only(
-                              //       topRight: Radius.circular(responsive(5, context)),
-                              //       topLeft: Radius.circular(responsive(5, context)),
-                              //     ),
-                              //     color : Color.fromRGBO(242, 242, 242, 1),
-                              //   ),
-                              //   child: Padding(
-                              //     padding: const EdgeInsets.symmetric(horizontal: 10),
-                              //     child: Row(
-                              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              //       children: [
-                              //         if(_isRecording) Text(_recordingTime),
-                              //         if(_isRecording == false) Text(timeToShow),
-                              //         Container(
-                              //           decoration: const BoxDecoration(
-                              //             color : Color.fromRGBO(242, 242, 242, 1),
-                              //           ),
-                              //           width: responsive(170, context),
-                              //           height: responsive(45, context),
-                              //
-                              //           child: Visibility(
-                              //             visible: _isPlayingRecordedAudio,
-                              //             child: AudioProgressBars(
-                              //               progressPercentage: 100,
-                              //               listOfHeights: values,
-                              //               width: responsive(170, context),
-                              //               initalColor: AppColors.GlobelColor,
-                              //               backgroundColor: const Color.fromRGBO(242, 242, 242, 1),
-                              //               progressColor: AppColors.GlobelColor,
-                              //               timeInMilliSeconds: totalDuration,
-                              //               isHorizontallyAnimated: true,
-                              //               isVerticallyAnimated: false,
-                              //             ),
-                              //           ),
-                              //         ),
-                              //
-                              //         InkWell(
-                              //             onTap: _isPlayingRecordedAudio == true ? _stopAudio : _playAudio,
-                              //             child: Visibility(
-                              //                 visible: !isplaybutton,
-                              //                 child: _isPlayingRecordedAudio == true ? const Icon(Icons.pause) :const Icon(Icons.play_arrow_rounded))),
-                              //         InkWell(
-                              //             onTap: _isRecording ? _stopRecording : _startRecording,
-                              //
-                              //             child: _isRecording == true ? const Icon(Icons.stop) :const Icon(Icons.mic)),
-                              //       ],
-                              //     ),
-                              //   ),
-                              //
-                              //
-                              // ),
-                              // SizedBox(
-                              //   height: responsive(20, context),
-                              // ),
+                              Container(
+                                width: responsive(364, context),
+                                height: responsive(54, context),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(responsive(5, context)),
+                                    topLeft: Radius.circular(responsive(5, context)),
+                                  ),
+                                  color : Color.fromRGBO(242, 242, 242, 1),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      if(_isRecording) Text(_recordingTime),
+                                      if(_isRecording == false) Text(timeToShow),
+                                      Container(
+                                        decoration: const BoxDecoration(
+                                          color : Color.fromRGBO(242, 242, 242, 1),
+                                        ),
+                                        width: responsive(170, context),
+                                        height: responsive(45, context),
+
+                                        child: Visibility(
+                                          visible: _isPlayingRecordedAudio,
+                                          // visible: true,
+                                          child: AudioProgressBars(
+                                            progressPercentage: 100,
+                                            listOfHeights: values,
+                                            width: responsive(170, context),
+                                            initalColor: AppColors.GlobelColor,
+                                            backgroundColor: const Color.fromRGBO(242, 242, 242, 1),
+                                            progressColor: AppColors.GlobelColor,
+                                            timeInMilliSeconds: totalDuration,
+                                            isHorizontallyAnimated: true,
+                                            isVerticallyAnimated: false,
+                                          ),
+                                        ),
+                                      ),
+
+                                      InkWell(
+                                          onTap: (){
+                                            _isPlayingRecordedAudio == true ? _stopAudio : _playAudio;
+                                            print("Is Playing record audio: $_isPlayingRecordedAudio and stop audio $_stopAudio  and plau audio : $_playAudio");
+                                          },
+                                          child: Visibility(
+                                              // visible: !isplaybutton,
+                                              visible: true,
+                                              child: _isPlayingRecordedAudio == true ? const Icon(Icons.pause) :const Icon(Icons.play_arrow_rounded))),
+                                      InkWell(
+                                          onTap: _isRecording ? _stopRecording : _startRecording,
+
+                                          child: _isRecording == true ? const Icon(Icons.stop) :const Icon(Icons.mic)),
+                                    ],
+                                  ),
+                                ),
+
+
+                              ),
+                              SizedBox(
+                                height: responsive(20, context),
+                              ),
                               PrimaryButton(
                                 btnText: 'SUBMIT',
                                 onPressed: () async {
@@ -480,8 +496,9 @@ class _raisComplaintState extends State<raisComplaint> {
                        title:  titleController.text,
                        message: yourSituationController.text,
                      ).then((value) {
+                       endLoading();
                      if(value == true){
-                         endLoading();
+
                          Get.back();
                      }
                      else {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:huz/Widgets/snackbar.dart';
 import 'package:provider/provider.dart';
 
 import '../Loading/loading.dart';
@@ -62,6 +63,8 @@ class CustomAppBar extends StatelessWidget {
                         endLoading();
                         if(value == true){
                           Get.to(()=> Complaints());
+                        }else{
+                          showSnackbar(context, "No complaints yet");
                         }
                       });
                     },

@@ -12,6 +12,7 @@ import 'package:huz/View/auth/view/finish_signing_up/finish_signing_up.dart';
 import 'package:huz/View/auth/view/sign_up_with_mobile_number/signup_with_number.dart';
 import 'package:huz/View/auth/view/verify_otp_screen/verify_otp_screen.dart';
 import 'package:huz/View/hajj_umrah_guide/controller/umrah_guide_controller.dart';
+import 'package:huz/voice_note_test/voice_note_test.dart';
 import 'package:provider/provider.dart';
 
 import 'Controller/pakagecontroller.dart';
@@ -76,6 +77,7 @@ Future<void> main() async {
           initialRoute: '/',
           getPages: [
             GetPage(name: '/', page: () => SplashScreen()),
+            // GetPage(name: '/', page: () => VoiceRecorderPlayer()),
             GetPage(name: '/Rtobook', page: () => RequestToBook()),
 
 
@@ -99,7 +101,7 @@ Future<void> main() async {
         //   HomeScreen(),
         //   SignUpWithNumber(),
           // Home(),
-
+          // home: VoiceNoteScreen(),
 
            // Home(),
         theme: ThemeData(
