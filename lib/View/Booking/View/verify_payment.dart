@@ -628,6 +628,7 @@ class _VerifyPaymentScreenState extends State<VerifyPaymentScreen> {
                                 booking.endDate = enddate;
                                 booking.specialreq = booking.booking?.specialRequest;
                                 return CustomBottomSheet(
+                                  previousclasscontext: contexts,
                                 isFromEdit: true,
                                 isFlexible: isFlex, startDate: booking.startDate??booking.initialstartdate, endDate: booking.startDate??booking.initialenddate, adults: booking.adults, childs: booking.childrens);
                               //   return bottomSheet(
@@ -738,14 +739,4 @@ class _VerifyPaymentScreenState extends State<VerifyPaymentScreen> {
     );
   }
 
-  // Future<void> pickImage() async {
-  //   final pickedFile =
-  //       await ImagePicker().pickImage(source: ImageSource.gallery);
-  //
-  //   if (pickedFile != null) {
-  //     setState(() {
-  //       _image = File(pickedFile.path);
-  //     });
-  //   }
-  // }
 }

@@ -21,10 +21,11 @@ import 'Bookingeditecard.dart';
 
 class CustomBottomSheet extends StatefulWidget {
   var adults, childs, startDate, endDate, isFlexible;
-  var isFromEdit;
+  var isFromEdit,previousclasscontext;
 
   CustomBottomSheet({
     super.key,
+    required this.previousclasscontext,
     required this.isFromEdit,
     required this.isFlexible,
     required this.startDate,
@@ -59,7 +60,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
           borderRadius: BorderRadius.vertical(
               top: Radius.circular(responsive(20, context)))),
       child: Consumer3<Bookingedite, pakagecontrollers, IsUserExitsController>(
-          builder: (context, booking, pkg, user, child) {
+          builder: (contexts, booking, pkg, user, child) {
             if (price == 0) {
               price = booking.price;
             }
@@ -437,15 +438,15 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
 
                           if(widget.isFromEdit) {
                             booking.Updatebooking(sessiontoken: user.isUser?.sessionToken,partnertoken: booking.booking?.partnerSessionToken,huztoken: booking.booking?.huzToken).then((value){
-                            if(value ==true){
                               endLoading();
-                              showSnackbar(context,'Successfully Updated !');
-
+                              if(value ==true){
+                              showSnackbar(widget.previousclasscontext,'Successfully Updated !');
                             }else{
-                              endLoading();
-                              showSnackbar(context,'Error Updating booking');
+                              showSnackbar(widget.previousclasscontext,'Error Updating booking');
 
                             }
+
+
                           });
                           }
 

@@ -118,6 +118,8 @@ class Bookingedite with ChangeNotifier{
 
   }
   Future<bool> Updatebooking ({sessiontoken,partnertoken,huztoken}) async {
+  // try{
+
 
     Loading();
     // Parse the string to DateTime
@@ -158,8 +160,9 @@ class Bookingedite with ChangeNotifier{
     http.StreamedResponse responses = await request.send();
     var response = await http.Response.fromStream(responses);
     if (response.statusCode == 200||response.statusCode == 201 ) {
-      debugPrint('good to go');
+
       var map = jsonDecode(response.body);
+      print(map);
       booking = createbooking.fromJson(map);
       isApiCalled = false;
       notifyListeners();
@@ -177,7 +180,9 @@ class Bookingedite with ChangeNotifier{
       return false;
     }
     // } catch (e) {
+    //
     //   isApiCalled = false;
+    //   return false;
     //   notifyListeners();
     // }
 

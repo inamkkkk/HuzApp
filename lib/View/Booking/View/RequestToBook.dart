@@ -79,7 +79,7 @@ class _RequestToBookState extends State<RequestToBook> {
         child: Consumer3<IsUserExitsController, OtpMessageControllerss,
             Bookingedite>(builder: (context, user, otp, booking, child) {
           return Center(
-            child: booking.isApiCalled == true && booking.booking==null
+            child: booking.isApiCalled == true
                 ?
             Container(
               height: responsive(20, context),

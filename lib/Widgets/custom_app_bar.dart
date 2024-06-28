@@ -37,7 +37,7 @@ class CustomAppBar extends StatelessWidget {
       title: appBarTitle(context: context, text: title),
       centerTitle: true,
       leading: GestureDetector(
-        onTap: isHome ? onPress : (){
+        onTap: isHome || isComplaint? onPress : (){
           Get.back();
         },
         child: InkWell(

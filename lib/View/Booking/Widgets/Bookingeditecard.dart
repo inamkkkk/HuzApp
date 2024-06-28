@@ -91,6 +91,7 @@ class _bookingdetailState extends State<bookingdetail> {
                               enableDrag: false,
                               builder: (context) {
                                 return CustomBottomSheet(
+                                  previousclasscontext: context,
                                   isFromEdit: false,
                                   isFlexible: widget.isFlex,
                                   startDate: widget.startdate,
@@ -224,13 +225,13 @@ class _bookingdetailState extends State<bookingdetail> {
                         ),
                         Row(
                           children: [
-                            customFonts(
-                                text: "${widget.packageName} - ",
-                                size: 14,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.primaryBlackColor
-                                    .withOpacity(0.9),
-                                context: context),
+                            // customFonts(
+                            //     text: "${widget.packageName} - ",
+                            //     size: 14,
+                            //     fontWeight: FontWeight.w500,
+                            //     color: AppColors.primaryBlackColor
+                            //         .withOpacity(0.9),
+                            //     context: context),
                             customFonts(
                                 text:
                                     '${widget.combineNights} nights with ${widget.child + widget.adults + widget.infent} members',
