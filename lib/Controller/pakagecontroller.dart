@@ -53,40 +53,7 @@ class pakagecontrollers with ChangeNotifier {
       notifyListeners();
     }
   }
-  // for(var avail in transport!.results){
-  //   String string = transport.results;
-  //   List<String> result = string.split(", ");
-  //   print(result);
-  //
-  //   for(var m in result){
-  //     routs.add(
-  //       Container(
-  //           width: responsive(150, context),
-  //           child: Row(
-  //             children: [
-  //               SvgPicture.asset(
-  //                 width: responsive(12, context),
-  //                 height: responsive(12, context),
-  //                 'images/include.svg',
-  //                 semanticsLabel: 'vector',
-  //                 // fit: BoxFit.fitHeight,
-  //               ),
-  //               SizedBox(
-  //                 width: responsive(08, context),
-  //               ),
-  //
-  //               Discription(
-  //                 center: false,
-  //                 text: '${m}',
-  //                 context: context,
-  //               ),
-  //               SizedBox(width: responsive(02, context),)
-  //             ],
-  //           )
-  //       ),
-  //     );
-  //   }
-  // }
+
 var include = [];
  var  exclude = [];
   List<List<String>> photes = [];
@@ -106,7 +73,7 @@ var include = [];
     photes.clear();
     allincludes.clear();
 
-    // try {
+    try {
       var headers = {'Authorization': '${NetworkServices.token}'};
       var request = http.Request(
           'GET',
@@ -170,26 +137,7 @@ var include = [];
 
         }
 
-        // for(var i in package!.results!){
-        //    for (var images in i.hotelInfoDetail!){
-        //      try{
-        //        for(int i=0; i<=images.hotelPhotos!.length;i++){
-        //          print('photes list : ${images.hotelPhotos?[i].hotelPhotos}');
-        //          photess.add(images.hotelPhotos?[i].hotelPhotos);
-        //          print('list of string: $photes');
-        //        }
-        //      }catch(e){
-        //        print(e);
-        //      }
-        //
-        //
-        //         photes.add(photess);
-        //      // for (var img in images.hotelPhotos!){
-        //      //   photess.add(img.hotelPhotos);
-        //      // }
-        //    }
-        //
-        // }
+
         print(photes);
         print("phoes length : ${photess.length}");
         isApiCalled = true;
@@ -199,26 +147,21 @@ var include = [];
 
       isApiCalled = true;
       notifyListeners();
-      // var map = jsonDecode(response.body);
-      // message = map['message'];
-      // isVisible = true;
-      // print(map);
-      // endLoading();
-      // notifyListeners();
-    // } catch (e) {
-    //   isApiCalled = true;
-    //   notifyListeners();
-    //   debugPrint('catch error : $e');
-    //   // endLoading();
-    //   // message = e.toString();
-    //   // isVisible = true;
-    //   // print(e);
-    // }
+      var map = jsonDecode(response.body);
+
+      notifyListeners();
+    } catch (e) {
+      isApiCalled = true;
+      notifyListeners();
+      debugPrint('catch error : $e');
+
+    }
   }
 
   Future<void> GetDetails(token, context) async {
     routs.clear();
     include.clear();
+    ziarat.clear();
     try {
       var headers = {'Authorization': '${NetworkServices.token}'};
       var request = http.Request(
@@ -238,6 +181,7 @@ var include = [];
         details = Details.fromJson(map[0]);
         length = package!.results!.length;
         String string = details?.transportDetail?[0].routes;
+        print('routes are : $string');
         List<String> result = string.split(", ");
         print(result);
 
@@ -271,7 +215,9 @@ var include = [];
         }
         String string2 = details?.ziyarahDetail?[0].ziyarahList;
         List<String> result2 = string2.split(", ");
-
+        print("ziarat is $string2");
+        // if(ziarat.isNotEmpty)
+        if(result2[0].isNotEmpty)
         for (var m in result2) {
           ziarat.add(
             Container(
@@ -298,6 +244,8 @@ var include = [];
             )),
           );
         }
+
+        print("ziarat is $ziarat");
         print(result);
         if(details?.isTourGuideIncluded!){
           include.add('Tour guide - ');

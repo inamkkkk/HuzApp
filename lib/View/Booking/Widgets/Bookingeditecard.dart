@@ -266,6 +266,9 @@ class _bookingdetailState extends State<bookingdetail> {
         required int childs,
         required int infent,
         required BuildContext contexts}) {
+    var startdate1 ;
+    var enddate2;
+    num price = 0;
     return Container(
       height: MediaQuery.of(context).size.height / responsive(isFlexible ? 2.8 : 3.3, context),
       width: MediaQuery.of(contexts).size.width,
@@ -281,6 +284,9 @@ class _bookingdetailState extends State<bookingdetail> {
               top: Radius.circular(responsive(20, contexts)))),
       child: Consumer2<Bookingedite, pakagecontrollers>(
           builder: (context, booking, pkg, child) {
+            if(price==0){
+              price = booking.price;
+            }
             return Column(
               children: [
                 Padding(
@@ -319,24 +325,6 @@ class _bookingdetailState extends State<bookingdetail> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        // GestureDetector(
-                        //   onTap: (){
-                        //     print("pressed");
-                        //     showDatePicker(context: context, firstDate: DateTime(2024), lastDate: DateTime(2025));
-                        //
-                        //   },
-                        //   child: Container(
-                        //     decoration: BoxDecoration(
-                        //       color: AppColors.grayboxcolor.withOpacity(0.2),
-                        //       borderRadius: BorderRadius.circular(responsive(5, context))
-                        //     ),
-                        //     height: responsive(60, context),
-                        //
-                        //       alignment: Alignment.center,
-                        //       child: customFonts(text: "$startdate   to   $enddate", size: 18, context: context)),
-                        // ),
-
-
 
                         isFlexible ? InkWell(
                           onTap: () {
@@ -354,18 +342,17 @@ class _bookingdetailState extends State<bookingdetail> {
                                   },
                                   endDate: DateFormat('dd MMM yyyy').parse(endDate),
                                   mindate:DateFormat('dd MMM yyyy').parse(startDate),
-                                  initialdate:
-                                  DateFormat('dd MMM yyyy').parse(startDate),
+                                  initialdate: DateFormat('dd MMM yyyy').parse(startDate),
                                   onselectchanged: (date) {
                                     String formattedDate = DateFormat('dd MMM yyyy')
                                         .format(date.value.startDate!);
                                     print(formattedDate);
                                     String edate= DateFormat('dd MMM yyyy').format(date.value.endDate);
                                     print(formattedDate);
-                                    booking.endDate = edate;
-                                    booking.startDate = formattedDate;
+                                    startdate1 = edate;
+                                    enddate2 = formattedDate;
                                     booking.isedite = true;
-                                    booking.notifyListeners();
+
 
                                     setState(() {
                                       startdate = formattedDate;
@@ -377,86 +364,7 @@ class _bookingdetailState extends State<bookingdetail> {
                             });
 
 
-                            // showBottomSheet(
-                            //     context: context,
-                            //     builder: (context) {
-                            //       return CustomDatePicker(
-                            //         title: 'Select Date',
-                            //         submite: (value){
-                            //           Navigator.pop(context);
-                            //         },
-                            //         endDate: DateFormat('dd MMM yyyy').parse(endDate),
-                            //         mindate:DateFormat('dd MMM yyyy').parse(startDate),
-                            //         initialdate:
-                            //         DateFormat('dd MMM yyyy').parse(startDate),
-                            //         onselectchanged: (date) {
-                            //           String formattedDate = DateFormat('dd MMM yyyy')
-                            //               .format(date.value.startDate!);
-                            //           print(formattedDate);
-                            //           String edate= DateFormat('dd MMM yyyy').format(date.value.endDate);
-                            //           print(formattedDate);
-                            //           booking.endDate = edate;
-                            //           booking.startDate = formattedDate;
-                            //           booking.isedite = true;
-                            //           booking.notifyListeners();
-                            //
-                            //           setState(() {
-                            //             startdate = formattedDate;
-                            //             enddate = edate;
-                            //           });
-                            //         },
-                            //       );
-                            //     }
-                            // );
-                            // Get.to(CustomDatePicker(
-                            //   title: 'Start Date',
-                            //   submite: (value) {
-                            //     String formattedDate =
-                            //     DateFormat('dd MMM yyyy').format(value!);
-                            //     print(formattedDate);
-                            //     booking.startDate = formattedDate;
-                            //     booking.isedite = true;
-                            //     booking.notifyListeners();
-                            //
-                            //     setState(() {
-                            //       startdate = formattedDate;
-                            //     });
-                            //
-                            //     Navigator.pop(context);
-                            //   },
-                            //   // mindate:DateFormat('dd MMM yyyy').parse(startDate),
-                            //   initialdate:
-                            //   DateFormat('dd MMM yyyy').parse(startDate),
-                            //   onselectchanged: (date) {
-                            //     String formattedDate = DateFormat('dd MMM yyyy')
-                            //         .format(date.value!);
-                            //     print(formattedDate);
-                            //     booking.startDate = formattedDate;
-                            //     booking.isedite = true;
-                            //     booking.notifyListeners();
-                            //
-                            //     setState(() {
-                            //       startdate = formattedDate;
-                            //     });
-                            //   },
-                            // ));
 
-                            // showDatePicker(
-                            //         context: context,
-                            //         firstDate: DateTime.now(),
-                            //         lastDate: DateTime(2050))
-                            //     .then((value) {
-                            //   String formattedDate =
-                            //       DateFormat('dd MMM yyyy').format(value!);
-                            //   print(formattedDate);
-                            //
-                            //   booking.startDate = formattedDate;
-                            //   booking.notifyListeners();
-                            //   setState(() {
-                            //     startdate = formattedDate;
-                            //     initialdate = value;
-                            //   });
-                            // });
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -518,12 +426,13 @@ class _bookingdetailState extends State<bookingdetail> {
                                   onTap: () {
                                     if (adultCount > 1) {
                                       adultCount--;
-                                      booking.price =
-                                          booking.price - booking.subtractprice;
+                                      price =
+                                          price - booking.subtractprice;
+
                                     }
-                                    booking.adults = adultCount;
+                                    // booking.adults = adultCount;
                                     booking.isedite = true;
-                                    booking.notifyListeners();
+
                                   },
                                   child: Container(
                                     alignment: Alignment.center,
@@ -554,13 +463,14 @@ class _bookingdetailState extends State<bookingdetail> {
                                     setState(() {
                                       if (adultCount >= 1) {
                                         adultCount++;
-                                        booking.price =
-                                            booking.price + booking.subtractprice;
+                                        price =
+                                            price + booking.subtractprice;
+                                        print(price);
                                       }
                                     });
-                                    booking.adults = adultCount;
+                                    // booking.adults = adultCount;
                                     booking.isedite = true;
-                                    booking.notifyListeners();
+
                                   },
                                   child: Container(
                                     alignment: Alignment.center,
@@ -605,13 +515,13 @@ class _bookingdetailState extends State<bookingdetail> {
                                     setState(() {
                                       if (childCount > 0) {
                                         childCount--;
-                                        booking.price =
-                                            booking.price - booking.subtractprice;
+                                        price =
+                                            price- booking.subtractprice;
                                       }
                                     });
-                                    booking.childrens = childCount;
+                                    // booking.childrens = childCount;
                                     booking.isedite = true;
-                                    booking.notifyListeners();
+
                                   },
                                   child: Container(
                                     alignment: Alignment.center,
@@ -642,13 +552,14 @@ class _bookingdetailState extends State<bookingdetail> {
                                     setState(() {
                                       if (childCount >= 0) {
                                         childCount++;
-                                        booking.price =
-                                            booking.price + booking.subtractprice;
+                                        price =
+                                            price + booking.subtractprice;
+
                                       }
                                     });
-                                    booking.childrens = childCount;
+
                                     booking.isedite = true;
-                                    booking.notifyListeners();
+
                                   },
 
                                   child: Container(
@@ -687,23 +598,24 @@ class _bookingdetailState extends State<bookingdetail> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: responsive(20, context)),
-                            decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                borderRadius:
-                                BorderRadius.circular(responsive(5, context))),
-                            height: responsive(60, context),
-                            alignment: Alignment.center,
-                            child: customFonts(
-                                text: "Clear",
-                                size: 15,
-                                isUnderLine: true,
-                                context: context)),
-                      ),
+                      // GestureDetector(
+                      //   onTap: () {},
+                      //   child: Container(
+                      //       padding: EdgeInsets.symmetric(
+                      //           horizontal: responsive(20, context)),
+                      //       decoration: BoxDecoration(
+                      //           color: Colors.transparent,
+                      //           borderRadius:
+                      //           BorderRadius.circular(responsive(5, context))),
+                      //       height: responsive(60, context),
+                      //       alignment: Alignment.center,
+                      //       child: customFonts(
+                      //           text: "Clear",
+                      //           size: 15,
+                      //           isUnderLine: true,
+                      //           context: context)),
+                      // ),
+                      Spacer(),
                       GestureDetector(
                         onTap: () {
                           var newNights;
@@ -720,14 +632,21 @@ class _bookingdetailState extends State<bookingdetail> {
                             newNights = daysBetween(format.parse(booking.startDate??booking.initialstartdate),
                                 format.parse(booking.endDate??booking.initialenddate));
                             booking.combineNights = newNights;
+                            booking.startDate = startDate;
+                            booking.endDate = endDate;
                             booking.isOpened = false;
+                            booking.adults = adultCount;
+                            booking.childrens = childCount;
+                            booking.price = price;
+
                             booking.notifyListeners();
                             Get.back();
                           });
                         },
                         child: Container(
                             padding: EdgeInsets.symmetric(
-                                horizontal: responsive(25, context)),
+                                horizontal: responsive(25, context),
+                            vertical: responsive(04, context)),
                             decoration: BoxDecoration(
                                 color: AppColors.GlobelColor,
                                 borderRadius:

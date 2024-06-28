@@ -61,7 +61,7 @@ class _RequestToBookState extends State<RequestToBook> {
 
   Widget bottombar() {
     return Container(
-        height: responsive(45, context),
+        height: responsive(55, context),
         width: MediaQuery.sizeOf(context).width,
         decoration: const BoxDecoration(
           border: Border(
@@ -133,38 +133,6 @@ class _RequestToBookState extends State<RequestToBook> {
 
                   }
 
-
-
-                  // if (phoneNumberController.text.isEmpty) {
-                  //   setState(() {
-                  //     isphone = true;
-                  //   });
-                  // } else {
-                  //   // if(user.isUser?.sessionToken==null){
-                  //
-                  //   user
-                  //       .checkUserExistence(
-                  //           phoneNumberController.text, code, context)
-                  //       .then((value) {
-                  //     otp
-                  //         .getOtpMessagebooking(
-                  //             context, "${code}${phoneNumberController.text}", code)
-                  //         .then((value) {
-                  //       showDialog(
-                  //           barrierDismissible: false,
-                  //           context: context,
-                  //           builder: (context) => AlertDialog(
-                  //               backgroundColor: Colors.transparent,
-                  //               insetPadding: EdgeInsets.zero,
-                  //               content: otpPopUp()));
-                  //     });
-                  //   });
-
-                  // }
-                  // else{
-                  //   booking.createbookings();
-                  // }
-                  // }
                 },
                 child:   Visibility(
                     visible:  booking.isedite,
@@ -213,7 +181,8 @@ class _RequestToBookState extends State<RequestToBook> {
                           height: responsive(10, context),
                         ),
                         bookingdetail(
-                          isFlex: pkg.details?.isPackageOpenForOtherDate,
+                          // isFlex: pkg.details?.isPackageOpenForOtherDate,
+                          isFlex: true,
 
 
 
@@ -362,174 +331,6 @@ class _RequestToBookState extends State<RequestToBook> {
                           ),
                         )
 
-                        // Heading3(
-                        //   text: 'Cancelation policy',
-                        //   center: false,
-                        //   context: context,
-                        //   isbold: false,
-                        // ),
-                        // cardtrailingsubtitle(
-                        //     text:
-                        //         'Free cancellation before Jun 15. After 15 jun reservation is \nnon-refundable.',
-                        //     center: false,
-                        //     context: context,
-                        //     isbold: true),
-                        // cardtrailingsubtitle(
-                        //     isunderline: true,
-                        //     text: 'Learn More',
-                        //     center: false,
-                        //     context: context,
-                        //     isbold: true),
-                        // SizedBox(
-                        //   height: responsive(10, context),
-                        // ),
-                        // Container(
-                        //     color: AppColors.grayboxcolor.withOpacity(0.6),
-                        //     height: responsive(1, context),
-                        //     width: responsive(330, context)),
-                        // SizedBox(
-                        //   height: responsive(05, context),
-                        // ),
-                        // RichText(
-                        //   text: TextSpan(
-                        //     style: TextStyle(
-                        //       color: AppColors.black,
-                        //       fontSize: responsive(13, context),
-                        //       fontFamily: GoogleFonts.cairo(
-                        //               textStyle: const TextStyle(
-                        //                   fontWeight: FontWeight.normal))
-                        //           .fontFamily,
-                        //       // fontFamily: AppFonts.poppinsMedium,
-                        //       fontWeight: FontWeight.normal,
-                        //     ),
-                        //     children: [
-                        //       const TextSpan(
-                        //         text:
-                        //             "By selecting the button below, I agree to the ",
-                        //       ),
-                        //       TextSpan(
-                        //         text:
-                        //             " Huz rules and regulations  and Refund policy, and that Huz can charge me any time",
-                        //         style: const TextStyle(
-                        //             decoration: TextDecoration.underline),
-                        //         recognizer: TapGestureRecognizer()
-                        //           ..onTap = () => print("Clicked!"),
-                        //       ),
-                        //       const TextSpan(
-                        //           text: ". if I’m responsible for any damage."),
-                        //     ],
-                        //   ),
-                        // ),
-                        // SizedBox(
-                        //   height: responsive(10, context),
-                        // ),
-                        // Heading3(
-                        //   text: 'Login or sign up to book',
-                        //   center: false,
-                        //   context: context,
-                        //   isbold: false,
-                        // ),
-                        // SizedBox(
-                        //   height: responsive(10, context),
-                        // ),
-                        // isUserLogin
-                        //     ? const SizedBox()
-                        //     : customContainer(
-                        //         height: 104,
-                        //         child: Column(
-                        //           children: [
-                        //             Expanded(
-                        //                 flex: 2,
-                        //                 child: Consumer<CountryController>(
-                        //                     builder: (context, country, child) {
-                        //                   if (country.called == false) {
-                        //                     country.loadCountryList(context);
-                        //                   }
-                        //                   return Padding(
-                        //                     padding: EdgeInsets.only(
-                        //                         left: responsive(10, context),
-                        //                         top: responsive(06, context),
-                        //                         right: responsive(05, context),
-                        //                         bottom: responsive(0, context)),
-                        //                     child: DropdownButton(
-                        //                       underline: Container(
-                        //                         color: Colors.transparent,
-                        //                       ),
-                        //                       // decoration: InputDecoration(
-                        //                       //     labelText: 'Country'
-                        //                       // ),
-                        //                       hint: Row(
-                        //                         children: [
-                        //                           Text(
-                        //                             '${countryname}(${code})',
-                        //                             style: TextStyle(
-                        //                               fontSize:
-                        //                                   responsive(15, context),
-                        //                               color: Colors.black,
-                        //                               fontWeight: FontWeight.normal,
-                        //                             ),
-                        //                           ),
-                        //                         ],
-                        //                       ),
-                        //
-                        //                       items:
-                        //                           country.countries.map((country) {
-                        //                         return DropdownMenuItem<
-                        //                             CountryPicker>(
-                        //                           value: country,
-                        //                           child: Text(
-                        //                               '${country.flag} ${country.name!}'),
-                        //                         );
-                        //                       }).toList(),
-                        //
-                        //                       onChanged: (CountryPicker? value) {
-                        //                         setState(() {
-                        //                           flag = value!.flag;
-                        //                           code = value.dialCode;
-                        //                           countryname = value.name;
-                        //                           _countryCodeController.text =
-                        //                               code;
-                        //                           setState(() {
-                        //                             print(_countryCodeController
-                        //                                 .text);
-                        //                           });
-                        //
-                        //                           country.selectCountry(value.name,
-                        //                               value.code, value.flag);
-                        //                         });
-                        //                       },
-                        //                       // value: '${countryController.flag} ${countryController.selectedCountry} ',
-                        //                       isExpanded: true,
-                        //                     ),
-                        //                   );
-                        //                 })),
-                        //             const Expanded(child: Divider()),
-                        //             Expanded(
-                        //               flex: 2,
-                        //               child: Padding(
-                        //                 padding: EdgeInsets.only(
-                        //                     left: responsive(10, context),
-                        //                     top: responsive(05, context),
-                        //                     bottom: responsive(10, context)),
-                        //                 child: textField(
-                        //                     onchanged: (value) {
-                        //                       isphone = false;
-                        //                       setState(() {});
-                        //                     },
-                        //                     controller: phoneNumberController,
-                        //                     formater: [pMask],
-                        //                     title: "Phone number",
-                        //                     context: context),
-                        //               ),
-                        //             ),
-                        //           ],
-                        //         )),
-                        // SizedBox(
-                        //   height: responsive(04, context),
-                        // ),
-                        // isphone
-                        //     ? validator(title: 'Enter phone number')
-                        //     : SizedBox(),
 
 
                       ],

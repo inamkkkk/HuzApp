@@ -222,19 +222,22 @@ class _WishListScreenState extends State<WishListScreen> {
                     ),
                   ),
                   Positioned(
-                    top: responsive(5, context),
-                    right: responsive(5, context),
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: responsive(18, context),
-                      width: responsive(18, context),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: SvgPicture.asset(
-                        "images/heart_icon_fill.svg",
-                        height: responsive(10, context),
+                    top: responsive(0, context),
+                    right: responsive(0, context),
+                    child: Padding(
+                      padding:  EdgeInsets.only(top: responsive(08, context),right: responsive(08, context),left: responsive(50, context),bottom: responsive(50, context)),
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: responsive(20, context),
+                        width: responsive(20, context),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: SvgPicture.asset(
+                          "images/heart_icon_fill.svg",
+                          height: responsive(13 , context),
+                        ),
                       ),
                     ),
                   ),

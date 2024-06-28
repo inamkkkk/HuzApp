@@ -20,6 +20,7 @@ import '../../../Controller/pakagecontroller.dart';
 import '../../../TextStyles/Color.dart';
 import '../../../TextStyles/styles.dart';
 import '../../../Widgets/custom_app_bar.dart';
+import '../../../Widgets/snackbar.dart';
 import '../../../utils/servecies.dart';
 import '../../Booking/Controller/BookingediteController/BookingEditeController.dart';
 import '../../Home/widgets/CustomTabs.dart';
@@ -64,7 +65,7 @@ class _DetailScreenState extends State<DetailScreen> {
               // Get.to(SignUpWithMobile());
               Get.to(const RequestToBook());
             },
-            child: Container(
+            child: packages.details == null ? SizedBox() :Container(
                 height: responsive(55, context),
                 width: MediaQuery.sizeOf(context).width,
                 decoration: const BoxDecoration(
@@ -477,6 +478,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           children: [
                             InkWell(
                               onTap: () {
+                                packages.ziarat.isNotEmpty?
                                 showModalBottomSheet(
                                   context: context,
                                   builder: (BuildContext context) {
@@ -524,8 +526,8 @@ class _DetailScreenState extends State<DetailScreen> {
                                         ),
                                       ),
                                     );
-                                  },
-                                );
+                                  }
+                                ):showSnackbar(context,"No places found ");
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(
@@ -552,55 +554,56 @@ class _DetailScreenState extends State<DetailScreen> {
                             horizontalSpace(7, context),
                             InkWell(
                               onTap: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(
-                                              responsive(15, context)),
-                                          topRight: Radius.circular(
-                                              responsive(15, context)),
-                                        ),
-                                      ),
-                                      // height: responsive(100, context),
-                                      width: MediaQuery.sizeOf(context)
-                                          .width,
-
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical:
-                                            responsive(20, context),
-                                            horizontal:
-                                            responsive(20, context)),
-                                        child: SingleChildScrollView(
-                                          child: Column(
-                                            children: [
-                                              Heading4(
-                                                center: false,
-                                                context: context,
-                                                text:
-                                                'Reviews & Rating',
-                                              ),
-                                              Container(
-                                                // child: Wrap(
-                                                //   spacing: 10.0,
-                                                //   // Adjust spacing between elements
-                                                //   // runSpacing: 5.0,
-                                                //
-                                                //   children:
-                                                //
-                                                // ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
+                                // showModalBottomSheet(
+                                //   context: context,
+                                //   builder: (BuildContext context) {
+                                //     return Container(
+                                //       decoration: BoxDecoration(
+                                //         color: Colors.white,
+                                //         borderRadius: BorderRadius.only(
+                                //           topLeft: Radius.circular(
+                                //               responsive(15, context)),
+                                //           topRight: Radius.circular(
+                                //               responsive(15, context)),
+                                //         ),
+                                //       ),
+                                //       // height: responsive(100, context),
+                                //       width: MediaQuery.sizeOf(context)
+                                //           .width,
+                                //
+                                //       child: Padding(
+                                //         padding: EdgeInsets.symmetric(
+                                //             vertical:
+                                //             responsive(20, context),
+                                //             horizontal:
+                                //             responsive(20, context)),
+                                //         child: SingleChildScrollView(
+                                //           child: Column(
+                                //             children: [
+                                //               Heading4(
+                                //                 center: false,
+                                //                 context: context,
+                                //                 text:
+                                //                 'Reviews & Rating',
+                                //               ),
+                                //               Container(
+                                //                 // child: Wrap(
+                                //                 //   spacing: 10.0,
+                                //                 //   // Adjust spacing between elements
+                                //                 //   // runSpacing: 5.0,
+                                //                 //
+                                //                 //   children:
+                                //                 //
+                                //                 // ),
+                                //               ),
+                                //             ],
+                                //           ),
+                                //         ),
+                                //       ),
+                                //     );
+                                //   },
+                                // );
+                                showSnackbar(context, "No Reviews or Rating found !");
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(
@@ -1037,9 +1040,12 @@ class _HotelContainerState extends State<HotelContainer> {
             ),
             Expanded(
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: responsive(10, context),
-                    vertical: responsive(5, context)),
+                padding: EdgeInsets.only(
+                    left: responsive(10, context),
+                    top: responsive(5, context),
+                  bottom: responsive(5, context),
+
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1345,56 +1351,6 @@ class _MainPackagessState extends State<MainPackagess> {
               height: responsive(03, context),
             ),
 
-            // Padding(
-            //   padding:  EdgeInsets.symmetric(horizontal: responsive(5, context)),
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       Dcardtrailing(
-            //         text: '${widget.title}',
-            //         center: false,
-            //         context: context,
-            //       ),
-            //
-            //       Padding(
-            //         padding:  EdgeInsets.symmetric(vertical: 02),
-            //         child: Row(
-            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //           children: [
-            //             altcardsubtitle(
-            //                 context: context,
-            //                 // center: false,
-            //                 color: AppColors.black,
-            //                 text: '${formatDateString(widget.start)} to ${formatDateString(widget.end)}'
-            //             ),
-            //
-            //             Tcardtrailing(
-            //               text: 'Stay 20 days',
-            //               center: false,
-            //               context: context,
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //       Row(
-            //         children: [
-            //           Dcardtrailing(
-            //             text: 'PKR ',
-            //             center: false,
-            //             context: context,
-            //           ),
-            //
-            //           cardtrailing(
-            //             text: '${widget.amount.toStringAsFixed(0)}',
-            //             center: false,
-            //             context: context,
-            //           ),
-            //         ],
-            //       ),
-            //
-            //     ],
-            //   ),
-            // )
             Padding(
               padding: EdgeInsets.only(right: responsive(02, context)),
               child: Wrap(
