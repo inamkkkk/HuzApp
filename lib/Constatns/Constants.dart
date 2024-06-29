@@ -1,4 +1,7 @@
+import 'package:huz/Controller/HotelJsonLoader.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+
+import '../Controller/pakagecontroller.dart';
 
 String formatCurrency(int amount) {
   // Convert the integer to a string
@@ -52,3 +55,91 @@ var titlemask = MaskTextInputFormatter(
     mask: '#########################',
     filter: {"#": RegExp(r'[a-zA-Z\.\-\s]')},
     type: MaskAutoCompletionType.lazy);
+
+
+
+
+List<String> concatenateStringLists({list1,list2}) {
+  // Concatenate the two lists
+
+  List<String> concatenatedList = List.from(list1)..addAll(list2);
+
+  return concatenatedList;
+}
+
+String getImages( hotelcontroller hotel, pakagecontrollers pkg,var index){
+  String image ="";
+  for(var hotelname in pkg.package!.results![index].hotelInfoDetail!){
+
+    if(hotelname.hotelCity == "Mecca"){
+
+      for(var m in hotel.makkahotels){
+           print(m.hotelName );
+           print(hotelname.hotelName );
+
+        if( m.hotelName == hotelname.hotelName  ){
+
+          image =  m.image1;
+
+          hotel.image = m.image1;
+          print(image);
+  break;
+        }
+      }
+    }
+
+  }
+  return image;
+
+
+}
+
+List<List> Getmultipleimages(hotelcontroller hotel, hotels ){
+  String image ="";
+  List<String> image1=[];
+  List<String> image2=[];
+  for(var hotelname in hotels){
+    print("cities ${hotelname.hotelCity}");
+    if(hotelname.hotelCity == "Madinah"){
+      for(var m in hotel.madinaHotels){
+        print(m.hotelName );
+        print(hotelname.hotelName );
+
+        if( m.hotelName == hotelname.hotelName)
+        {
+
+          hotel.image = m.image1;
+          print(image);
+
+          image2 = [m.image1,m.image2,m.image3,m.image4];
+break;
+
+        }
+      }
+    }
+    if(hotelname.hotelCity == "Mecca"){
+
+      for(var m in hotel.makkahotels){
+        print(m.hotelName );
+        print(hotelname.hotelName );
+
+        if( m.hotelName == hotelname.hotelName  ){
+
+          image =  m.image1;
+          image1 = [m.image1,m.image2,m.image3,m.image4];
+break;
+          print(image);
+
+        }
+      }
+    }
+
+
+
+
+  }
+   // image1.addAll(image2);
+  return [image1,image2] ;
+
+
+}

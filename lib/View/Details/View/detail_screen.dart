@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:huz/Controller/HotelJsonLoader.dart';
 import 'package:huz/Rating/Controller/RatingController.dart';
 import 'package:huz/Rating/rating.dart';
 import 'package:huz/Rating/show_review_rating.dart';
@@ -112,10 +113,14 @@ class _DetailScreenState extends State<DetailScreen> {
       required var startDate,
       required var endDate,
       required var include,
+        required var hotel2,
+        required var rating,
       required var cost}) async {
     final wish = WishList(
         packageImage: packageImage,
+        rating:rating,
         id: id,
+        hotel2: hotel2,
         packageName: packageName,
         startDate: startDate,
         endDate: endDate,
@@ -149,7 +154,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<pakagecontrollers>(builder: (context, packages, child) {
+    return Consumer2<pakagecontrollers,hotelcontroller>(builder: (context, packages,hotel, child) {
       if (packages.details == null) {
         packages.GetDetails(widget.token, context);
       }
@@ -320,6 +325,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                     horizontal: responsive(20, context),
                                     vertical: responsive(04, context)),
                                 child: HotelContainer(
+                                  hotellist: Getmultipleimages(hotel,pkg),
                                     index: index,
                                     roomType: pkg?[index].roomSharingType,
                                     hotelName: pkg?[index].hotelName,
@@ -847,7 +853,7 @@ Widget BoxWidget(var number, status, context) {
   return Container(
       // height: MediaQuery.of(context).size.height * (82 / 667),
       width: MediaQuery.of(context).size.width * (164 / 375),
-      height: responsive(30, context),
+      height: responsive(40, context),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(5),
@@ -872,7 +878,7 @@ Widget BoxWidget(var number, status, context) {
                 style: TextStyle(
                     color: AppColors.primaryBlackColor,
                     fontFamily: 'Poppins',
-                    fontSize: responsive(12, context),
+                    fontSize: responsive(14, context),
                     letterSpacing:
                         0 /*percentages not used in flutter. defaulting to zero*/,
                     fontWeight: FontWeight.w400,
@@ -885,7 +891,7 @@ Widget BoxWidget(var number, status, context) {
                 style: TextStyle(
                     color: AppColors.GlobelColor,
                     fontFamily: AppFonts.poppinsExtraBold,
-                    fontSize: responsive(12, context),
+                    fontSize: responsive(14, context),
                     letterSpacing:
                         0 /*p6ercentages not used in flutter. defaulting to zero*/,
                     height: 1),
@@ -956,9 +962,11 @@ class HotelContainer extends StatefulWidget {
   var distance;
   var rating;
   var context;
+  var hotellist;
 
   HotelContainer(
       {super.key,
+        required this.hotellist,
       required this.index,
       required this.hotelName,
       required this.roomType,
@@ -980,28 +988,17 @@ class _HotelContainerState extends State<HotelContainer> {
 
   final PageController pageController = PageController();
   int currentIndex = 0;
-  var hotelList = [];
+
 
   @override
   Widget build(BuildContext context) {
     return Consumer<pakagecontrollers>(builder: (context, packages, child) {
       String hotelname = widget.hotelName.replaceAll(' ', '_');
       var data = packages.details?.hotelDetail?[widget.index].hotelPhotos;
-      hotelList = widget.city == "Madinah"
-          ? [
-              "https://hajjumrah.co/madinah/${hotelname}_image1.jpg",
-              "https://hajjumrah.co/madinah/${hotelname}_image2.jpg",
-              "https://hajjumrah.co/madinah/${hotelname}_image3.jpg",
-              "https://hajjumrah.co/madinah/${hotelname}_image4.jpg"
-            ]
-          : [
-              "https://hajjumrah.co/makkah/${hotelname}_image1.jpg",
-              "https://hajjumrah.co/makkah/${hotelname}_image2.jpg",
-              "https://hajjumrah.co/makkah/${hotelname}_image3.jpg",
-              "https://hajjumrah.co/makkah/${hotelname}_image4.jpg",
-            ];
+      List<String> list = widget.city == "Mecca"?widget.hotellist[0]:widget.hotellist[1];
+      print("list is ${widget.hotellist}");
 
-      print(hotelList);
+
 
       print('${NetworkServices.ibaseUrl}');
       return Container(
@@ -1029,7 +1026,7 @@ class _HotelContainerState extends State<HotelContainer> {
                       child: PageView(
                         controller: pageController,
                         scrollDirection: Axis.horizontal,
-                        children: hotelList!.map((item) {
+                        children: list!.map((item) {
                           return Container(
                             width: double.infinity,
                             // color: currentIndex == context.watch<int>() ? Colors.blue : Colors.white,
@@ -1055,7 +1052,7 @@ class _HotelContainerState extends State<HotelContainer> {
                   bottom: responsive(10, context),
                   child: Row(
                     children: List.generate(
-                        hotelList.isEmpty ? 1 : hotelList.length,
+                        list.isEmpty ? 1 :   list.length,
                         (index) => round2(context, index != currentIndex)),
                   ),
                 )

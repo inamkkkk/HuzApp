@@ -15,6 +15,7 @@ import 'package:huz/View/hajj_umrah_guide/controller/umrah_guide_controller.dart
 
 import 'package:provider/provider.dart';
 
+import 'Controller/HotelJsonLoader.dart';
 import 'Controller/pakagecontroller.dart';
 import 'Draweritems/Profile/Controllers/EditeProfileController/EditeProfileController.dart';
 import 'Draweritems/Profile/Controllers/EditeProfileImage/EditeProfileimageController.dart';
@@ -67,6 +68,7 @@ Future<void> main() async {
           ChangeNotifierProvider.value(value: TawafStepsProvider()),
           ChangeNotifierProvider.value(value: SaiStepsProvider()),
           ChangeNotifierProvider.value(value: Complaintscontroller()),
+          ChangeNotifierProvider.value(value: hotelcontroller()),
 
 
 

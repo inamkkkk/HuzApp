@@ -150,7 +150,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                     endDate: formatDateString(
                                         wishListController.list[index].endDate),
                                     amount: wishListController.list[index].cost,
-                                    rating: ""),
+                                    rating:wishListController.list[index].rating ),
                               ),
                             );
                           })),
@@ -320,7 +320,7 @@ class _WishListScreenState extends State<WishListScreen> {
                               ),
                               horizontalSpace(5, context),
                               customFonts(
-                                  text: rating,
+                                  text: rating.toString(),
                                   size: 16,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.primaryBlackColor

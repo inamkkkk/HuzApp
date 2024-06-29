@@ -132,6 +132,8 @@ class Complaintscontroller with ChangeNotifier{
   //     debugPrint('API hit failed with status code: ${response.body}');
   //   }
   // }
+
+  var present = false;
   Future<bool> GetComplaintsbystatus({var token,status}) async {
     Loading();
     result.clear();

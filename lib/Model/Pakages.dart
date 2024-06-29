@@ -52,6 +52,7 @@ class Results {
   var partnerSessionToken;
   List<HotelInfoDetail>? hotelInfoDetail;
   CompanyDetail? companyDetail;
+  RatingCount? ratingCount;
 
   Results(
       {this.huzToken,
@@ -74,7 +75,8 @@ class Results {
         this.packageStage,
         this.partnerSessionToken,
         this.hotelInfoDetail,
-        this.companyDetail});
+        this.companyDetail,
+        this.ratingCount});
 
   Results.fromJson(Map<String, dynamic> json) {
     huzToken = json['huz_token'];
@@ -104,6 +106,9 @@ class Results {
     }
     companyDetail = json['company_detail'] != null
         ? new CompanyDetail.fromJson(json['company_detail'])
+        : null;
+    ratingCount = json['rating_count'] != null
+        ? new RatingCount.fromJson(json['rating_count'])
         : null;
   }
 
@@ -135,41 +140,72 @@ class Results {
     if (this.companyDetail != null) {
       data['company_detail'] = this.companyDetail!.toJson();
     }
+    if (this.ratingCount != null) {
+      data['rating_count'] = this.ratingCount!.toJson();
+    }
     return data;
   }
 }
 
 class HotelInfoDetail {
-   var hotelId;
-   var hotelCity;
-   var hotelName;
-   var stayType;
-   var hotelRating;
-   var isShuttleServicesIncluded;
-  List<HotelPhotos>? hotelPhotos;
+  var hotelId;
+  var hotelCity;
+  var hotelName;
+  var hotelRating;
+  var roomSharingType;
+  var hotelDistance;
+  var distanceType;
+  var isShuttleServicesIncluded;
+  var isAirCondition;
+  var isTelevision;
+  var isWifi;
+  var isElevator;
+  var isAttachBathroom;
+  var isWashroomAmenities;
+  var isEnglishToilet;
+  var isIndianToilet;
+  var isLaundry;
+  List<Null>? hotelPhotos;
 
   HotelInfoDetail(
       {this.hotelId,
         this.hotelCity,
         this.hotelName,
-        this.stayType,
         this.hotelRating,
+        this.roomSharingType,
+        this.hotelDistance,
+        this.distanceType,
         this.isShuttleServicesIncluded,
+        this.isAirCondition,
+        this.isTelevision,
+        this.isWifi,
+        this.isElevator,
+        this.isAttachBathroom,
+        this.isWashroomAmenities,
+        this.isEnglishToilet,
+        this.isIndianToilet,
+        this.isLaundry,
         this.hotelPhotos});
 
   HotelInfoDetail.fromJson(Map<String, dynamic> json) {
     hotelId = json['hotel_id'];
     hotelCity = json['hotel_city'];
     hotelName = json['hotel_name'];
-    stayType = json['stay_type'];
     hotelRating = json['hotel_rating'];
+    roomSharingType = json['room_sharing_type'];
+    hotelDistance = json['hotel_distance'];
+    distanceType = json['distance_type'];
     isShuttleServicesIncluded = json['is_shuttle_services_included'];
-    if (json['hotel_photos'] != null) {
-      hotelPhotos = <HotelPhotos>[];
-      json['hotel_photos'].forEach((v) {
-        hotelPhotos!.add(new HotelPhotos.fromJson(v));
-      });
-    }
+    isAirCondition = json['is_air_condition'];
+    isTelevision = json['is_Television'];
+    isWifi = json['is_wifi'];
+    isElevator = json['is_elevator'];
+    isAttachBathroom = json['is_attach_bathroom'];
+    isWashroomAmenities = json['is_washroom_amenities'];
+    isEnglishToilet = json['is_english_toilet'];
+    isIndianToilet = json['is_indian_toilet'];
+    isLaundry = json['is_laundry'];
+
   }
 
   Map<String, dynamic> toJson() {
@@ -177,31 +213,21 @@ class HotelInfoDetail {
     data['hotel_id'] = this.hotelId;
     data['hotel_city'] = this.hotelCity;
     data['hotel_name'] = this.hotelName;
-    data['stay_type'] = this.stayType;
     data['hotel_rating'] = this.hotelRating;
+    data['room_sharing_type'] = this.roomSharingType;
+    data['hotel_distance'] = this.hotelDistance;
+    data['distance_type'] = this.distanceType;
     data['is_shuttle_services_included'] = this.isShuttleServicesIncluded;
-    if (this.hotelPhotos != null) {
-      data['hotel_photos'] = this.hotelPhotos!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
+    data['is_air_condition'] = this.isAirCondition;
+    data['is_Television'] = this.isTelevision;
+    data['is_wifi'] = this.isWifi;
+    data['is_elevator'] = this.isElevator;
+    data['is_attach_bathroom'] = this.isAttachBathroom;
+    data['is_washroom_amenities'] = this.isWashroomAmenities;
+    data['is_english_toilet'] = this.isEnglishToilet;
+    data['is_indian_toilet'] = this.isIndianToilet;
+    data['is_laundry'] = this.isLaundry;
 
-class HotelPhotos {
-   var photoId;
-   var hotelPhotos;
-
-  HotelPhotos({this.photoId, this.hotelPhotos});
-
-  HotelPhotos.fromJson(Map<String, dynamic> json) {
-    photoId = json['photo_id'];
-    hotelPhotos = json['hotel_photos'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['photo_id'] = this.photoId;
-    data['hotel_photos'] = this.hotelPhotos;
     return data;
   }
 }
@@ -231,6 +257,28 @@ class CompanyDetail {
     data['total_experience'] = this.totalExperience;
     data['company_bio'] = this.companyBio;
     data['company_logo'] = this.companyLogo;
+    return data;
+  }
+}
+
+class RatingCount {
+  var totalStars;
+  var ratingCount;
+  var averageStars;
+
+  RatingCount({this.totalStars, this.ratingCount, this.averageStars});
+
+  RatingCount.fromJson(Map<String, dynamic> json) {
+    totalStars = json['total_stars'];
+    ratingCount = json['rating_count'];
+    averageStars = json['average_stars'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['total_stars'] = this.totalStars;
+    data['rating_count'] = this.ratingCount;
+    data['average_stars'] = this.averageStars;
     return data;
   }
 }

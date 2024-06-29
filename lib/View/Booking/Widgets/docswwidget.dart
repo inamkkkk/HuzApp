@@ -156,7 +156,8 @@ class _showdocsState extends State<showdocs> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Document'),
+        centerTitle: true,
+        title: appBarTitle(context: context, text: "Documents "),
       ),
       body: WebViewWidget(
         controller: controller,

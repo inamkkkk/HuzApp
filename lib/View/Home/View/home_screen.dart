@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:huz/Controller/HotelJsonLoader.dart';
 import 'package:huz/Draweritems/how_it_works_screen/how_it_works_screen.dart';
 import 'package:huz/Draweritems/privay_policy_terms_conditions/privacy_policy_screen.dart';
 import 'package:huz/Draweritems/privay_policy_terms_conditions/terms_and_conditions.dart';
@@ -97,6 +98,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _addTask({required var packageImage,
     required var id,
+    required var rating,
+    required var hotel2,
     required var packageName,
     required var startDate,
     required var endDate,
@@ -104,6 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
     required var cost}) async {
     final wish = WishList(
         packageImage: packageImage,
+        hotel2 : hotel2,
+        rating: rating,
         id: id,
         packageName: packageName,
         startDate: startDate,
@@ -475,14 +480,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             bottomNavigationBar: bottombar(user),
             backgroundColor: Colors.white,
-            body: Consumer<pakagecontrollers>(
-                builder: (context, packagecontroller, child) {
+            body: Consumer2<pakagecontrollers,hotelcontroller>(
+                builder: (context, packagecontroller,hotel, child) {
                   // if (packagecontroller.package == null) {
                   //   packagecontroller.Getpackages('Umrah');
                   // }
 
                   return widget.selectedIndex == 0
-                      ? homeButton(context, packagecontroller)
+                      ? homeButton(context, packagecontroller,hotel)
                       : widget.selectedIndex == 1
                       ? WishListScreen()
                       : widget.selectedIndex == 2
@@ -497,7 +502,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // List list = ["package 1", "Package 2", "Package 3"];
 
-  Widget homeButton(BuildContext context, pakagecontrollers packagecontroller) {
+  Widget homeButton(BuildContext context, pakagecontrollers packagecontroller,hotelcontroller hotel) {
     return SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -657,6 +662,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   verticalSpace(20, context),
                   PageBuilder(
+                    hotel: hotel,
                       total: packagecontroller.package!.results!.length,
                       package: packagecontroller,
                       pageController: pageController,
@@ -708,23 +714,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           var pkg = packagecontroller
                               .package?.results?[index];
-                          var hotelimage;
+                          var hotel1,hotel2;
 
-                          if (tabList[isSelect] == 'Umrah') {
-                            String hotelname = pkg
-                                ?.hotelInfoDetail?[1].hotelName
-                                .replaceAll(' ', '_');
-                            hotelimage =
-                            "https://hajjumrah.co/makkah/${hotelname}_image1.jpg";
-                          } else {
-                            String hotelname = pkg
-                                ?.hotelInfoDetail?[1].hotelName
-                                .replaceAll(' ', '_');
-                            hotelimage =
-                            "https://hajjumrah.co/madinah/${hotelname}_image1.jpg";
-                          }
+                          // getImages(hotel, packagecontroller, index);
 
-                          print(hotelimage);
 
                           bool isFav = toggle(wishController.list,
                               pkg?.huzToken, false);
@@ -750,11 +743,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                       pkg?.huzToken, true);
                                   if (isFav) {} else {
                                     _addTask(
-                                      packageImage: hotelimage,
+                                      packageImage: getImages(hotel, packagecontroller, index),
+                                      hotel2: hotel1,
                                       id: pkg?.huzToken,
+                                      rating:pkg?.ratingCount?.averageStars,
                                       packageName: pkg?.packageName,
-                                      include: packagecontroller
-                                          ?.allincludes[index],
+                                      include: packagecontroller?.allincludes[index],
                                       startDate: pkg?.startDate,
                                       endDate: pkg?.endDate,
                                       cost: pkg?.packageCost,
@@ -762,10 +756,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   }
                                 },
                                 isFav: isFav,
-                                image: hotelimage,
+                                image: getImages(hotel, packagecontroller, index),
                                 id: pkg?.huzToken,
                                 packageName: pkg?.packageName,
-                                rating: "4.6",
+                                rating: pkg?.ratingCount?.averageStars,
                                 startDate: pkg?.startDate,
                                 endDate: pkg?.endDate,
                                 amount: formatCurrency(
@@ -819,6 +813,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var rating,
     var inlcudes,
   }) {
+    print('images are ${ image}');
     return Container(
       padding: EdgeInsets.all(responsive(5, context)),
       decoration: BoxDecoration(

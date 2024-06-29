@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:huz/Constatns/Constants.dart';
+import 'package:huz/Controller/HotelJsonLoader.dart';
 
 
 import '../../../../Responsive/ResponsiveClass.dart';
@@ -17,12 +18,14 @@ class PageBuilder extends StatefulWidget {
     super.key,
     required this.total,
     required this.package,
+    required this.hotel,
     required this.pageController,
     required this.tabList,
     required this.isSelect,
   });
 
   final PageController pageController;
+  final hotelcontroller hotel;
   final List tabList;
   final int isSelect;
   final int total;
@@ -44,7 +47,7 @@ class _PageBuilderState extends State<PageBuilder> {
           height: responsive(190, context),
           child: Transform.translate(
             offset: currentPage == 0
-                ? Offset(responsive(-20, context), 0)
+                ? Offset(responsive(-42, context), 0)
                 : currentPage == widget.total-1
                 ? Offset(responsive(20, context), 0)
                 : Offset(0, 0),
@@ -61,19 +64,7 @@ class _PageBuilderState extends State<PageBuilder> {
                 controller: widget.pageController,
                 itemBuilder: (context, index) {
                   var pkg = widget.package.package?.results?[index];
-                  var hotelimage;
 
-                  if (widget.tabList[widget.isSelect] == 'Umrah') {
-                    String hotelname =
-                    pkg?.hotelInfoDetail?[1].hotelName.replaceAll(' ', '_');
-                    hotelimage =
-                    "https://hajjumrah.co/makkah/${hotelname}_image1.jpg";
-                  } else {
-                    String hotelname =
-                    pkg?.hotelInfoDetail?[1].hotelName.replaceAll(' ', '_');
-                    hotelimage =
-                    "https://hajjumrah.co/madinah/${hotelname}_image1.jpg";
-                  }
 
                   return Padding(
                       padding: EdgeInsets.only(right: responsive(10, context)),
@@ -102,7 +93,7 @@ class _PageBuilderState extends State<PageBuilder> {
                                   // height: responsive(200, context),
 
                                   child: CachedNetworkImage(
-                                    imageUrl: hotelimage,
+                                    imageUrl: getImages(widget.hotel, widget.package, index),
                                     fit: BoxFit.cover,
                                     width: double.infinity,
                                     height: double.infinity,

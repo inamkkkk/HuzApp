@@ -39,7 +39,7 @@ class _RatingAndReviewScreenState extends State<RatingAndReviewScreen> {
 
   String message = '';
   bool isValidated = true;
-  var conierge = 0,platform = 0, support = 0, huzplatform = 0, quality = 0, response =0,pStars =0 ;
+  var conierge = 0.0,platform = 0.0, support = 0.0, huzplatform = 0.0, quality = 0.0, response =0.0,pStars =0.0 ;
 
   @override
   Widget build(BuildContext context) {
@@ -136,6 +136,7 @@ class _RatingAndReviewScreenState extends State<RatingAndReviewScreen> {
                         rating: 0.0,
                         onChanged: (value) {
                           pStars = value;
+                          print(" stars $pStars");
                         },
                         context: context),
                   ],

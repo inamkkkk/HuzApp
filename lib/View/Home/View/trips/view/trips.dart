@@ -14,6 +14,7 @@ import 'package:huz/Widgets/snackbar.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../Constatns/Constants.dart';
 import '../../../../../Controller/pakagecontroller.dart';
 import '../../../../../Responsive/ResponsiveClass.dart';
 import '../../../../../TextStyles/Color.dart';
@@ -99,7 +100,7 @@ class _TripsState extends State<Trips> {
                           package: booking.Blist[index].packageName,
                           companyName: 'N/A',
                           status:booking.Blist[index].bookingStatus == "Initialize"?'Not Paid':booking.Blist[index].bookingStatus,
-                          cost: booking.Blist[index].packageCost,
+                          cost: formatCurrency(double.parse(booking.Blist[index].packageCost).toInt()) ,
                           startDate: formatDateString(booking.Blist[index].startDate),
                           endDate: formatDateString(booking.Blist[index].endDate),
                           bookingNumber: booking.Blist[index].bookingNumber,
@@ -111,6 +112,7 @@ class _TripsState extends State<Trips> {
                               booking.booking = null;
                               booking.getbookingdetail(user.isUser?.sessionToken, booking.Blist[index].bookingNumber).then((value){
                                 endLoading();
+
                                if(value = true){
 
                                  Get.to(VerifyPaymentScreen());
@@ -222,12 +224,12 @@ class _TripsState extends State<Trips> {
                              color: AppColors.primaryBlackColor.withOpacity(0.9),
                              fontWeight: FontWeight.w600,
                              context: context),
-                         verticalSpace(2, context),
-                         customFonts(
-                             text: companyName,
-                             size: 12,
-                             color: AppColors.primaryBlackColor.withOpacity(0.9),
-                             context: context),
+                         // verticalSpace(2, context),
+                         // customFonts(
+                         //     text: companyName,
+                         //     size: 12,
+                         //     color: AppColors.primaryBlackColor.withOpacity(0.9),
+                         //     context: context),
                        ],
                      ),
                      statusContainer(title: status)

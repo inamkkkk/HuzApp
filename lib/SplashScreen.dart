@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:huz/Controller/HotelJsonLoader.dart';
 import 'package:huz/TextStyles/Color.dart';
+import 'package:huz/View/Details/View/detail_screen.dart';
 import 'package:huz/View/Home/View/Home.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -113,40 +115,47 @@ var num;
 
     // print("date is : ${}");
     // print("shahzaib bhai :${MediaQuery.of(context).size.height}");
-    return   Scaffold(
-        backgroundColor: Colors.white,
-        body: SizedBox(
-          width: MediaQuery.sizeOf(context).width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Spacer(),
-              Padding(
-                padding:  EdgeInsets.only(top: responsive(50, context)),
-                child: Image(
-                  image: AssetImage(
-                    'images/huz_logo.png',
-                
+    return   Consumer<hotelcontroller >(
+        builder: (context, hotel, child) {
+          if(hotel.madinaHotels.isEmpty || hotel.makkahotels.isEmpty){
+            hotel.LoadHotels(context);
+          }
+        return Scaffold(
+            backgroundColor: Colors.white,
+            body: SizedBox(
+              width: MediaQuery.sizeOf(context).width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Spacer(),
+                  Padding(
+                    padding:  EdgeInsets.only(top: responsive(50, context)),
+                    child: Image(
+                      image: AssetImage(
+                        'images/huz_logo.png',
+
+                      ),
+                      height: responsive(140, context),
+                      width: responsive(110, context),
+                    ),
                   ),
-                  height: responsive(140, context),
-                  width: responsive(110, context),
-                ),
-              ),
-              Spacer(),
-              Image(
-                image: AssetImage(
-                  'images/poweredby.png',
+                  Spacer(),
+                  Image(
+                    image: AssetImage(
+                      'images/poweredby.png',
 
-                ),
-                width: responsive(330, context),
+                    ),
+                    width: responsive(330, context),
 
+                  ),
+                  SizedBox(height: responsive(40, context),)
+                ]
               ),
-              SizedBox(height: responsive(40, context),)
-            ]
-          ),
-        ),
-      );
+            ),
+          );
+      }
+    );
 
   }
 }

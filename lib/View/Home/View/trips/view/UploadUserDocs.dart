@@ -239,10 +239,11 @@ class _UploadRequiredDocsState extends State<UploadRequiredDocs> {
                       booking.imageFileList.isEmpty
                           ? Container()
                           : Container(
-                              height: responsive(300, context),
+                              // height: responsive(300, context),
                               child: ListView.builder(
                                   shrinkWrap: true,
                                   primary: true,
+                                  physics: NeverScrollableScrollPhysics(),
                                   itemCount: booking.imageFileList!.length,
                                   itemBuilder: (context, index) {
                                     isImageSizeValid(
@@ -340,237 +341,13 @@ class _UploadRequiredDocsState extends State<UploadRequiredDocs> {
                       verticalSpace(30, context),
                       bottomBar(),
 
-                      // or
+                      SizedBox(
+                        height: responsive(10, context),
+                      ),
+                      SizedBox(
+                        height: responsive(10, context),
+                      ),
 
-                      // WidgetsToImage(
-                      //   controller: controller,
-                      //   child: Container(
-                      //     width: size.width,
-                      //     decoration: BoxDecoration(
-                      //       color: Colors.white,
-                      //       borderRadius: BorderRadius.all(
-                      //         Radius.circular(responsive(05, context)),
-                      //       ),
-                      //       border: Border.all(
-                      //         color: AppColors.grayboxcolor,
-                      //         width: responsive(1, context),
-                      //       ),
-                      //     ),
-                      //     padding: EdgeInsets.all(responsive(20, context)),
-                      //     child: Column(
-                      //       crossAxisAlignment: CrossAxisAlignment.start,
-                      //       children: [
-                      //         Heading3(
-                      //           text: 'Your booking detail',
-                      //           center: false,
-                      //           context: context,
-                      //           isbold: false,
-                      //         ),
-                      //         SizedBox(
-                      //           height: responsive(10, context),
-                      //         ),
-                      //         detailRow(
-                      //             title: "Package", data: "Economy", context: context),
-                      //         SizedBox(
-                      //           height: responsive(10, context),
-                      //         ),
-                      //         detailRow(
-                      //             title: "Booking number",
-                      //             data: "13373",
-                      //             context: context),
-                      //         SizedBox(
-                      //           height: responsive(10, context),
-                      //         ),
-                      //         detailRow(
-                      //             title: "Invoice number",
-                      //             data: "1990223",
-                      //             context: context),
-                      //         SizedBox(
-                      //           height: responsive(10, context),
-                      //         ),
-                      //         detailRowDate(
-                      //             title: "Start date",
-                      //             date: "Sat 25 jun 2024",
-                      //             time: "12:00 pm - 1:00 pm",
-                      //             context: context),
-                      //         SizedBox(
-                      //           height: responsive(10, context),
-                      //         ),
-                      //         detailRowDate(
-                      //             title: "End date",
-                      //             date: "Sat 1 july 2024",
-                      //             time: "12:00 pm - 1:00 pm",
-                      //             context: context),
-                      //         SizedBox(
-                      //           height: responsive(10, context),
-                      //         ),
-                      //         detailRow(
-                      //             title: "Length of stay",
-                      //             data: "30 nights",
-                      //             context: context),
-                      //         SizedBox(
-                      //           height: responsive(10, context),
-                      //         ),
-                      //         detailRow(
-                      //             title: "Package", data: "Economy", context: context),
-                      //         SizedBox(
-                      //           height: responsive(10, context),
-                      //         ),
-                      //         Divider(
-                      //           color: Colors.black.withOpacity(0.30),
-                      //           thickness: 0.5,
-                      //         ),
-                      //         SizedBox(
-                      //           height: responsive(10, context),
-                      //         ),
-                      //         headlineSub(
-                      //           text: "You selected",
-                      //           context: context,
-                      //         ),
-                      //         SizedBox(
-                      //           height: 5,
-                      //         ),
-                      //         Heading3(
-                      //           text: '30 nights of stay with 4 members',
-                      //           center: false,
-                      //           context: context,
-                      //           isbold: false,
-                      //         ),
-                      //         SizedBox(
-                      //           height: responsive(10, context),
-                      //         ),
-                      //         Divider(
-                      //           color: Colors.black.withOpacity(0.30),
-                      //           thickness: 0.5,
-                      //         ),
-                      //         SizedBox(
-                      //           height: responsive(10, context),
-                      //         ),
-                      //         headlineSub(
-                      //           text: "Your price summery",
-                      //           context: context,
-                      //         ),
-                      //         SizedBox(
-                      //           height: responsive(5, context),
-                      //         ),
-                      //         Row(
-                      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //           children: [
-                      //             Heading3(
-                      //               text: 'Payment',
-                      //               center: false,
-                      //               context: context,
-                      //               isbold: false,
-                      //             ),
-                      //             Heading3(
-                      //               text: 'PKR 80,000',
-                      //               center: false,
-                      //               context: context,
-                      //               isbold: false,
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
-                      SizedBox(
-                        height: responsive(10, context),
-                      ),
-                      SizedBox(
-                        height: responsive(10, context),
-                      ),
-                      // SizedBox(
-                      //   width: size.width,
-                      //   child: Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.end,
-                      //     children: [
-                      //       GestureDetector(
-                      //         onTap:() async {
-                      //           final bytes = await controller.capture();
-                      //           setState(() {
-                      //             this.bytes = bytes;
-                      //           });
-                      //           showDialog(context: context, builder: (context) => Container(
-                      //
-                      //             decoration: BoxDecoration(
-                      //               color: Colors.white,
-                      //               borderRadius: BorderRadius.circular(responsive(20, context)),
-                      //             ),
-                      //             padding: EdgeInsets.symmetric(horizontal: responsive(20, context), vertical: responsive(20, context)),
-                      //             alignment: Alignment.topCenter,
-                      //             child: Column(
-                      //               children: [
-                      //                 SizedBox(height: responsive(20, context),),
-                      //                 customFonts(text: "Save to Gallery", fontWeight: FontWeight.bold ,size: 15, context: context),
-                      //                 SizedBox(height: responsive(20, context),),
-                      //                 Image.memory(bytes!),
-                      //                 SizedBox(height: responsive(20, context),),
-                      //                 Row(
-                      //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //                   children: [
-                      //                     GestureDetector(
-                      //                       onTap: () {
-                      //                         Navigator.pop(context);
-                      //                       },
-                      //                       child: Container(
-                      //                           padding: EdgeInsets.symmetric(
-                      //                               horizontal: responsive(25, context)),
-                      //                           decoration: BoxDecoration(
-                      //                               color: AppColors.GlobelColor.withOpacity(0.2),
-                      //                               borderRadius:
-                      //                               BorderRadius.circular(responsive(5, context))),
-                      //                           height: responsive(40, context),
-                      //                           alignment: Alignment.center,
-                      //                           child: customFonts(
-                      //                               text: "Cancel",
-                      //                               size: 15,
-                      //                               context: context)),
-                      //                     ),
-                      //                     GestureDetector(
-                      //                       onTap: () {
-                      //                         _saveLocalImage(this.bytes);
-                      //                         Navigator.pop(context);
-                      //                       },
-                      //                       child: Container(
-                      //                           padding: EdgeInsets.symmetric(
-                      //                               horizontal: responsive(25, context)),
-                      //                           decoration: BoxDecoration(
-                      //                               color: AppColors.GlobelColor,
-                      //                               borderRadius:
-                      //                               BorderRadius.circular(responsive(5, context))),
-                      //                           height: responsive(40, context),
-                      //                           alignment: Alignment.center,
-                      //                           child: customFonts(
-                      //                               text: "Save to galley",
-                      //                               size: 15,
-                      //                               color: Colors.white,
-                      //                               context: context)),
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //           ));
-                      //         },
-                      //         // onTap: () async {
-                      //         //   final bytes = await controller.capture();
-                      //         //   setState(() {
-                      //         //     this.bytes = bytes;
-                      //         //   });
-                      //         //   _saveLocalImage(this.bytes);
-                      //         // },
-                      //         child: Heading3(
-                      //           text: 'Download Slip',
-                      //           center: false,
-                      //           isunderline: true,
-                      //           context: context,
-                      //           isbold: false,
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // )
                     ],
                   ),
                 ),

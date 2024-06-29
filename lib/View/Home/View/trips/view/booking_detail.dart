@@ -33,19 +33,19 @@ class _BookingDetailState extends State<BookingDetail> {
   bool isActive = false;
   var count = 0;
   var count2 = 0;
-
+ var isapi =false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
 
-      bottomNavigationBar: isPaymentConfirm || isActive ? bottomWidget(
+      bottomNavigationBar:bottomWidget(
         onTapReview: (){
          Get.to(RatingAndReviewScreen());
         },
         onTapComplaint: (){
          Get.to(raisComplaint());
         }
-      ) : const SizedBox(),
+      ),
 
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -66,8 +66,9 @@ class _BookingDetailState extends State<BookingDetail> {
           }
         ) ,
       ),
-      body: Consumer2<IsUserExitsController, Bookingedite>(
-          builder: (context, user, booking, child) {
+      body: Consumer3<IsUserExitsController, Bookingedite,Complaintscontroller>(
+          builder: (context, user, booking, complaints,child) {
+
 
         var bookingList = [
           booking.booking!.bookingDocumentsStatus?[0].isAirlineCompleted,
@@ -302,7 +303,36 @@ class _BookingDetailState extends State<BookingDetail> {
                               //   ],
                               // )
                             ],
-                          )
+                          ),
+                    // documentContainer(
+                    //     icon: "images/evisa_icon.svg",
+                    //     title: "Your Complaints",
+                    //     onTap: () {
+                    //       print('inam');
+                    //       showModalBottomSheet(
+                    //         context: context,
+                    //         shape: RoundedRectangleBorder(
+                    //             borderRadius:
+                    //             BorderRadius.vertical(
+                    //               top: Radius.circular(20),
+                    //             )),
+                    //         builder:
+                    //             (BuildContext context) {
+                    //           return Docviewer(
+                    //             name: 'eVisa',
+                    //             list: booking.booking
+                    //                 ?.bookingRequiredDocuments,
+                    //             onSelectCountry:
+                    //                 (String country) {
+                    //               setState(() {
+                    //                 // _countryCodeController.text = country;
+                    //               });
+                    //               Navigator.pop(context);
+                    //             },
+                    //           );
+                    //         },
+                    //       );
+                    //     })
                   ],
                 ),
               ),
@@ -343,42 +373,54 @@ class _BookingDetailState extends State<BookingDetail> {
   }
 
   Widget bottomWidget({required var onTapReview, required var onTapComplaint}) {
-    return Row(
-      children: [
-        GestureDetector(
-          onTap: onTapReview,
-          child: Container(
-            alignment: Alignment.center,
-            width: MediaQuery.of(context).size.width / 2,
-            height: responsive(51, context),
-            decoration: const BoxDecoration(
-                border: Border(
-              top: BorderSide(color: AppColors.GlobelColor),
-            )),
-            child: customFonts(
-                text: "Review and Feedback",
-                size: 15,
-                fontWeight: FontWeight.w500,
-                color: AppColors.GlobelColor,
-                context: context),
+    return Consumer2<IsUserExitsController, Bookingedite>(
+        builder: (context, user, booking, child) {
+          print(booking.booking?.bookingStatus);
+        return Visibility(
+          visible: booking.booking?.bookingStatus == "Paid"?false:true,
+          child: Row(
+
+            children: [
+              Visibility(
+                visible: booking.booking?.bookingStatus=="Completed"||booking.booking?.bookingStatus == 'Closed'?true:false,
+                child: InkWell(
+                  onTap: onTapReview,
+                  child: Container(
+                    alignment: Alignment.center,
+                     width: MediaQuery.of(context).size.width/2,
+                    height: responsive(51, context),
+                    decoration: const BoxDecoration(
+                        border: Border(
+                      top: BorderSide(color: AppColors.GlobelColor),
+                    )),
+                    child: customFonts(
+                        text: "Review and Feedback",
+                        size: 15,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.GlobelColor,
+                        context: context),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: onTapComplaint,
+                child: Container(
+                  alignment: Alignment.center,
+                  width:  booking.booking?.bookingStatus=="Completed"||booking.booking?.bookingStatus == 'Closed'?MediaQuery.of(context).size.width/2:MediaQuery.of(context).size.width,
+                  height: responsive(51, context),
+                  decoration: const BoxDecoration(color: AppColors.GlobelColor),
+                  child: customFonts(
+                      text: "Raise Complaint",
+                      size: 15,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                      context: context),
+                ),
+              )
+            ],
           ),
-        ),
-        GestureDetector(
-          onTap: onTapComplaint,
-          child: Container(
-            alignment: Alignment.center,
-            width: MediaQuery.of(context).size.width / 2,
-            height: responsive(51, context),
-            decoration: const BoxDecoration(color: AppColors.GlobelColor),
-            child: customFonts(
-                text: "Raise Complaint",
-                size: 15,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-                context: context),
-          ),
-        )
-      ],
+        );
+      }
     );
   }
 

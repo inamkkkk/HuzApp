@@ -45,6 +45,7 @@ class WishListController with ChangeNotifier {
     return tasks.map((date) {
       final wishListDate = json.decode(date);
       return WishList(
+        hotel2: wishListDate['hotel2'],
         packageImage: wishListDate['packageImage'],
           id: wishListDate['id'],
           packageName: wishListDate['packageName'],

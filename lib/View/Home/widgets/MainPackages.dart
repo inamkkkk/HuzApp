@@ -81,7 +81,7 @@ class _MainPackagesState extends State<MainPackages> {
                                 ),
                                 fit: BoxFit.cover,
                               ): CachedNetworkImage(
-                                imageUrl: "${NetworkServices.ibaseUrl}${item.hotelPhotos?[0].hotelPhotos}",
+                                imageUrl: "",
                                 placeholder: (context, url) => Image.asset('images/placeholder-image.png',
                                   fit: BoxFit.cover,
                                 ),

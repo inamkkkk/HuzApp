@@ -409,12 +409,16 @@ class _VerifyPaymentScreenState extends State<VerifyPaymentScreen> {
                         fontWeight: FontWeight.w500,
                         color: AppColors.primaryBlackColor.withOpacity(0.9),
                         context: context),
-                    customFonts(
-                        text: "$packageName",
-                        size: 14,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.GlobelColor,
-                        context: context),
+                    Container(
+                      width: responsive(200, context),
+                      child: customFonts(
+                        textOverflow: TextOverflow.ellipsis,
+                          text: "$packageName",
+                          size: 14,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.GlobelColor,
+                          context: context),
+                    ),
                   ],
                 ),
                 SizedBox(
