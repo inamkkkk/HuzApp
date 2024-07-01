@@ -387,8 +387,8 @@ class _UploadRequiredDocsState extends State<UploadRequiredDocs> {
       required BuildContext context}) {
     return Container(
       width: MediaQuery.sizeOf(context).width,
-      height: responsive(51, context),
-      padding: EdgeInsets.symmetric(horizontal: responsive(20, context)),
+      
+      padding: EdgeInsets.symmetric(horizontal: responsive(20, context), vertical: responsive(8, context)),
       alignment: Alignment.centerLeft,
       decoration: const BoxDecoration(
         color: AppColors.GlobelColor,
@@ -402,7 +402,7 @@ class _UploadRequiredDocsState extends State<UploadRequiredDocs> {
             children: [
               customFonts(
                   text: "Status",
-                  size: 10,
+                  size: 13,
                   fontWeight: FontWeight.w500,
                   color: Colors.white,
                   context: context),
@@ -420,7 +420,7 @@ class _UploadRequiredDocsState extends State<UploadRequiredDocs> {
             children: [
               customFonts(
                   text: "Booking number",
-                  size: 10,
+                  size: 13,
                   fontWeight: FontWeight.w500,
                   color: Colors.white,
                   context: context),

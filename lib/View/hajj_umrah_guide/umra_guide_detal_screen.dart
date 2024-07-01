@@ -36,8 +36,9 @@ class UmraGuideDetailScreen extends StatelessWidget {
             ),
           ),
           Container(
+            alignment: Alignment.centerLeft,
             width: MediaQuery.sizeOf(context).width,
-            height: responsive(53, context),
+            height: responsive(65, context),
             decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -51,6 +52,7 @@ class UmraGuideDetailScreen extends StatelessWidget {
                     bottomLeft: Radius.circular(responsive(15, context)),
                     bottomRight: Radius.circular(responsive(15, context)))),
             child: Stack(
+              alignment: Alignment.centerLeft,
               children: [
                 IconButton(
                     onPressed: () {
@@ -66,7 +68,7 @@ class UmraGuideDetailScreen extends StatelessWidget {
                         context: context,
                         text: title,
                         size: 18,
-
+                        fontWeight: FontWeight.bold,
                         color: AppColors.GlobelColor)),
               ],
             ),
@@ -78,7 +80,7 @@ class UmraGuideDetailScreen extends StatelessWidget {
                 child: customFonts(
                     context: context,
                     text: description,
-                    size: 14,
+                    size: 16,
                     textAlign: TextAlign.justify),
               ),
             ),

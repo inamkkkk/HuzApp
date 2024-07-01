@@ -33,7 +33,6 @@ var baseurl;
     }
     return Container(
       width: MediaQuery.sizeOf(context).width,
-      height: responsive(119, context),
       color: index % 2 == 0 ? const Color(0xffF6F6F6  ) : Colors.white,
       padding: EdgeInsets.only(
         left: responsive(23, context),
@@ -49,36 +48,36 @@ var baseurl;
                 child: CachedNetworkImage(
                   placeholder: (context, url) => Image.asset(
                     "assets/images/user_icon.png",
-                    height: responsive(37, context),
+                    height: responsive(45, context),
                   ),
 
                   errorWidget: (context, url, error) => Image.asset(
                     "assets/images/user_icon.png",
-                    height: responsive(37, context),
+                    height: responsive(45, context),
                   ),
                   imageUrl:
                   '${baseurl}${image}',
                   // replace with the URL of your image
                   fit: BoxFit.cover,
-                  width: responsive(37, context),
-                  height: responsive(37, context),
+                  width: responsive(45, context),
+                  height: responsive(45, context),
                 ),
               ),
-              horizontalSpace(8,context,),
+              horizontalSpace(15,context,),
               Column(
                 crossAxisAlignment:
                 CrossAxisAlignment.start,
                 children: [
                   textPoppins(
                       text: name,
-                      size: 14,
+                      size: 16,
                       fontFamily:
                       AppFonts.poppinsSemiBold,
                       color: AppColors.textSecondary.withOpacity(0.8),
                       context: context),
                   textPoppins(
                       text: location,
-                      size: 12,
+                      size: 14,
                       fontWeight: FontWeight.w300,
                       color: AppColors.textSecondary.withOpacity(0.8),
                       context: context),
@@ -87,33 +86,34 @@ var baseurl;
 
             ],
           ),
+          verticalSpace(10, context),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Column(
-
                 crossAxisAlignment:
                 CrossAxisAlignment.start,
                 children: [
                   textPoppins(
                       text: "Raised date & time",
-                      size: 10,
+                      size: 14,
                       fontWeight: FontWeight.w300,
-                      color: AppColors.textSecondary.withOpacity(0.5),
+                      color: AppColors.textSecondary.withOpacity(0.8),
                       context: context),
+
                   Row(
                     children: [
                       textPoppins(
                           text: date,
-                          size: 13,
+                          size: 14,
                           fontWeight: FontWeight.w500,
                           color: AppColors.textSecondary.withOpacity(0.8),
                           context: context),
-                      horizontalSpace( 3, context),
+                      horizontalSpace( 10, context),
                       textPoppins(
                           text: time,
-                          size: 13,
+                          size: 14,
                           fontWeight: FontWeight.w500,
                           color: AppColors.primaryColor.withOpacity(0.8),
                           context: context),

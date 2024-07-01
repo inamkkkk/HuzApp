@@ -192,8 +192,8 @@ var include = [];
                 child: Row(
                   children: [
                     SvgPicture.asset(
-                      width: responsive(12, context),
-                      height: responsive(12, context),
+                      width: responsive(15, context),
+                      height: responsive(15, context),
                       'images/include.svg',
                       semanticsLabel: 'vector',
                       // fit: BoxFit.fitHeight,
@@ -202,7 +202,7 @@ var include = [];
                       width: responsive(08, context),
                     ),
                     customFonts(text:  '$m',
-                        size: 14,
+                        size: 15,
                         color: AppColors.primaryBlackColor,
                         fontWeight: FontWeight.w500,
                         context: context),

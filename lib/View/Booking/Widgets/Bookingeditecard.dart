@@ -103,8 +103,8 @@ class _bookingdetailState extends State<bookingdetail> {
                         },
                         child: Container(
                           alignment: Alignment.center,
-                          height: responsive(21, context),
-                          width: responsive(46, context),
+                          height: responsive(25, context),
+                          width: responsive(50, context),
                           padding: EdgeInsets.symmetric(
                               horizontal: responsive(6, context)),
                           decoration: BoxDecoration(
@@ -115,7 +115,7 @@ class _bookingdetailState extends State<bookingdetail> {
                               )),
                           child: customFonts(
                               text: "Edit",
-                              size: 12,
+                              size: 14,
                               fontWeight: FontWeight.w500,
                               color: AppColors.GlobelColor,
                               context: context),
@@ -365,7 +365,7 @@ class PriceSummery extends StatelessWidget {
           children: [
             customFonts(
                 text: "Price",
-                size: 14,
+                size: 16,
                 color: AppColors.primaryBlackColor.withOpacity(0.9),
                 fontWeight: FontWeight.w500,
                 context: context),

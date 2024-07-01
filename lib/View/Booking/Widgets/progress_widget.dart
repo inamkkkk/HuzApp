@@ -23,7 +23,7 @@ class ProgressWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: responsive(66, context),
+      
       decoration: BoxDecoration(
 
         color: Colors.white,
@@ -33,7 +33,7 @@ class ProgressWidget extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: responsive(20, context)),
+        padding:  EdgeInsets.symmetric(horizontal: responsive(20, context), vertical: responsive(10, context)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -42,7 +42,7 @@ class ProgressWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                customFonts(context: context, text: '$packageName', size: 14,
+                customFonts(context: context, text: '$packageName', size: 16,
                   fontWeight: FontWeight.bold,
                   color: AppColors.primaryBlackColor.withOpacity(0.9),
 
@@ -50,7 +50,7 @@ class ProgressWidget extends StatelessWidget {
                 SizedBox(
                   height: responsive(04, context),
                 ),
-                customFonts(context: context, text: '$companyName', size: 12,
+                customFonts(context: context, text: '$companyName', size: 14,
                   color: AppColors.primaryBlackColor.withOpacity(0.9),
 
 

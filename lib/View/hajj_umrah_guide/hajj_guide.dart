@@ -61,7 +61,7 @@ class _UmrahGuideState extends State<UmrahGuide> {
                           fontWeight: FontWeight.bold)),
                   Text("Experience the sacred steps of pilgrimage.",
                       style: TextStyle(
-                          fontSize: responsive(12, context),
+                          fontSize: responsive(14, context),
                           color: Colors.white,
                           fontWeight: FontWeight.bold)),
 
@@ -74,7 +74,7 @@ class _UmrahGuideState extends State<UmrahGuide> {
 
               alignment: Alignment.center,
               width: MediaQuery.sizeOf(context).width,
-              height: responsive(53, context),
+              height: responsive(65, context),
               decoration: BoxDecoration(
                   color: Colors.white,
                   boxShadow: [
@@ -94,7 +94,7 @@ class _UmrahGuideState extends State<UmrahGuide> {
                   unselectedLabelColor: AppColors.primaryBlackColor,
                   labelStyle: TextStyle(
                       fontFamily: AppFonts.poppinsSemiBold,
-                      fontSize: responsive(12, context)),
+                      fontSize: responsive(13, context)),
 
                   unselectedLabelStyle:
                   const TextStyle(fontFamily: AppFonts.poppinsMedium),
@@ -231,7 +231,7 @@ class _UmrahGuideState extends State<UmrahGuide> {
                     child: textPoppins(
                         context: context,
                         text: halq,
-                        size: 14,
+                        size: 16,
                         textAlign: TextAlign.justify),
                   ),
                 ]),
@@ -343,7 +343,7 @@ class GuideStepContainer extends StatelessWidget {
                     maxLines: 2,
                     textAlign: TextAlign.justify,
                     textOverflow: TextOverflow.ellipsis,
-                    size: 10,
+                    size: 12,
                     fontFamily: AppFonts.poppinsMedium,
                     color: Colors.black38),
               ],

@@ -244,7 +244,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                     customFonts(
                                         text:
                                             packages.details?.description ?? "",
-                                        size: 14,
+                                        size: 15,
                                         fontWeight: FontWeight.w500,
                                         color: AppColors.primaryBlackColor,
                                         context: context),
@@ -282,7 +282,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                           (index) => index == 0
                                               ? customFonts(
                                                   text: "Includes: ",
-                                                  size: 14,
+                                                  size: 15,
                                                   color: AppColors
                                                       .primaryBlackColor,
                                                   fontWeight: FontWeight.bold,
@@ -290,7 +290,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                               : customFonts(
                                                   text:
                                                       "${packages.include[index]}",
-                                                  size: 14,
+                                                  size: 15,
                                                   fontWeight: FontWeight.w500,
                                                   color: AppColors
                                                       .primaryBlackColor,
@@ -300,12 +300,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                     ),
 
                                     SizedBox(
-                                      height: responsive(10, context),
+                                      height: responsive(20, context),
                                     ),
 
-                                    SizedBox(
-                                      height: responsive(0, context),
-                                    ),
                                   ],
                                 ),
                               ),
@@ -358,7 +355,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                   customFonts(
                                       text:
                                           "${packages.details?.airlineDetail?[0].airlineName} Airline",
-                                      size: 14,
+                                      size: 15,
                                       color: AppColors.primaryBlackColor
                                           .withOpacity(0.9),
                                       fontWeight: FontWeight.w700,
@@ -394,8 +391,8 @@ class _DetailScreenState extends State<DetailScreen> {
                                       child: Row(
                                         children: [
                                           SvgPicture.asset(
-                                            width: responsive(12, context),
-                                            height: responsive(12, context),
+                                            width: responsive(15, context),
+                                            height: responsive(15, context),
                                             'images/include.svg',
                                             semanticsLabel: 'vector',
                                             // fit: BoxFit.fitHeight,
@@ -406,7 +403,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                           customFonts(
                                               text:
                                                   '${packages.details?.airlineDetail?[0].ticketType} Ticket',
-                                              size: 14,
+                                              size: 15,
                                               color:
                                                   AppColors.primaryBlackColor,
                                               fontWeight: FontWeight.w500,
@@ -421,8 +418,8 @@ class _DetailScreenState extends State<DetailScreen> {
                                       child: Row(
                                         children: [
                                           SvgPicture.asset(
-                                            width: responsive(12, context),
-                                            height: responsive(12, context),
+                                            width: responsive(15, context),
+                                            height: responsive(15, context),
                                             packages.details?.airlineDetail?[0]
                                                     .isReturnFlightIncluded
                                                 ? 'images/include.svg'
@@ -435,7 +432,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                           ),
                                           customFonts(
                                               text: '${'Return flight'}',
-                                              size: 14,
+                                              size: 15,
                                               color:
                                                   AppColors.primaryBlackColor,
                                               fontWeight: FontWeight.w500,
@@ -452,7 +449,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                 children: [
                                   customFonts(
                                       text: "Shared Luxury Bus ",
-                                      size: 14,
+                                      size: 15,
                                       color: AppColors.primaryBlackColor
                                           .withOpacity(0.9),
                                       fontWeight: FontWeight.w700,
@@ -551,7 +548,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                     child: Container(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: responsive(10, context)),
-                                      height: responsive(35, context),
+                                      height: responsive(40, context),
                                       decoration: BoxDecoration(
                                         color: Colors.white,
                                         border: Border.all(
@@ -637,7 +634,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                     child: Container(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: responsive(10, context)),
-                                      height: responsive(35, context),
+                                      height: responsive(40, context),
                                       decoration: BoxDecoration(
                                         color: Colors.white,
                                         border: Border.all(
@@ -780,7 +777,7 @@ Widget Headertitle(context, title, subtitle, amount, onTapFav, icon) {
           ),
           customFonts(
               text: subtitle,
-              size: 14,
+              size: 15,
               fontWeight: FontWeight.w500,
               color: AppColors.primaryBlackColor,
               context: context),
@@ -789,7 +786,7 @@ Widget Headertitle(context, title, subtitle, amount, onTapFav, icon) {
           ),
           customFonts(
               text: "PKR ${amount}",
-              size: 16,
+              size: 18,
               fontWeight: FontWeight.bold,
               color: const Color(0xFF484848),
               context: context),
@@ -801,8 +798,8 @@ Widget Headertitle(context, title, subtitle, amount, onTapFav, icon) {
             onTap: onTapFav,
             child: Container(
                 alignment: Alignment.center,
-                height: responsive(24, context),
-                width: responsive(24, context),
+                height: responsive(28, context),
+                width: responsive(28, context),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.circle,
@@ -812,7 +809,7 @@ Widget Headertitle(context, title, subtitle, amount, onTapFav, icon) {
           horizontalSpace(5, context),
           SvgPicture.asset(
             width: responsive(61, context),
-            height: responsive(26, context),
+            height: responsive(28, context),
             'images/share.svg',
             semanticsLabel: 'vector',
             // fit: BoxFit.fitHeight,
@@ -1006,8 +1003,8 @@ class _HotelContainerState extends State<HotelContainer> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(responsive(6, context)),
             border: Border.all(color: const Color(0xFFDEDEDE))),
-        height: responsive(128, context),
-        width: responsive(382, context),
+        height: responsive(170, context),
+        // width: responsive(382, context),
         child: Row(
           children: [
             Stack(
@@ -1015,7 +1012,7 @@ class _HotelContainerState extends State<HotelContainer> {
               children: [
                 Container(
                     width: responsive(118, context),
-                    height: responsive(129, context),
+                    height: responsive(170, context),
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(responsive(10, context)),
@@ -1061,192 +1058,192 @@ class _HotelContainerState extends State<HotelContainer> {
             Expanded(
               child: Padding(
                 padding: EdgeInsets.only(
+                  right: 5,
                   left: responsive(10, context),
                   top: responsive(5, context),
                   bottom: responsive(5, context),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         customFonts(
                             text: widget.hotelName,
-                            size: 13,
+                            size: 14,
                             fontWeight: FontWeight.bold,
                             color: AppColors.primaryBlackColor,
                             context: context),
                         customFonts(
                             text: widget.roomType,
-                            size: 13,
+                            size: 14,
                             fontWeight: FontWeight.w500,
                             color: AppColors.primaryBlackColor,
                             context: context),
-                      ],
-                    ),
-                    Wrap(
-                      spacing: 00.0,
-                      children: [
-                        customFonts(
-                            text: "Includes: ",
-                            size: 12,
-                            color: AppColors.primaryBlackColor,
-                            fontWeight: FontWeight.bold,
-                            context: context),
-                        Visibility(
-                          visible: packages.details?.hotelDetail?[widget.index]
+                        verticalSpace(5, context),
+                        Wrap(
+                          spacing: 00.0,
+                          children: [
+                            customFonts(
+                                text: "Includes: ",
+                                size: 13,
+                                color: AppColors.primaryBlackColor,
+                                fontWeight: FontWeight.bold,
+                                context: context),
+                            Visibility(
+                              visible: packages.details?.hotelDetail?[widget.index]
                                   .isAirCondition
-                              ? true
-                              : false,
-                          child: customFonts(
-                              text: "Air Condition - ",
-                              size: 12,
-                              color: AppColors.primaryBlackColor,
-                              fontWeight: FontWeight.w500,
-                              context: context),
-                        ),
-                        Visibility(
-                            visible: packages
+                                  ? true
+                                  : false,
+                              child: customFonts(
+                                  text: "Air Condition - ",
+                                  size: 13,
+                                  color: AppColors.primaryBlackColor,
+                                  fontWeight: FontWeight.w500,
+                                  context: context),
+                            ),
+                            Visibility(
+                                visible: packages
                                     .details
                                     ?.hotelDetail?[widget.index]
                                     .isAttachBathroom
-                                ? true
-                                : false,
-                            child: customFonts(
-                                text: "Attached Bathroom - ",
-                                size: 12,
-                                color: AppColors.primaryBlackColor,
-                                fontWeight: FontWeight.w500,
-                                context: context)),
-                        Visibility(
-                            visible: packages.details
+                                    ? true
+                                    : false,
+                                child: customFonts(
+                                    text: "Attached Bathroom - ",
+                                    size: 13,
+                                    color: AppColors.primaryBlackColor,
+                                    fontWeight: FontWeight.w500,
+                                    context: context)),
+                            Visibility(
+                                visible: packages.details
                                     ?.hotelDetail?[widget.index].isElevator
-                                ? true
-                                : false,
-                            child: customFonts(
-                                text: "Elevator - ",
-                                size: 12,
-                                color: AppColors.primaryBlackColor,
-                                fontWeight: FontWeight.w500,
-                                context: context)),
-                        Visibility(
-                            visible: packages.details
+                                    ? true
+                                    : false,
+                                child: customFonts(
+                                    text: "Elevator - ",
+                                    size: 13,
+                                    color: AppColors.primaryBlackColor,
+                                    fontWeight: FontWeight.w500,
+                                    context: context)),
+                            Visibility(
+                                visible: packages.details
                                     ?.hotelDetail?[widget.index].isLaundry
-                                ? true
-                                : false,
-                            child: customFonts(
-                                text: "Laundry - ",
-                                size: 12,
-                                color: AppColors.primaryBlackColor,
-                                fontWeight: FontWeight.w500,
-                                context: context)),
-                        Visibility(
-                            visible: packages.details
+                                    ? true
+                                    : false,
+                                child: customFonts(
+                                    text: "Laundry - ",
+                                    size: 13,
+                                    color: AppColors.primaryBlackColor,
+                                    fontWeight: FontWeight.w500,
+                                    context: context)),
+                            Visibility(
+                                visible: packages.details
                                     ?.hotelDetail?[widget.index].isTelevision
-                                ? true
-                                : false,
-                            child: customFonts(
-                                text: "Television - ",
-                                size: 12,
-                                color: AppColors.primaryBlackColor,
-                                fontWeight: FontWeight.w500,
-                                context: context)),
-                        Visibility(
-                            visible: packages.details
+                                    ? true
+                                    : false,
+                                child: customFonts(
+                                    text: "Television - ",
+                                    size: 13,
+                                    color: AppColors.primaryBlackColor,
+                                    fontWeight: FontWeight.w500,
+                                    context: context)),
+                            Visibility(
+                                visible: packages.details
                                     ?.hotelDetail?[widget.index].isEnglishToilet
-                                ? true
-                                : false,
-                            child: customFonts(
-                                text: "English Toilet - ",
-                                size: 12,
-                                color: AppColors.primaryBlackColor,
-                                fontWeight: FontWeight.w500,
-                                context: context)),
-                        Visibility(
-                            visible: packages.details
+                                    ? true
+                                    : false,
+                                child: customFonts(
+                                    text: "English Toilet - ",
+                                    size: 13,
+                                    color: AppColors.primaryBlackColor,
+                                    fontWeight: FontWeight.w500,
+                                    context: context)),
+                            Visibility(
+                                visible: packages.details
                                     ?.hotelDetail?[widget.index].isIndianToilet
-                                ? true
-                                : false,
-                            child: customFonts(
-                                text: "Indian Toilet - ",
-                                size: 12,
-                                color: AppColors.primaryBlackColor,
-                                fontWeight: FontWeight.w500,
-                                context: context)),
-                        Visibility(
-                            visible: packages
+                                    ? true
+                                    : false,
+                                child: customFonts(
+                                    text: "Indian Toilet - ",
+                                    size: 13,
+                                    color: AppColors.primaryBlackColor,
+                                    fontWeight: FontWeight.w500,
+                                    context: context)),
+                            Visibility(
+                                visible: packages
                                     .details
                                     ?.hotelDetail?[widget.index]
                                     .isShuttleServicesIncluded
-                                ? true
-                                : false,
-                            child: customFonts(
-                                text: "Shuttle Services - ",
-                                size: 12,
-                                color: AppColors.primaryBlackColor,
-                                fontWeight: FontWeight.w500,
-                                context: context)),
-                        Visibility(
-                            visible: packages
+                                    ? true
+                                    : false,
+                                child: customFonts(
+                                    text: "Shuttle Services - ",
+                                    size: 13,
+                                    color: AppColors.primaryBlackColor,
+                                    fontWeight: FontWeight.w500,
+                                    context: context)),
+                            Visibility(
+                                visible: packages
                                     .details
                                     ?.hotelDetail?[widget.index]
                                     .isWashroomAmenities
-                                ? true
-                                : false,
-                            child: customFonts(
-                                text: "Amentites - ",
-                                size: 12,
-                                color: AppColors.primaryBlackColor,
-                                fontWeight: FontWeight.w500,
-                                context: context)),
-                        Visibility(
-                            visible: packages
+                                    ? true
+                                    : false,
+                                child: customFonts(
+                                    text: "Amentites - ",
+                                    size: 13,
+                                    color: AppColors.primaryBlackColor,
+                                    fontWeight: FontWeight.w500,
+                                    context: context)),
+                            Visibility(
+                                visible: packages
                                     .details?.hotelDetail?[widget.index].isWifi
-                                ? true
-                                : false,
-                            child: customFonts(
-                                text: "Wifi",
-                                size: 12,
-                                color: AppColors.primaryBlackColor,
-                                fontWeight: FontWeight.w500,
-                                context: context)),
+                                    ? true
+                                    : false,
+                                child: customFonts(
+                                    text: "Wifi",
+                                    size: 13,
+                                    color: AppColors.primaryBlackColor,
+                                    fontWeight: FontWeight.w500,
+                                    context: context)),
+                          ],
+                        ),
                       ],
                     ),
-                    SizedBox(
-                      width: responsive(300, context),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            width: responsive(130, context),
-                            child: customFonts(
-                                text:
-                                    "${widget.distance} km from ${widget.city}",
-                                size: 13,
-                                fontWeight: FontWeight.bold,
+Spacer(),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          child: customFonts(
+                              text:
+                                  "${widget.distance} km from ${widget.city}",
+                              size: 14,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primaryBlackColor
+                                  .withOpacity(0.9),
+                              context: context),
+                        ),
+                        Row(
+                          children: [
+                            customFonts(
+                                text: widget.rating,
+                                size: 14,
+                                fontWeight: FontWeight.w700,
                                 color: AppColors.primaryBlackColor
                                     .withOpacity(0.9),
                                 context: context),
-                          ),
-                          Row(
-                            children: [
-                              customFonts(
-                                  text: widget.rating,
-                                  size: 16,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColors.primaryBlackColor
-                                      .withOpacity(0.9),
-                                  context: context),
-                              horizontalSpace(5, context),
-                              SvgPicture.asset(
-                                "images/star.svg",
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            horizontalSpace(5, context),
+                            SvgPicture.asset(
+                              "images/star.svg",
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ],
                 ),

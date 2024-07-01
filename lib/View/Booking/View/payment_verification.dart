@@ -210,9 +210,7 @@ class _PaymentVerificationState extends State<PaymentVerification> {
                             height: responsive(10, context),
                           ),
                           // transfer ID Textfield
-                          SizedBox(
-                            height: responsive(10, context),
-                          ),
+
 
                           customFonts(
                               text:
@@ -443,8 +441,8 @@ class _PaymentVerificationState extends State<PaymentVerification> {
         required BuildContext context}) {
     return Container(
       width: MediaQuery.sizeOf(context).width,
-      height: responsive(51, context),
-      padding: EdgeInsets.symmetric(horizontal: responsive(20, context)),
+
+      padding: EdgeInsets.symmetric(horizontal: responsive(20, context), vertical: responsive(8, context)),
       alignment: Alignment.centerLeft,
       decoration: const BoxDecoration(
         color: AppColors.GlobelColor,
@@ -458,10 +456,11 @@ class _PaymentVerificationState extends State<PaymentVerification> {
             children: [
               customFonts(
                   text: "Status",
-                  size: 10,
+                  size: 13,
                   fontWeight: FontWeight.w500,
                   color: Colors.white,
                   context: context),
+              verticalSpace(3, context),
               customFonts(
                   text: status,
                   size: 16,
@@ -476,10 +475,11 @@ class _PaymentVerificationState extends State<PaymentVerification> {
             children: [
               customFonts(
                   text: "Booking number",
-                  size: 10,
+                  size: 13,
                   fontWeight: FontWeight.w500,
                   color: Colors.white,
                   context: context),
+              verticalSpace(3, context),
               customFonts(
                   text: "$bookingNumber",
                   size: 16,

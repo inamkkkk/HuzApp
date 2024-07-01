@@ -220,7 +220,7 @@ class _TripsState extends State<Trips> {
 
                          customFonts(
                              text: package,
-                             size: 15,
+                             size: 16,
                              color: AppColors.primaryBlackColor.withOpacity(0.9),
                              fontWeight: FontWeight.w600,
                              context: context),
@@ -248,7 +248,7 @@ class _TripsState extends State<Trips> {
                      //         context: context)),
                    ],
                  ),
-                 verticalSpace(5, context),
+                 verticalSpace(10, context),
                  Row(
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                    children: [
@@ -258,7 +258,7 @@ class _TripsState extends State<Trips> {
 
                        customFonts(
                            text: "Start date & End date",
-                           size: 10,
+                           size: 13,
                            color: AppColors.primaryBlackColor.withOpacity(0.5),
 
                            context: context),
@@ -266,19 +266,19 @@ class _TripsState extends State<Trips> {
                          children: [
                            customFonts(
                                text: startDate,
-                               size: 13,
+                               size: 14,
                                fontWeight: FontWeight.w500,
                                color: AppColors.primaryBlackColor.withOpacity(0.9),
                                context: context),
                            customFonts(
                                text: " to ",
-                               size: 13,
+                               size: 14,
                                fontWeight: FontWeight.w500,
                                color: AppColors.GlobelColor,
                                context: context),
                            customFonts(
                                text: endDate,
-                               size: 13,
+                               size: 14,
                                fontWeight: FontWeight.w500,
                                color: AppColors.primaryBlackColor.withOpacity(0.9),
                                context: context),
@@ -292,7 +292,7 @@ class _TripsState extends State<Trips> {
 
                        customFonts(
                            text: "Adults & child",
-                           size: 10,
+                           size: 13,
                            color: AppColors.primaryBlackColor.withOpacity(0.5),
 
                            context: context),
@@ -300,13 +300,13 @@ class _TripsState extends State<Trips> {
                          children: [
                            customFonts(
                                text: "$adults - ",
-                               size: 13,
+                               size: 14,
                                fontWeight: FontWeight.w500,
                                color: AppColors.primaryBlackColor.withOpacity(0.9),
                                context: context),
                            customFonts(
                                text: "$childs",
-                               size: 13,
+                               size: 14,
                                fontWeight: FontWeight.w500,
                                color: AppColors.primaryBlackColor.withOpacity(0.9),
                                context: context),
@@ -322,13 +322,13 @@ class _TripsState extends State<Trips> {
 
                      customFonts(
                          text: "Cost",
-                         size: 10,
+                         size: 13,
                          color: AppColors.primaryBlackColor.withOpacity(0.5),
 
                          context: context),
                      customFonts(
                          text: "PKR $cost",
-                         size: 15,
+                         size: 16,
                          fontWeight: FontWeight.bold,
                          color: AppColors.GlobelColor,
                          context: context),
@@ -351,7 +351,7 @@ class _TripsState extends State<Trips> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   customFonts(
-                      text: "Booking number", size: 12, color: Color(0xFF0F654E).withOpacity(0.8), context: context),
+                      text: "Booking number", size: 14, color: Color(0xFF0F654E).withOpacity(0.8), context: context),
                   GestureDetector(
                     onTap: onTap,
                     child: customFonts(
@@ -443,7 +443,7 @@ class statusContainer extends StatelessWidget {
             vertical: responsive(5, context)),
         child: customFonts(
             text: title,
-            size: 14,
+            size: 15,
             color: colors['textColor']!,
             fontWeight: FontWeight.w500,
             context: context));

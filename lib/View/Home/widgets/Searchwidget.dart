@@ -69,8 +69,9 @@ Widget Search({
           ],
         ),
         child:Padding(
-          padding:  EdgeInsets.symmetric(horizontal: responsive(23, context),vertical: responsive(10, context)),
+          padding:  EdgeInsets.symmetric(horizontal: responsive(23, context),vertical: responsive(5, context)),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
       
               SvgPicture.asset(
@@ -85,6 +86,7 @@ Widget Search({
               Padding(
                 padding:  EdgeInsets.only(left: responsive(20, context)),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     cardsubtitle(

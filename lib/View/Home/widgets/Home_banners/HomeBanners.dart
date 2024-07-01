@@ -120,41 +120,38 @@ class _PageBuilderState extends State<PageBuilder> {
                                     horizontal: responsive(15, context),
                                     vertical: responsive(5, context),
                                   ),
-                                  child: Row(
+                                  child: Column(
                                     mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                      customFonts(
+                                        text: pkg?.packageName,
+                                        size: 15,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        context: context,
+                                      ),
+
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           customFonts(
-                                            text: pkg?.packageName,
+                                            text:
+                                            "${formatDateString(pkg?.startDate)} to ${formatDateString(pkg?.endDate)}",
                                             size: 13,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white,
                                             context: context,
                                           ),
                                           customFonts(
-                                            text:
-                                            "${formatDateString(pkg?.startDate)} to ${formatDateString(pkg?.endDate)}",
-                                            size: 11,
+                                            text: "${formatCurrency(pkg?.packageCost.toInt())}",
+                                            size: 16,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white,
                                             context: context,
                                           ),
                                         ],
-                                      ),
-                                      Spacer(),
-                                      customFonts(
-                                        text: "${formatCurrency(pkg?.packageCost.toInt())}",
-                                        size: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        context: context,
                                       ),
                                     ],
                                   ),
@@ -178,11 +175,11 @@ class _PageBuilderState extends State<PageBuilder> {
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
                     height: currentPage == index
-                        ? responsive(8, context)
-                        : responsive(6.4, context),
+                        ? responsive(10, context)
+                        : responsive(8, context),
                     width: currentPage == index
-                        ? responsive(8, context)
-                        : responsive(6.4, context),
+                        ? responsive(10, context)
+                        : responsive(8, context),
                     decoration: BoxDecoration(
                         color: currentPage == index
                             ? AppColors.GlobelColor

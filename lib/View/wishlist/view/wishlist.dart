@@ -191,13 +191,13 @@ class _WishListScreenState extends State<WishListScreen> {
             color: Colors.transparent,
               borderRadius: BorderRadius.circular(responsive(6, context)),
               border: Border.all(color: const Color(0xFFDEDEDE))),
-          height: responsive(128, context),
+          height: responsive(150, context),
           child: Row(
             children: [
               Stack(
                 children: [
                   Container(
-                    height: responsive(118, context),
+                    height: responsive(150, context),
                     width: responsive(139, context),
                     child:  ClipRRect(
                       borderRadius: BorderRadius.only(
@@ -223,26 +223,26 @@ class _WishListScreenState extends State<WishListScreen> {
                       ),
                     ),
                   ),
-                  Positioned(
-                    top: responsive(0, context),
-                    right: responsive(0, context),
-                    child: Padding(
-                      padding:  EdgeInsets.only(top: responsive(08, context),right: responsive(08, context),left: responsive(50, context),bottom: responsive(50, context)),
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: responsive(20, context),
-                        width: responsive(20, context),
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                        ),
-                        child: SvgPicture.asset(
-                          "images/heart_icon_fill.svg",
-                          height: responsive(13 , context),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Positioned(
+                  //   top: responsive(0, context),
+                  //   right: responsive(0, context),
+                  //   child: Padding(
+                  //     padding:  EdgeInsets.only(top: responsive(08, context),right: responsive(08, context),left: responsive(50, context),bottom: responsive(50, context)),
+                  //     child: Container(
+                  //       alignment: Alignment.center,
+                  //       height: responsive(20, context),
+                  //       width: responsive(20, context),
+                  //       decoration: const BoxDecoration(
+                  //         color: Colors.white,
+                  //         shape: BoxShape.circle,
+                  //       ),
+                  //       child: SvgPicture.asset(
+                  //         "images/heart_icon_fill.svg",
+                  //         height: responsive(13 , context),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
               Expanded(
@@ -252,58 +252,50 @@ class _WishListScreenState extends State<WishListScreen> {
                       vertical: responsive(5, context)),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           customFonts(
                               text: packageName,
-                              size: 13,
+                              size: 14,
                               fontWeight: FontWeight.bold,
                               color: AppColors.primaryBlackColor
                                   .withOpacity(0.90),
                               context: context),
                           customFonts(
                               text: "$startDate to $endDate",
-                              size: 11,
+                              size: 13,
                               fontWeight: FontWeight.w500,
                               color: AppColors.primaryBlackColor,
                               context: context),
-                        ],
-                      ),
-                      Wrap(
-                        spacing: 0.0,
-                        children: List.generate(
-                          includeList.length,
-                          (index) => index == 0
-                              ? customFonts(
+                          verticalSpace(5, context),
+                          Wrap(
+                            spacing: 0.0,
+                            children: List.generate(
+                              includeList.length,
+                                  (index) => index == 0
+                                  ? customFonts(
                                   text: "Includes: ",
-                                  size: 10,
+                                  size: 13,
                                   color: AppColors.primaryBlackColor,
                                   fontWeight: FontWeight.bold,
                                   context: context)
-                              : customFonts(
+                                  : customFonts(
                                   text: "${includeList[index]}",
-                                  size: 10,
+                                  size: 13,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.primaryBlackColor,
                                   context: context),
-                        ),
+                            ),
+                          ),
+
+                        ],
                       ),
-                      // Wrap(
-                      //   spacing: 10,
-                      //   children: List.generate(
-                      //     7,
-                      //         (index) =>  customFonts(
-                      //         text: "Dinner",
-                      //         size: 10,
-                      //         fontWeight: FontWeight.w500,
-                      //         color: AppColors.primaryBlackColor,
-                      //         context: context),
-                      //   ),
-                      // ),
-                              
+
+
+                      Spacer(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -330,6 +322,22 @@ class _WishListScreenState extends State<WishListScreen> {
                           ),
                         ],
                       ),
+                      // Wrap(
+                      //   spacing: 10,
+                      //   children: List.generate(
+                      //     7,
+                      //         (index) =>  customFonts(
+                      //         text: "Dinner",
+                      //         size: 10,
+                      //         fontWeight: FontWeight.w500,
+                      //         color: AppColors.primaryBlackColor,
+                      //         context: context),
+                      //   ),
+                      // ),
+
+
+                              
+
                     ],
                   ),
                 ),
