@@ -387,7 +387,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                 // runSpacing: .0,
                                 children: [
                                   SizedBox(
-                                      width: responsive(140, context),
+                                      width: responsive(160, context),
                                       child: Row(
                                         children: [
                                           SvgPicture.asset(
@@ -414,7 +414,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                         ],
                                       )),
                                   SizedBox(
-                                      width: responsive(150, context),
+                                      width: responsive(160, context),
                                       child: Row(
                                         children: [
                                           SvgPicture.asset(
@@ -471,7 +471,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               ),
                               Container(
                                 child: Wrap(
-                                  spacing: 04.0,
+                                  spacing: 12,
                                   // Adjust spacing between elements
                                   // runSpacing: 5.0,
 
@@ -1003,16 +1003,17 @@ class _HotelContainerState extends State<HotelContainer> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(responsive(6, context)),
             border: Border.all(color: const Color(0xFFDEDEDE))),
-        height: responsive(170, context),
+        // height: responsive(170, context),
         // width: responsive(382, context),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
               alignment: Alignment.center,
               children: [
                 Container(
                     width: responsive(118, context),
-                    height: responsive(170, context),
+                    height: responsive(100, context),
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(responsive(10, context)),
@@ -1067,153 +1068,148 @@ class _HotelContainerState extends State<HotelContainer> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    customFonts(
+                        text: widget.hotelName,
+                        size: 14,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primaryBlackColor,
+                        context: context),
+                    customFonts(
+                        text: widget.roomType,
+                        size: 14,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.primaryBlackColor,
+                        context: context),
+                    verticalSpace(5, context),
+                    Wrap(
+                      spacing: 00.0,
                       children: [
                         customFonts(
-                            text: widget.hotelName,
-                            size: 14,
+                            text: "Includes: ",
+                            size: 13,
+                            color: AppColors.primaryBlackColor,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.primaryBlackColor,
                             context: context),
-                        customFonts(
-                            text: widget.roomType,
-                            size: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.primaryBlackColor,
-                            context: context),
-                        verticalSpace(5, context),
-                        Wrap(
-                          spacing: 00.0,
-                          children: [
-                            customFonts(
-                                text: "Includes: ",
+                        Visibility(
+                          visible: packages.details?.hotelDetail?[widget.index]
+                              .isAirCondition
+                              ? true
+                              : false,
+                          child: customFonts(
+                              text: "Air Condition - ",
+                              size: 13,
+                              color: AppColors.primaryBlackColor,
+                              fontWeight: FontWeight.w500,
+                              context: context),
+                        ),
+                        Visibility(
+                            visible: packages
+                                .details
+                                ?.hotelDetail?[widget.index]
+                                .isAttachBathroom
+                                ? true
+                                : false,
+                            child: customFonts(
+                                text: "Attached Bathroom - ",
                                 size: 13,
                                 color: AppColors.primaryBlackColor,
-                                fontWeight: FontWeight.bold,
-                                context: context),
-                            Visibility(
-                              visible: packages.details?.hotelDetail?[widget.index]
-                                  .isAirCondition
-                                  ? true
-                                  : false,
-                              child: customFonts(
-                                  text: "Air Condition - ",
-                                  size: 13,
-                                  color: AppColors.primaryBlackColor,
-                                  fontWeight: FontWeight.w500,
-                                  context: context),
-                            ),
-                            Visibility(
-                                visible: packages
-                                    .details
-                                    ?.hotelDetail?[widget.index]
-                                    .isAttachBathroom
-                                    ? true
-                                    : false,
-                                child: customFonts(
-                                    text: "Attached Bathroom - ",
-                                    size: 13,
-                                    color: AppColors.primaryBlackColor,
-                                    fontWeight: FontWeight.w500,
-                                    context: context)),
-                            Visibility(
-                                visible: packages.details
-                                    ?.hotelDetail?[widget.index].isElevator
-                                    ? true
-                                    : false,
-                                child: customFonts(
-                                    text: "Elevator - ",
-                                    size: 13,
-                                    color: AppColors.primaryBlackColor,
-                                    fontWeight: FontWeight.w500,
-                                    context: context)),
-                            Visibility(
-                                visible: packages.details
-                                    ?.hotelDetail?[widget.index].isLaundry
-                                    ? true
-                                    : false,
-                                child: customFonts(
-                                    text: "Laundry - ",
-                                    size: 13,
-                                    color: AppColors.primaryBlackColor,
-                                    fontWeight: FontWeight.w500,
-                                    context: context)),
-                            Visibility(
-                                visible: packages.details
-                                    ?.hotelDetail?[widget.index].isTelevision
-                                    ? true
-                                    : false,
-                                child: customFonts(
-                                    text: "Television - ",
-                                    size: 13,
-                                    color: AppColors.primaryBlackColor,
-                                    fontWeight: FontWeight.w500,
-                                    context: context)),
-                            Visibility(
-                                visible: packages.details
-                                    ?.hotelDetail?[widget.index].isEnglishToilet
-                                    ? true
-                                    : false,
-                                child: customFonts(
-                                    text: "English Toilet - ",
-                                    size: 13,
-                                    color: AppColors.primaryBlackColor,
-                                    fontWeight: FontWeight.w500,
-                                    context: context)),
-                            Visibility(
-                                visible: packages.details
-                                    ?.hotelDetail?[widget.index].isIndianToilet
-                                    ? true
-                                    : false,
-                                child: customFonts(
-                                    text: "Indian Toilet - ",
-                                    size: 13,
-                                    color: AppColors.primaryBlackColor,
-                                    fontWeight: FontWeight.w500,
-                                    context: context)),
-                            Visibility(
-                                visible: packages
-                                    .details
-                                    ?.hotelDetail?[widget.index]
-                                    .isShuttleServicesIncluded
-                                    ? true
-                                    : false,
-                                child: customFonts(
-                                    text: "Shuttle Services - ",
-                                    size: 13,
-                                    color: AppColors.primaryBlackColor,
-                                    fontWeight: FontWeight.w500,
-                                    context: context)),
-                            Visibility(
-                                visible: packages
-                                    .details
-                                    ?.hotelDetail?[widget.index]
-                                    .isWashroomAmenities
-                                    ? true
-                                    : false,
-                                child: customFonts(
-                                    text: "Amentites - ",
-                                    size: 13,
-                                    color: AppColors.primaryBlackColor,
-                                    fontWeight: FontWeight.w500,
-                                    context: context)),
-                            Visibility(
-                                visible: packages
-                                    .details?.hotelDetail?[widget.index].isWifi
-                                    ? true
-                                    : false,
-                                child: customFonts(
-                                    text: "Wifi",
-                                    size: 13,
-                                    color: AppColors.primaryBlackColor,
-                                    fontWeight: FontWeight.w500,
-                                    context: context)),
-                          ],
-                        ),
+                                fontWeight: FontWeight.w500,
+                                context: context)),
+                        Visibility(
+                            visible: packages.details
+                                ?.hotelDetail?[widget.index].isElevator
+                                ? true
+                                : false,
+                            child: customFonts(
+                                text: "Elevator - ",
+                                size: 13,
+                                color: AppColors.primaryBlackColor,
+                                fontWeight: FontWeight.w500,
+                                context: context)),
+                        Visibility(
+                            visible: packages.details
+                                ?.hotelDetail?[widget.index].isLaundry
+                                ? true
+                                : false,
+                            child: customFonts(
+                                text: "Laundry - ",
+                                size: 13,
+                                color: AppColors.primaryBlackColor,
+                                fontWeight: FontWeight.w500,
+                                context: context)),
+                        Visibility(
+                            visible: packages.details
+                                ?.hotelDetail?[widget.index].isTelevision
+                                ? true
+                                : false,
+                            child: customFonts(
+                                text: "Television - ",
+                                size: 13,
+                                color: AppColors.primaryBlackColor,
+                                fontWeight: FontWeight.w500,
+                                context: context)),
+                        Visibility(
+                            visible: packages.details
+                                ?.hotelDetail?[widget.index].isEnglishToilet
+                                ? true
+                                : false,
+                            child: customFonts(
+                                text: "English Toilet - ",
+                                size: 13,
+                                color: AppColors.primaryBlackColor,
+                                fontWeight: FontWeight.w500,
+                                context: context)),
+                        Visibility(
+                            visible: packages.details
+                                ?.hotelDetail?[widget.index].isIndianToilet
+                                ? true
+                                : false,
+                            child: customFonts(
+                                text: "Indian Toilet - ",
+                                size: 13,
+                                color: AppColors.primaryBlackColor,
+                                fontWeight: FontWeight.w500,
+                                context: context)),
+                        Visibility(
+                            visible: packages
+                                .details
+                                ?.hotelDetail?[widget.index]
+                                .isShuttleServicesIncluded
+                                ? true
+                                : false,
+                            child: customFonts(
+                                text: "Shuttle Services - ",
+                                size: 13,
+                                color: AppColors.primaryBlackColor,
+                                fontWeight: FontWeight.w500,
+                                context: context)),
+                        Visibility(
+                            visible: packages
+                                .details
+                                ?.hotelDetail?[widget.index]
+                                .isWashroomAmenities
+                                ? true
+                                : false,
+                            child: customFonts(
+                                text: "Amentites - ",
+                                size: 13,
+                                color: AppColors.primaryBlackColor,
+                                fontWeight: FontWeight.w500,
+                                context: context)),
+                        Visibility(
+                            visible: packages
+                                .details?.hotelDetail?[widget.index].isWifi
+                                ? true
+                                : false,
+                            child: customFonts(
+                                text: "Wifi",
+                                size: 13,
+                                color: AppColors.primaryBlackColor,
+                                fontWeight: FontWeight.w500,
+                                context: context)),
                       ],
                     ),
-Spacer(),
+
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

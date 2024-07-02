@@ -21,6 +21,7 @@ import '../../../../../TextStyles/Color.dart';
 import '../../../../../TextStyles/styles.dart';
 import '../../../../Booking/Controller/BookingediteController/BookingEditeController.dart';
 import '../../../../Booking/View/verify_payment.dart';
+import '../../../../Booking/Widgets/progress_widget.dart';
 import '../../../../Details/View/Details.dart';
 import '../../../../Details/View/detail_screen.dart';
 import '../../../../auth/controller/is_user_exist_controller.dart';
@@ -66,6 +67,13 @@ class _TripsState extends State<Trips> {
     return Consumer4<IsUserExitsController,
         transectioncontroller, Bookingedite, pakagecontrollers>(
         builder: (context, user, transection, booking, pkg, child) {
+
+
+
+
+
+
+
           if(booking.Blist.isEmpty){
             booking.getbookings(user.isUser?.sessionToken);
           }
@@ -94,9 +102,31 @@ class _TripsState extends State<Trips> {
                   child: ListView.builder(
                     itemCount: booking.Blist.length,
                     itemBuilder: (context, index){
+
+                      var bookingList = [
+                        booking.booking?.bookingDocumentsStatus?[0].isAirlineCompleted,
+                        booking.booking?.bookingDocumentsStatus?[0].isVisaCompleted,
+                        booking.booking?.bookingDocumentsStatus?[0].isHotelCompleted,
+                        booking.booking?.bookingDocumentsStatus?[0].isUserPassportCompleted,
+                        booking.booking?.bookingDocumentsStatus?[0].isTransportCompleted,
+                      ];
+
+                      print("$bookingList");
+
+                      double? calculateCompletionPercentage(var bookingList) {
+                        // Count the number of true values in the list
+                        int completedCount = bookingList.where((status) => status == true).length;
+
+                        // Calculate the percentage
+                        double? percentage = (completedCount / bookingList.length * 100).toDouble();
+
+                        return percentage;
+                      }
+
                       return Padding(
                         padding:  EdgeInsets.only(bottom: responsive(20, context)),
                         child: bookingContainer(
+                          percent: calculateCompletionPercentage(bookingList),
                           package: booking.Blist[index].packageName,
                           companyName: 'N/A',
                           status:booking.Blist[index].bookingStatus == "Initialize"?'Not Paid':booking.Blist[index].bookingStatus,
@@ -171,6 +201,7 @@ class _TripsState extends State<Trips> {
 
   Widget bookingContainer(
       {
+        required var percent,
         required var package,
         required var companyName,
       required var status,
@@ -205,13 +236,15 @@ class _TripsState extends State<Trips> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            statusContainer(title: status, bookingNumber: bookingNumber,),
+            verticalSpace(5, context),
            Padding(
-             padding: EdgeInsets.all(responsive(20, context)),
+             padding: EdgeInsets.all(responsive(10, context)),
              child: Column(
                crossAxisAlignment: CrossAxisAlignment.start,
                children: [
                  Row(
-                   crossAxisAlignment: CrossAxisAlignment.start,
+                   crossAxisAlignment: CrossAxisAlignment.center,
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                    children: [
                      Column(
@@ -224,6 +257,30 @@ class _TripsState extends State<Trips> {
                              color: AppColors.primaryBlackColor.withOpacity(0.9),
                              fontWeight: FontWeight.w600,
                              context: context),
+                         verticalSpace(5, context),
+                         Row(
+
+                           children: [
+                             customFonts(
+                                 text: startDate,
+                                 size: 14,
+                                 fontWeight: FontWeight.w500,
+                                 color: AppColors.primaryBlackColor.withOpacity(0.9),
+                                 context: context),
+                             customFonts(
+                                 text: " to ",
+                                 size: 14,
+                                 fontWeight: FontWeight.w500,
+                                 color: AppColors.GlobelColor,
+                                 context: context),
+                             customFonts(
+                                 text: endDate,
+                                 size: 14,
+                                 fontWeight: FontWeight.w500,
+                                 color: AppColors.primaryBlackColor.withOpacity(0.9),
+                                 context: context),
+                           ],
+                         ),
                          // verticalSpace(2, context),
                          // customFonts(
                          //     text: companyName,
@@ -232,7 +289,23 @@ class _TripsState extends State<Trips> {
                          //     context: context),
                        ],
                      ),
-                     statusContainer(title: status)
+
+                     Stack(
+                       alignment: Alignment.center,
+                       children: [
+                         CircularProgressIndicator(
+                           value: percent/100, // Convert percentage to a value between 0 and 1
+                           backgroundColor: Color(0xFFDAE8E5),
+                           color: AppColors.GlobelColor,
+                           strokeWidth: responsive(5, context),
+                         ),
+
+                         customFonts(context: context, text: '${percent == 0.0?0:percent.toInt()}%', color: AppColors.GlobelColor,size: 15, fontWeight: FontWeight.w500,)
+
+
+                       ],
+                     ),
+
                      // Container(
                      //     decoration: BoxDecoration(
                      //       color: AppColors.GlobelColor.withOpacity(0.08),
@@ -248,137 +321,56 @@ class _TripsState extends State<Trips> {
                      //         context: context)),
                    ],
                  ),
-                 verticalSpace(10, context),
+                 verticalSpace(15, context),
                  Row(
+                   crossAxisAlignment: CrossAxisAlignment.end,
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                    children: [
-                   Column(
-                     crossAxisAlignment: CrossAxisAlignment.start,
-                     children: [
-
-                       customFonts(
-                           text: "Start date & End date",
-                           size: 13,
-                           color: AppColors.primaryBlackColor.withOpacity(0.5),
-
-                           context: context),
-                       Row(
-                         children: [
-                           customFonts(
-                               text: startDate,
-                               size: 14,
-                               fontWeight: FontWeight.w500,
-                               color: AppColors.primaryBlackColor.withOpacity(0.9),
-                               context: context),
-                           customFonts(
-                               text: " to ",
-                               size: 14,
-                               fontWeight: FontWeight.w500,
-                               color: AppColors.GlobelColor,
-                               context: context),
-                           customFonts(
-                               text: endDate,
-                               size: 14,
-                               fontWeight: FontWeight.w500,
-                               color: AppColors.primaryBlackColor.withOpacity(0.9),
-                               context: context),
-                         ],
-                       )
-                     ],
-                   ),
-                   Column(
-                     crossAxisAlignment: CrossAxisAlignment.end,
-                     children: [
-
-                       customFonts(
-                           text: "Adults & child",
-                           size: 13,
-                           color: AppColors.primaryBlackColor.withOpacity(0.5),
-
-                           context: context),
-                       Row(
-                         children: [
-                           customFonts(
-                               text: "$adults - ",
-                               size: 14,
-                               fontWeight: FontWeight.w500,
-                               color: AppColors.primaryBlackColor.withOpacity(0.9),
-                               context: context),
-                           customFonts(
-                               text: "$childs",
-                               size: 14,
-                               fontWeight: FontWeight.w500,
-                               color: AppColors.primaryBlackColor.withOpacity(0.9),
-                               context: context),
-                         ],
-                       )
-                     ],
-                   ),
-                 ],),
-                 verticalSpace(5, context),
-                 Column(
-                   crossAxisAlignment: CrossAxisAlignment.start,
-                   children: [
-
-                     customFonts(
-                         text: "Cost",
-                         size: 13,
-                         color: AppColors.primaryBlackColor.withOpacity(0.5),
-
-                         context: context),
                      customFonts(
                          text: "PKR $cost",
                          size: 16,
                          fontWeight: FontWeight.bold,
                          color: AppColors.GlobelColor,
                          context: context),
+                     GestureDetector(
+                       onTap: (){},
+                       child: Container(
+                         alignment: Alignment.center,
+                         height: responsive(25, context),
+                         width: responsive(50, context),
+                         padding: EdgeInsets.symmetric(horizontal: responsive(6, context)),
+                         decoration: BoxDecoration(
+                             borderRadius: BorderRadius.circular(responsive(6, context)),
+                             border: Border.all(
+
+                               color: Color(0xFFBBBBBB),
+                             )
+                         ),
+                         child: customFonts(text: "View", size: 14, fontWeight: FontWeight.w500, color: AppColors.GlobelColor, context: context),
+                       ),
+                     )
                    ],
                  ),
                ],
              ),
            ),
-            Container(
-              padding:  EdgeInsets.symmetric(horizontal: responsive(20, context)),
-              height: responsive(40, context),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(responsive(5, context))
-                ),
-                color: AppColors.GlobelColor.withOpacity(0.15),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  customFonts(
-                      text: "Booking number", size: 14, color: Color(0xFF0F654E).withOpacity(0.8), context: context),
-                  GestureDetector(
-                    onTap: onTap,
-                    child: customFonts(
-                        text: "$bookingNumber",
-                        size: 16,
-                        color: Color(0xFF0F654E).withOpacity(0.8),
-                        fontWeight: FontWeight.bold,
-                        context: context),
-                  ),
-                ],
-              ),
-            ),
+
           ],
         ),
       ),
     );
   }
 
-  
+
 
 }
 
 class statusContainer extends StatelessWidget {
   final String title;
+  var bookingNumber;
 
 
-  statusContainer({required this.title});
+  statusContainer({required this.title, required this.bookingNumber});
 
   // Define your status colors
   final Map<String, Map<String, Color>> statuses = {
@@ -435,17 +427,44 @@ class statusContainer extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
           color: colors['containerColor']!,
-          border: title == "Paid" ? Border.all(color: Color(0xFF00936C)) : null,
-          borderRadius: BorderRadius.circular(responsive(5, context)),
+          // border: title == "Paid" ? Border.all(color: Color(0xFF00936C)) : null,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(responsive(5, context))),
         ),
         padding: EdgeInsets.symmetric(
             horizontal: responsive(10, context),
-            vertical: responsive(5, context)),
-        child: customFonts(
-            text: title,
-            size: 15,
-            color: colors['textColor']!,
-            fontWeight: FontWeight.w500,
-            context: context));
+            vertical: responsive(10, context)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                customFonts(text: "Status", size: 13, color: colors['textColor']!, context: context),
+
+                customFonts(
+                    text: title,
+                    size: 15,
+
+                    color: colors['textColor']!,
+                    fontWeight: FontWeight.bold,
+                    context: context),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                customFonts(text: "Booking number", size: 13, color: colors['textColor']!, context: context),
+
+                customFonts(
+                    text: bookingNumber,
+                    size: 15,
+
+                    color: colors['textColor']!,
+                    fontWeight: FontWeight.bold,
+                    context: context),
+              ],
+            ),
+          ],
+        ));
   }
 }

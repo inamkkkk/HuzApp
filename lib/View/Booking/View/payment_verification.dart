@@ -171,6 +171,8 @@ class _PaymentVerificationState extends State<PaymentVerification> {
       child: Consumer4<IsUserExitsController, Bookingedite, pakagecontrollers,transectioncontroller>(
           builder: (context, user,  booking, pkg,transection, child) {
 
+
+
             return Scaffold(
               appBar: AppBar(
                 automaticallyImplyLeading: false,

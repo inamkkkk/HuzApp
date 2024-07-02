@@ -8,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:huz/View/Details/View/detail_screen.dart';
+import 'package:huz/View/search_br/widgets/range_slider.dart';
 import 'package:huz/Widgets/custom_app_bar.dart';
 
 import 'package:huz/Widgets/date_picker/date_picker.dart';
@@ -120,6 +121,71 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
                           ),
                         ),
 
+                        // Adjust Pricing
+
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: responsive(20, context)),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color.fromRGBO(0, 0, 0, 0.12),
+
+                                    blurRadius:
+                                    10, // Assuming responsive() function returns the responsive blur radius
+                                  )
+                                ],
+                                color: Colors.white,
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(
+                                    responsive(20, context),
+                                  ),
+                                  bottom: Radius.circular(
+                                    responsive(20, context),
+                                  ),
+                                )),
+                            padding: EdgeInsets.symmetric(vertical: responsive(30, context)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding:  EdgeInsets.symmetric(horizontal: responsive(30, context)),
+                                  child: customFonts(
+                                      text: "Your budget",
+                                      size: 18,
+                                      fontWeight: FontWeight.w600,
+                                      context: context),
+                                ),
+                                verticalSpace(10, context),
+
+                                Column(
+                                  children: [
+                                    Padding(
+                                      padding:  EdgeInsets.symmetric(horizontal: responsive(10, context)),
+                                      child: PriceRangeSlider(),
+                                    ),
+                                    Padding(
+                                      padding:  EdgeInsets.symmetric(horizontal: responsive(30, context)),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          customFonts(text: "80,000", size: 16, context: context),
+                                          customFonts(text: "10,000,00", size: 16, context: context),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        verticalSpace(20, context),
+
+
                         // Adjust date
 
                         Padding(
@@ -164,6 +230,8 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
                             },
                           ),
                         ),
+
+
 
                         verticalSpace(20, context),
                         // adjust guests
@@ -443,7 +511,6 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
                               selectedEndDate == pEndate) {
                             setState(() {
                               isFound = true;
-
                             });
                             searchList.add(packagesContainer(
                                 id: pkg?.huzToken,

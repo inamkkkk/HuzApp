@@ -820,16 +820,17 @@ class _HomeScreenState extends State<HomeScreen> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(responsive(6, context)),
           border: Border.all(color: const Color(0xFFDEDEDE))),
-      height: responsive(150, context),
+      // height: responsive(150, context),
       // width: responsive(382, context),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
 
             children: [
               Container(
-                height: responsive(150, context),
+                // height: responsive(150, context),
                 width: responsive(139, context),
                 child: ClipRRect(
                   borderRadius: BorderRadius.only(
@@ -842,13 +843,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     imageUrl: "${image}",
                     placeholder: (context, url) => Image.asset(
                       'images/placeholder-image.png',
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fitHeight,
                     ),
                     errorWidget: (context, url, error) => Image.asset(
                       'images/placeholder-image.png',
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fitHeight,
                     ),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fitHeight,
                   ),
                 ),
               ),
@@ -887,54 +888,50 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           Expanded(
+            flex: 2,
             child: Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: responsive(10, context),
-                vertical: responsive(5, context)
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      customFonts(
-                          text: packageName,
-                          size: 14,
+                  customFonts(
+                      text: packageName,
+                      size: 14,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primaryBlackColor.withOpacity(0.90),
+                      context: context),
+                  customFonts(
+                      text:
+                          "${formatDateString(startDate)} to ${formatDateString(endDate)}",
+                      size: 13,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primaryBlackColor,
+                      context: context),
+                  verticalSpace(5, context),
+                  Wrap(
+                    spacing: 0.0,
+                    children: List.generate(
+                      inlcudes.length,
+                          (index) => index == 0
+                          ? customFonts(
+                          text: "Includes: ",
+                          size: 13,
+                          color: AppColors.primaryBlackColor,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.primaryBlackColor.withOpacity(0.90),
-                          context: context),
-                      customFonts(
-                          text:
-                              "${formatDateString(startDate)} to ${formatDateString(endDate)}",
+                          context: context)
+                          : customFonts(
+                          text: "${inlcudes[index]}",
                           size: 13,
                           fontWeight: FontWeight.w500,
                           color: AppColors.primaryBlackColor,
                           context: context),
-                      verticalSpace(5, context),
-                      Wrap(
-                        spacing: 0.0,
-                        children: List.generate(
-                          inlcudes.length,
-                              (index) => index == 0
-                              ? customFonts(
-                              text: "Includes: ",
-                              size: 13,
-                              color: AppColors.primaryBlackColor,
-                              fontWeight: FontWeight.bold,
-                              context: context)
-                              : customFonts(
-                              text: "${inlcudes[index]}",
-                              size: 13,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.primaryBlackColor,
-                              context: context),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                  Spacer(),
+                  verticalSpace(5, context),
+                  // Spacer(),
                   // Wrap(
                   //   spacing: 10,
                   //   children: List.generate(

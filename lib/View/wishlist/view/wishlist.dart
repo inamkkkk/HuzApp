@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:huz/Responsive/ResponsiveClass.dart';
@@ -191,61 +192,90 @@ class _WishListScreenState extends State<WishListScreen> {
             color: Colors.transparent,
               borderRadius: BorderRadius.circular(responsive(6, context)),
               border: Border.all(color: const Color(0xFFDEDEDE))),
-          height: responsive(150, context),
+          // height: responsive(150, context),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Stack(
-                children: [
-                  Container(
-                    height: responsive(150, context),
-                    width: responsive(139, context),
-                    child:  ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(responsive(10, context)),
-                        topRight: Radius.circular(responsive(10, context)),
-                        bottomRight: Radius.circular(responsive(10, context)),
-                        bottomLeft: Radius.circular(responsive(10, context)),
-                      ),
-                      child: CachedNetworkImage(
-                        imageUrl:
-                        "${image}",
-                        placeholder: (context, url) =>
-                            Image.asset(
-                              'images/placeholder-image.png',
-                              fit: BoxFit.cover,
-                            ),
-                        errorWidget: (context, url, error) =>
-                            Image.asset(
-                              'images/placeholder-image.png',
-                              fit: BoxFit.cover,
-                            ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+              Container(
+
+                width: responsive(139, context),
+                child:  ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(responsive(10, context)),
+                    topRight: Radius.circular(responsive(10, context)),
+                    bottomRight: Radius.circular(responsive(10, context)),
+                    bottomLeft: Radius.circular(responsive(10, context)),
                   ),
-                  // Positioned(
-                  //   top: responsive(0, context),
-                  //   right: responsive(0, context),
-                  //   child: Padding(
-                  //     padding:  EdgeInsets.only(top: responsive(08, context),right: responsive(08, context),left: responsive(50, context),bottom: responsive(50, context)),
-                  //     child: Container(
-                  //       alignment: Alignment.center,
-                  //       height: responsive(20, context),
-                  //       width: responsive(20, context),
-                  //       decoration: const BoxDecoration(
-                  //         color: Colors.white,
-                  //         shape: BoxShape.circle,
-                  //       ),
-                  //       child: SvgPicture.asset(
-                  //         "images/heart_icon_fill.svg",
-                  //         height: responsive(13 , context),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                ],
+                  child: CachedNetworkImage(
+                    imageUrl:
+                    "${image}",
+                    placeholder: (context, url) =>
+                        Image.asset(
+                          'images/placeholder-image.png',
+                          fit: BoxFit.cover,
+                        ),
+                    errorWidget: (context, url, error) =>
+                        Image.asset(
+                          'images/placeholder-image.png',
+                          fit: BoxFit.cover,
+                        ),
+                    fit: BoxFit.contain,
+                  ),
+                ),
               ),
+              // Stack(
+              //   children: [
+              //     Container(
+              //       // height: responsive(150, context),
+              //       width: responsive(139, context),
+              //       child:  ClipRRect(
+              //         borderRadius: BorderRadius.only(
+              //           topLeft: Radius.circular(responsive(10, context)),
+              //           topRight: Radius.circular(responsive(10, context)),
+              //           bottomRight: Radius.circular(responsive(10, context)),
+              //           bottomLeft: Radius.circular(responsive(10, context)),
+              //         ),
+              //         child: CachedNetworkImage(
+              //           imageUrl:
+              //           "${image}",
+              //           placeholder: (context, url) =>
+              //               Image.asset(
+              //                 'images/placeholder-image.png',
+              //                 fit: BoxFit.cover,
+              //               ),
+              //           errorWidget: (context, url, error) =>
+              //               Image.asset(
+              //                 'images/placeholder-image.png',
+              //                 fit: BoxFit.cover,
+              //               ),
+              //           fit: BoxFit.cover,
+              //         ),
+              //       ),
+              //     ),
+              //     // Positioned(
+              //     //   top: responsive(0, context),
+              //     //   right: responsive(0, context),
+              //     //   child: Padding(
+              //     //     padding:  EdgeInsets.only(top: responsive(08, context),right: responsive(08, context),left: responsive(50, context),bottom: responsive(50, context)),
+              //     //     child: Container(
+              //     //       alignment: Alignment.center,
+              //     //       height: responsive(20, context),
+              //     //       width: responsive(20, context),
+              //     //       decoration: const BoxDecoration(
+              //     //         color: Colors.white,
+              //     //         shape: BoxShape.circle,
+              //     //       ),
+              //     //       child: SvgPicture.asset(
+              //     //         "images/heart_icon_fill.svg",
+              //     //         height: responsive(13 , context),
+              //     //       ),
+              //     //     ),
+              //     //   ),
+              //     // ),
+              //   ],
+              // ),
               Expanded(
+
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: responsive(10, context),
@@ -254,48 +284,39 @@ class _WishListScreenState extends State<WishListScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          customFonts(
-                              text: packageName,
-                              size: 14,
+                      customFonts(
+                          text: packageName,
+                          size: 14,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryBlackColor
+                              .withOpacity(0.90),
+                          context: context),
+                      customFonts(
+                          text: "$startDate to $endDate",
+                          size: 13,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.primaryBlackColor,
+                          context: context),
+                      verticalSpace(5, context),
+                      Wrap(
+                        spacing: 0.0,
+                        children: List.generate(
+                          includeList.length,
+                              (index) => index == 0
+                              ? customFonts(
+                              text: "Includes: ",
+                              size: 13,
+                              color: AppColors.primaryBlackColor,
                               fontWeight: FontWeight.bold,
-                              color: AppColors.primaryBlackColor
-                                  .withOpacity(0.90),
-                              context: context),
-                          customFonts(
-                              text: "$startDate to $endDate",
+                              context: context)
+                              : customFonts(
+                              text: "${includeList[index]}",
                               size: 13,
                               fontWeight: FontWeight.w500,
                               color: AppColors.primaryBlackColor,
                               context: context),
-                          verticalSpace(5, context),
-                          Wrap(
-                            spacing: 0.0,
-                            children: List.generate(
-                              includeList.length,
-                                  (index) => index == 0
-                                  ? customFonts(
-                                  text: "Includes: ",
-                                  size: 13,
-                                  color: AppColors.primaryBlackColor,
-                                  fontWeight: FontWeight.bold,
-                                  context: context)
-                                  : customFonts(
-                                  text: "${includeList[index]}",
-                                  size: 13,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.primaryBlackColor,
-                                  context: context),
-                            ),
-                          ),
-
-                        ],
+                        ),
                       ),
-
-
-                      Spacer(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -322,6 +343,9 @@ class _WishListScreenState extends State<WishListScreen> {
                           ),
                         ],
                       ),
+
+
+
                       // Wrap(
                       //   spacing: 10,
                       //   children: List.generate(
