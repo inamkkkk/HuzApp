@@ -18,6 +18,7 @@ import 'package:huz/View/Details/View/detail_screen.dart';
 import 'package:huz/View/Home/View/inbox/inbox.dart';
 import 'package:huz/View/Home/View/trips/view/trips.dart';
 import 'package:huz/View/auth/controller/is_user_exist_controller.dart';
+import 'package:huz/View/eVisa/view/evisa_screen.dart';
 import 'package:huz/View/hajj_umrah_guide/hajj_guide.dart';
 import 'package:huz/View/hajj_umrah_guide/model/umrah_guide.dart';
 import 'package:huz/View/hajj_umrah_guide/umra_guide_detal_screen.dart';
@@ -571,7 +572,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                )
+                ) : isSelect == 2 ? EVisaScreen()
               : isSelect == 3
                   ? ListView.builder(
                       padding: EdgeInsets.symmetric(
