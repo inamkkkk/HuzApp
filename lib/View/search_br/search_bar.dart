@@ -520,7 +520,7 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
                                 image: "",
                                 packageName: pkg?.packageName,
                                 startDate: pkg?.startDate,
-                                endDate: pkg?.startDate,
+                                endDate: pkg?.endDate,
                                 amount: pkg?.packageCost));
                           }
 
