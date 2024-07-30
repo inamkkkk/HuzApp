@@ -307,24 +307,18 @@ class _DetailScreenState extends State<DetailScreen> {
                                         color: AppColors.primaryBlackColor,
                                         context: context),
                                     verticalSpace(10, context),
-                                    Row(
-                                      children: [
-                                        BoxWidget(
-                                            formatCurrency(packages.details!.costForChild.toInt()),
-                                            'Child',
-                                            context,
-                                            isCost: true
-                                        ),
-                                        SizedBox(
-                                          width: responsive(10, context),
-                                        ),
-                                        BoxWidget(
-                                            formatCurrency(packages.details!.costForInfants.toInt()),
-                                            'Infant',
-                                            context,
-                                            isCost: true
-                                        ),
-                                      ],
+                                    BoxWidget(
+                                        formatCurrency(packages.details!.costForChild.toInt()),
+                                        'Child',
+                                        context,
+                                        isCost: true
+                                    ),
+                                    verticalSpace(10, context),
+                                    BoxWidget(
+                                        formatCurrency(packages.details!.costForInfants.toInt()),
+                                        'Infant',
+                                        context,
+                                        isCost: true
                                     ),
                                     verticalSpace(10, context),
                                     customFonts(
@@ -335,44 +329,32 @@ class _DetailScreenState extends State<DetailScreen> {
                                         color: AppColors.primaryBlackColor,
                                         context: context),
                                     verticalSpace(10, context),
-                                    Row(
-                                      children: [
-                                        BoxWidget(
-                                          formatCurrency(packages.details!.costForSingle.toInt()),
-                                          'Single room',
-                                          context,
-                                          isCost: true
-                                        ),
-                                        SizedBox(
-                                          width: responsive(10, context),
-                                        ),
-                                        BoxWidget(
-                                            formatCurrency(packages.details!.costForDouble.toInt()),
-                                            'Double room',
-                                            context,
-                                            isCost: true
-                                        ),
-                                      ],
+                                    BoxWidget(
+                                      formatCurrency(packages.details!.costForSingle.toInt()),
+                                      'Single room',
+                                      context,
+                                      isCost: true
                                     ),
                                     verticalSpace(10, context),
-                                    Row(
-                                      children: [
-                                        BoxWidget(
-                                            formatCurrency(packages.details!.costForTriple.toInt()),
-                                            'Triple Room',
-                                            context,
-                                            isCost: true
-                                        ),
-                                        SizedBox(
-                                          width: responsive(10, context),
-                                        ),
-                                        BoxWidget(
-                                            formatCurrency(packages.details!.costForQuad.toInt()),
-                                            'Quad room',
-                                            context,
-                                            isCost: true
-                                        ),
-                                      ],
+                                    BoxWidget(
+                                        formatCurrency(packages.details!.costForDouble.toInt()),
+                                        'Double room',
+                                        context,
+                                        isCost: true
+                                    ),
+                                    verticalSpace(10, context),
+                                    BoxWidget(
+                                        formatCurrency(packages.details!.costForTriple.toInt()),
+                                        'Triple Room',
+                                        context,
+                                        isCost: true
+                                    ),
+                                    verticalSpace(10, context),
+                                    BoxWidget(
+                                        formatCurrency(packages.details!.costForQuad.toInt()),
+                                        'Quad room',
+                                        context,
+                                        isCost: true
                                     ),
                                     verticalSpace(10, context),
                                     BoxWidget(
@@ -1066,6 +1048,29 @@ class HotelContainer extends StatefulWidget {
 }
 
 class _HotelContainerState extends State<HotelContainer> {
+
+
+
+  final GlobalKey _containerKey = GlobalKey();
+
+  double _containerHeight = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _getContainerHeight());
+  }
+
+  void _getContainerHeight() {
+    final RenderBox? renderBox = _containerKey.currentContext?.findRenderObject() as RenderBox?;
+    if (renderBox != null) {
+      setState(() {
+        _containerHeight = renderBox.size.height;
+        print(" ************** COntainer height : $_containerHeight");
+      });
+    }
+  }
+
   int currentPage = 0;
   var currentImageUrl = "";
   var randomIndex;
@@ -1086,6 +1091,7 @@ class _HotelContainerState extends State<HotelContainer> {
 
       print('${NetworkServices.ibaseUrl}');
       return Container(
+        height: responsive(140, context),
         padding: EdgeInsets.all(responsive(5, context)),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(responsive(6, context)),
@@ -1096,11 +1102,13 @@ class _HotelContainerState extends State<HotelContainer> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
+
               alignment: Alignment.center,
               children: [
                 Container(
-                    width: responsive(118, context),
-                    height: responsive(100, context),
+                    width: responsive(130, context),
+                    height: responsive(130, context),
+                    key: _containerKey,
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(responsive(10, context)),
@@ -1112,21 +1120,17 @@ class _HotelContainerState extends State<HotelContainer> {
                         controller: pageController,
                         scrollDirection: Axis.horizontal,
                         children: list!.map((item) {
-                          return Container(
-                            width: double.infinity,
-                            // color: currentIndex == context.watch<int>() ? Colors.blue : Colors.white,
-                            child: CachedNetworkImage(
-                              imageUrl: "${item}",
-                              placeholder: (context, url) => Image.asset(
-                                'images/placeholder-image.png',
-                                fit: BoxFit.cover,
-                              ),
-                              errorWidget: (context, url, error) => Image.asset(
-                                'images/placeholder-image.png',
-                                fit: BoxFit.cover,
-                              ),
+                          return CachedNetworkImage(
+                            imageUrl: "${item}",
+                            placeholder: (context, url) => Image.asset(
+                              'images/placeholder-image.png',
                               fit: BoxFit.cover,
                             ),
+                            errorWidget: (context, url, error) => Image.asset(
+                              'images/placeholder-image.png',
+                              fit: BoxFit.cover,
+                            ),
+                            fit: BoxFit.cover,
                           );
                         }).toList(),
                         onPageChanged: (int index) =>
@@ -1144,6 +1148,7 @@ class _HotelContainerState extends State<HotelContainer> {
               ],
             ),
             Expanded(
+
               child: Padding(
                 padding: EdgeInsets.only(
                   right: 5,
@@ -1153,7 +1158,8 @@ class _HotelContainerState extends State<HotelContainer> {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
                   children: [
                     customFonts(
                         text: widget.hotelName,
@@ -1296,7 +1302,9 @@ class _HotelContainerState extends State<HotelContainer> {
                                 context: context)),
                       ],
                     ),
+Spacer(),
 
+                    verticalSpace(5, context),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

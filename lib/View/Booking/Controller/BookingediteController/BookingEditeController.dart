@@ -37,19 +37,19 @@ class Bookingedite with ChangeNotifier{
   var editemessage = "error" ;
   var edite= false;
   var bmessage = "";
-  var roomType;
-  var roomCost;
+  var selectedRoom = "Single";
+  var finalRoom = "";
+  var updatePrice = "";
 
   void updatedate({var startdate, enddate}){
     startDate = startdate;
     endDate = enddate;
-
     notifyListeners();
 
   }
 
   void roomChange(value){
-    roomType = value;
+    selectedRoom = value;
     notifyListeners();
   }
 
@@ -171,7 +171,7 @@ Future<bool> submitobjection(
       "adults": adults,
       "child": childrens,
       "infants":infents,
-      "room_type": "Sharing",
+      "room_type": finalRoom,
       "start_date": sdate,
       "end_date":edate,
       "total_price":price,
