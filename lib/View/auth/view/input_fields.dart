@@ -34,7 +34,8 @@ class NumberInputTextField extends StatelessWidget {
     this.suffixText,
     this.cursorHeight,
     this.initialvalue,
-    this.formater
+    this.formater,
+    this.textAlignVertical
   });
   var formater;
   final TextEditingController? controller;
@@ -42,6 +43,7 @@ class NumberInputTextField extends StatelessWidget {
   final Color? hintColor;
   final bool? readOnly;
   final TextAlign? textAlign;
+  final TextAlignVertical? textAlignVertical;
   final TextInputType? keyboardType;
   final String? prefixText;
   final VoidCallback? onTap;
@@ -58,6 +60,7 @@ class NumberInputTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      textAlignVertical: textAlignVertical,
       inputFormatters: formater,
       initialValue: initialvalue,
       cursorHeight: cursorHeight,
