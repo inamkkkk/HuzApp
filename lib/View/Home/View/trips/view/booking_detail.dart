@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,10 +11,14 @@ import 'package:huz/View/Complaints/Controller/Controller/ComplaintController.da
 import 'package:huz/View/Complaints/View/view/Complaints/Complaints.dart';
 import 'package:huz/View/Details/View/detail_screen.dart';
 import 'package:huz/Widgets/custom_app_bar.dart';
+import 'package:huz/Widgets/snackbar.dart';
+import 'package:huz/widgets/primary_button.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../Rating/rating.dart';
 import '../../../../../Responsive/ResponsiveClass.dart';
+import '../../../../../TextStyles/AppFonts.dart';
 import '../../../../../TextStyles/Color.dart';
 import '../../../../../TextStyles/styles.dart';
 import '../../../../Booking/Controller/BookingediteController/BookingEditeController.dart';
@@ -34,6 +40,15 @@ class _BookingDetailState extends State<BookingDetail> {
   var count = 0;
   var count2 = 0;
  var isapi =false;
+
+  final TextEditingController titleController = TextEditingController();
+
+  final TextEditingController yourSituationController = TextEditingController();
+
+
+  final FocusNode titleFocusNode = FocusNode();
+
+  final FocusNode yourSituationFocusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,9 +157,11 @@ class _BookingDetailState extends State<BookingDetail> {
 
                     // uploadDocuments
 
-                    booking.booking?.bookingStatus == "Paid" ||
-                            booking.booking?.bookingStatus != "Pending"
-                        ? Container(
+                    // booking.booking?.bookingStatus == "Paid" ||
+                    //         booking.booking?.bookingStatus != "Pending"
+                    //     ?
+
+                    Container(
                             alignment: Alignment.center,
                             height: responsive(45, context),
                             decoration: BoxDecoration(
@@ -161,10 +178,10 @@ class _BookingDetailState extends State<BookingDetail> {
                                 horizontalSpace(6, context),
                                 InkWell(
                                     onTap: () {
-                                      if (booking.booking?.bookingStatus ==
-                                              "Paid" ||
-                                          booking.booking?.bookingStatus ==
-                                              "Confirm")
+                                      // if (booking.booking?.bookingStatus ==
+                                      //         "Paid" ||
+                                      //     booking.booking?.bookingStatus ==
+                                      //         "Confirm")
                                         Get.to(UploadRequiredDocs());
                                     },
                                     child: customFonts(
@@ -174,14 +191,14 @@ class _BookingDetailState extends State<BookingDetail> {
                                                         ?.bookingStatus ==
                                                     "Confirm"
                                             ? "Upload Required Documents"
-                                            : "Shared Documents",
+                                            : "User Shared Documents",
                                         size: 15,
                                         color: Colors.white,
                                         context: context))
                               ],
                             ),
-                          )
-                        : SizedBox(),
+                          ),
+                        // : SizedBox(),
 
                     verticalSpace(20, context),
 
@@ -259,49 +276,22 @@ class _BookingDetailState extends State<BookingDetail> {
                                                 );
                                               }))
                                       : SizedBox(),
+
                                 ],
                               ),
-                              // verticalSpace(10, context),
-                              // Row(
-                              //   children: [
-                              //     Expanded(child: documentContainer(icon: "images/hotel_icon_global.svg", title: "Hotel", onTap: (){
-                              //       showModalBottomSheet(
-                              //         context: context,
-                              //         builder: (BuildContext context) {
-                              //           return Docviewer(
-                              //             name:'Hotel',
-                              //             list: booking.booking?.bookingRequiredDocuments,
-                              //             onSelectCountry: (String country) {
-                              //               setState(() {
-                              //                 // _countryCodeController.text = country;
-                              //               });
-                              //               Navigator.pop(context);
-                              //             },
-                              //           );
-                              //         },
-                              //       );
-                              //     })),
-                              //     horizontalSpace(10, context),
-                              //
-                              //     Expanded(child: documentContainer(icon: "images/transport_global.svg", title: "Transport", onTap: (){
-                              //       showModalBottomSheet(
-                              //         context: context,
-                              //         builder: (BuildContext context) {
-                              //           return Docviewer(
-                              //             name:'Transport',
-                              //             list: booking.booking?.bookingRequiredDocuments,
-                              //             onSelectCountry: (String country) {
-                              //               setState(() {
-                              //                 // _countryCodeController.text = country;
-                              //               });
-                              //               Navigator.pop(context);
-                              //             },
-                              //           );
-                              //         },
-                              //       );
-                              //     })),
-                              //   ],
-                              // )
+                              booking.booking?.bookingStatus=="Objection"?
+
+                                  ListView.builder(
+                                      primary: true,
+                                      shrinkWrap: true,
+                                      itemCount: booking?.booking?.bookingObjections?.length,
+                                      physics: NeverScrollableScrollPhysics(),
+
+                                      itemBuilder: (context,index){
+                                    return  Objectionmodule(yourSituationFocusNode: yourSituationFocusNode, yourSituationController: yourSituationController,index: index,);
+                                  })
+                             :Container(),
+                              SizedBox(height: responsive(40, context),)
                             ],
                           ),
                     // documentContainer(
@@ -580,7 +570,7 @@ class _BookingDetailState extends State<BookingDetail> {
                         color: AppColors.primaryBlackColor.withOpacity(0.8),
                         context: context),
                     customFonts(
-                        text: "$specialRequest",
+                        text: "${specialRequest??'N/A'}",
                         size: 14,
                         fontWeight: FontWeight.w500,
                         color: AppColors.primaryBlackColor.withOpacity(0.9),
@@ -605,6 +595,177 @@ class _BookingDetailState extends State<BookingDetail> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class Objectionmodule extends StatefulWidget {
+   Objectionmodule({
+    super.key,
+    required this.index,
+    required this.yourSituationFocusNode,
+    required this.yourSituationController,
+  });
+
+  final FocusNode yourSituationFocusNode;
+  final TextEditingController yourSituationController;
+  var index;
+
+  @override
+  State<Objectionmodule> createState() => _ObjectionmoduleState();
+}
+
+class _ObjectionmoduleState extends State<Objectionmodule> {
+  var images;
+  final ImagePicker _picker = ImagePicker();
+
+  Future<bool> pickImageobjection() async {
+    var status = false;
+    // Loading();
+
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      images = File(image.path);
+    }
+setState(() {
+
+});
+
+
+
+    return status;
+
+  }
+  final TextEditingController titleController = TextEditingController();
+
+  final TextEditingController yourSituationController = TextEditingController();
+
+
+  final FocusNode titleFocusNode = FocusNode();
+
+  final FocusNode yourSituationFocusNode = FocusNode();
+  @override
+  Widget build(BuildContext context) {
+
+    return Consumer2<IsUserExitsController, Bookingedite>(
+        builder: (context, user, booking, child) {
+        return Padding(
+          padding:  EdgeInsets.only(bottom: responsive(06, context)),
+          child: Container(
+            decoration: BoxDecoration(
+              // Background color of the container
+              border: Border.all(
+                color: Color(0xFFEAEAEA), // Border color
+                width: 1, // Border width
+              ),
+              borderRadius: BorderRadius.circular(03.0),
+            ),
+            child: Padding(
+              padding:  EdgeInsets.all(responsive(10, context)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  customFonts(text: 'Objection', size: 16, context: context,fontWeight: FontWeight.bold,color: Colors.red),
+                  SizedBox(height: responsive(05, context),),
+                  customFonts(text: 'Remarks or reason: ${booking?.booking?.bookingObjections![widget.index].remarksOrReason}', size: 14, context: context,fontWeight: FontWeight.bold,color: AppColors.grayboxcolor),
+                  SizedBox(height: responsive(10, context),),
+                  Visibility(
+                      visible: booking.booking?.bookingObjections?[widget.index].clientRemarks==null?false:true,
+                      child: customFonts(text: 'Client Remarks: ${booking.booking?.bookingObjections?[widget.index].clientRemarks}', size: 14, context: context,fontWeight: FontWeight.bold,color: AppColors.grayboxcolor)),
+              Visibility(
+                  visible: booking.booking?.bookingObjections?[widget.index].clientRemarks==null?false:true,
+                  child: SizedBox(height: responsive(10, context),)),
+                  booking.booking?.bookingObjections?[widget.index].clientRemarks!=null?Container():Container(
+                    height: responsive(70, context),
+                    alignment: Alignment.topLeft,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: AppColors.lightBrownColor,
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(responsive(5, context)),
+                        topLeft: Radius.circular(responsive(5, context)),
+                      ),
+                    ),
+                    child: TextFormField(
+                      focusNode: yourSituationFocusNode,
+                      controller:yourSituationController,
+                      textAlignVertical: TextAlignVertical.center,
+                      textAlign: TextAlign.start,
+                      maxLines: 15,
+
+                      onFieldSubmitted: (value) {},
+                      validator: (value) {
+                        return null;
+                      },
+                      keyboardType: TextInputType.text,
+                      style: TextStyle(
+                          fontFamily: AppFonts.poppinsMedium,
+                          fontSize: responsive(
+                              15, context)),
+                      cursorColor: AppColors.GlobelColor,
+                      decoration: InputDecoration(
+
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: responsive(15, context),
+                          vertical: responsive(10, context),
+                        ),
+                        hintText: 'Enter your remarks here  ',
+                        hintStyle: TextStyle(
+                          fontFamily: AppFonts.poppinsMedium,
+                          fontSize: responsive(15, context),
+                          color: const Color(0xffB1B1B1),
+                        ),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  booking.booking?.bookingObjections?[widget.index].clientRemarks!=null?Container(): SizedBox(height: responsive(10, context),),
+                  booking.booking?.bookingObjections?[widget.index].clientRemarks!=null?Container(): InkWell(
+                      onTap: (){
+                       if(images==null)pickImageobjection();
+
+                      },
+                      child: customFonts(text: images==null?'Choose file':"You have selected your file ", size: 14, context: context,fontWeight: FontWeight.bold,color: AppColors.primaryColor)),
+                  booking.booking?.bookingObjections?[widget.index].clientRemarks!=null?Container():SizedBox(height: responsive(10, context),),
+
+                  booking.booking?.bookingObjections?[widget.index].clientRemarks!=null? InkWell(
+                      onTap: (){
+                        url2 = booking?.booking?.bookingObjections?[widget.index].requiredDocumentForObjection;
+                        Get.to(showdocs());
+                      },
+                      child: customFonts(text: "View Document", size: 14, context: context,fontWeight: FontWeight.bold,color: AppColors.primaryColor)): GestureDetector(
+                onTap: (){
+                  Loading();
+                  booking.submitobjection(sessiontoken: booking?.booking?.userSessionToken,bookingnumber: booking?.booking?.bookingNumber,message: yourSituationController.text,objectionid: booking?.booking?.bookingObjections?[widget.index].objectionId,image: images).then((value){
+                    if(value == true){
+                      endLoading();
+                      showSnackbar(context, 'Successfully updated');
+                    } else {
+                      endLoading();
+                      showSnackbar(context, 'Error while updating ');
+                    }
+                  });
+                },
+                child: Container(
+
+                  height: responsive(35,context),
+                  width: responsive(120, context),
+
+                  decoration: BoxDecoration(
+                    color: AppColors.GlobelColor,
+                    borderRadius: BorderRadius.circular(responsive(5,context)),),
+                  child: Center(
+                      child: customFonts(text: 'Submit', size: 13, color: Colors.white, fontWeight: FontWeight.bold, context: context)
+                  ),
+                ),
+              ),
+                ],
+              ),
+            ),
+          ),
+        );
+      }
     );
   }
 }

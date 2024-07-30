@@ -90,8 +90,8 @@ Future<void> main() async {
           ],
             debugShowCheckedModeBanner:false,
 
-       // home: const SplashScreen(),
-          home: EVisaScreen(),
+        home: const SplashScreen(),
+       //    home: EVisaScreen(),
         theme: ThemeData(
           drawerTheme: DrawerThemeData(
             backgroundColor: Colors.white,
