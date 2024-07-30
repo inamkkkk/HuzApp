@@ -527,7 +527,7 @@ Widget appBarTitle(
       required String text,
 
     }) {
-  return customFonts(text: text, size: 18,fontWeight: FontWeight.bold, context: context);
+  return customFonts(text: text, size: 20,fontWeight: FontWeight.bold, context: context);
 }
 
 Widget textPoppins(

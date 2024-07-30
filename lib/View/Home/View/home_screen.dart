@@ -326,7 +326,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       context: context),
                   drawertile(
-                      text: 'How It is Work',
+                      text: 'How It Works',
                       ontap: () {
                         Get.to(HowItWorksScreen());
                       },
@@ -1249,284 +1249,334 @@ class _HomeButtonState extends State<HomeButton> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              verticalSpace(10, context),
-
-              // Search bar
-              InkWell(
-                onTap: () {
-                  Get.to(() => SearchBarScreen());
-                },
-                child: Padding(
-                  padding:
-                  EdgeInsets.symmetric(horizontal: responsive(20, context)),
-                  child: Search(context: context, onchange: (value) {}),
-                ),
-              ),
-
-              // TabBar
-
-              Padding(
-                padding: EdgeInsets.only(
-                    left: responsive(20, context), top: responsive(29, context)),
-                child: Row(
-                  children: List.generate(
-                      tabList.length,
-                          (index) => Padding(
-                        padding:
-                        EdgeInsets.only(right: responsive(10, context)),
-                        child: tabBarContainer(
-                            context: context,
-                            index: index,
-                            onTap: () {
-                              setState(() {
-                                isSelect = index;
-                                print(isSelect);
-                              });
-
-                              widget.packagecontroller.isApiCalled = false;
-                              // packagecontroller.package =null;
-                              widget.packagecontroller.fromtabs = true;
-                              widget.packagecontroller.notifyListeners();
-                              if (index == 3) {
-                                widget.packagecontroller.GetTransport();
-                              } else {
-                                // await Future.delayed(Duration(milliseconds: 500));
-                                widget.packagecontroller.Getpackages(tabList[index]);
-                              }
-                            },
-                            text: tabList[index],
-                            isSelect: isSelect),
-                      )),
-                ),
-              ),
-
-              widget.packagecontroller.isApiCalled == false
-                  ? Padding(
-                padding: EdgeInsets.only(top: responsive(300, context)),
-                child: Container(
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.GlobelColor,
+    return Scaffold(
+      body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                verticalSpace(10, context),
+      
+                  // Search bar
+                  InkWell(
+                    onTap: () {
+                      Get.to(() => SearchBarScreen());
+                    },
+                    child: Padding(
+                      padding:
+                      EdgeInsets.symmetric(horizontal: responsive(20, context)),
+                      child: Search(context: context, onchange: (value) {}),
                     ),
                   ),
-                ),
-              ) : isSelect == 2 ? VisaRequirementScreen()
-                  : isSelect == 3
-                  ? ListView.builder(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: responsive(20, context),
-                      vertical: responsive(10, context)),
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  primary: true,
-                  scrollDirection: Axis.vertical,
-                  itemCount: widget.packagecontroller.transport?.results!.length,
-                  itemBuilder: (context, i) {
-                    var lengt =
-                        widget.packagecontroller.transport!.results!.length;
-
-                    // if(i >= packagecontroller.length){
-                    //   return Container(
-                    //     height: responsive(100, context),
-                    //   );
-                    // } else{
-
-                    return Padding(
-                      padding: EdgeInsets.only(
-                          bottom: i == lengt - 1
-                              ? responsive(120, context)
-                              : responsive(0, context)),
-                      child: Transportpackage(
-                        index: i,
-                      ),
-                    );
-                    // }
-                  })
-                  : widget.packagecontroller.package!.results!.isEmpty
-                  ? Center(
-                child: Padding(
-                  padding:
-                  EdgeInsets.only(top: responsive(140, context)),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        "assets/images/empty_box.svg",
-                        height: responsive(160, context),
-                        width: responsive(154, context),
-                      ),
-                      verticalSpace(20, context),
-                      customFonts(
-                          text: "${tabList[isSelect]} is Empty",
-                          size: 14,
-                          color: Colors.black,
-                          context: context)
-                    ],
-                  ),
-                ),
-              )
-                  :
-
-              // Padding(
-              //   padding: EdgeInsets.only(
-              //       left: responsive(20, context), top: responsive(29, context)),
-              //   child: Row(
-              //     children: List.generate(
-              //         tabList.length,
-              //         (index) => Padding(
-              //               padding:
-              //                   EdgeInsets.only(right: responsive(10, context)),
-              //               child: tabBarContainer(
-              //                   index: index,
-              //                   onTap: () {
-              //                     setState(() {
-              //                       isSelect = index;
-              //                     });
-              //                   },
-              //                   text: tabList[index],
-              //                   isSelect: isSelect),
-              //             )),
-              //   ),
-              // ),
-
-              // vertical space
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  verticalSpace(20, context),
+      
+                  // TabBar
+      
                   Padding(
                     padding: EdgeInsets.only(
-                        left: responsive(19.5, context)),
-                    child: customFonts(
-                        text: "Recommended Packages",
-                        size: 19,
-                        fontWeight: FontWeight.w600,
-                        context: context),
-                  ),
-                  verticalSpace(20, context),
-                  PageBuilder(
-                      hotel: widget.hotel,
-                      total:
-                      widget.packagecontroller.package!.results!.length,
-                      package: widget.packagecontroller,
-                      pageController: pageController,
-                      tabList: tabList,
-                      isSelect: isSelect),
-                  verticalSpace(20, context),
-                  verticalSpace(20, context),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: responsive(20, context)),
+                        left: responsive(20, context), top: responsive(29, context)),
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween,
-                      children: [
-                        customFonts(
-                            text: "${tabList[isSelect]} Packages",
+                      children: List.generate(
+                          tabList.length,
+                              (index) => Padding(
+                            padding:
+                            EdgeInsets.only(right: responsive(10, context)),
+                            child: tabBarContainer(
+                                context: context,
+                                index: index,
+                                onTap: () async {
+                                  setState(() {
+                                    isSelect = index;
+                                    print(isSelect);
+                                  });
+      
+
+                                  if (index == 3) {
+                                    widget.packagecontroller.isApiCalled = false;
+                                    // widget.packagecontroller.package =null;
+                                    widget.packagecontroller.fromtabs = true;
+                                    widget.packagecontroller.notifyListeners();
+                                    widget.packagecontroller.GetTransport();
+                                  }
+      
+                                  else if(index ==2){
+
+                                    // setState(() {
+                                    //
+                                    // });
+                                    widget.packagecontroller.isApiCalled = false;
+                                    // widget.packagecontroller.package =null;
+                                    widget.packagecontroller.fromtabs = true;
+                                    widget.packagecontroller.notifyListeners();
+                                    widget.packagecontroller.Getpackages(tabList[1]);
+
+
+                                   await  Get.to(VisaRequirementScreen());
+                                    isSelect = 1;
+
+
+                                  }
+      
+                                  else {
+                                    // await Future.delayed(Duration(milliseconds: 500));
+                                    widget.packagecontroller.isApiCalled = false;
+                                    // widget.packagecontroller.package =null;
+                                    widget.packagecontroller.fromtabs = true;
+                                    widget.packagecontroller.notifyListeners();
+                                    widget.packagecontroller.Getpackages(tabList[isSelect]);
+                                  }
+                                },
+                                text: tabList[index],
+                                isSelect: isSelect),
+                          )),
+                    ),
+                  ),
+      
+                  widget.packagecontroller.isApiCalled == false
+                      ? Padding(
+                    padding: EdgeInsets.only(top: responsive(300, context)),
+                    child: Container(
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.GlobelColor,
+                        ),
+                      ),
+                    ),
+                  ) : isSelect == 3
+                      ? widget.packagecontroller.transport==null?Center(
+                    child: Padding(
+                      padding:
+                      EdgeInsets.only(top: responsive(140, context)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            "assets/images/empty_box.svg",
+                            height: responsive(160, context),
+                            width: responsive(154, context),
+                          ),
+                          verticalSpace(20, context),
+                          customFonts(
+                              text: "${tabList[isSelect]} is Empty",
+                              size: 14,
+                              color: Colors.black,
+                              context: context)
+                        ],
+                      ),
+                    ),
+                  ):ListView.builder(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: responsive(20, context),
+                          vertical: responsive(10, context)),
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      primary: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: widget.packagecontroller.transport?.results!.length,
+                      itemBuilder: (context, i) {
+                        var lengt;
+                        if(widget.packagecontroller.transport!=null)
+
+                           lengt = widget.packagecontroller.transport?.results?.length;
+      
+                        // if(i >= packagecontroller.length){
+                        //   return Container(
+                        //     height: responsive(100, context),
+                        //   );
+                        // } else{
+      
+                        return Padding(
+                          padding: EdgeInsets.only(
+                              bottom: lengt==null?0:i == lengt - 1
+                                  ? responsive(120, context)
+                                  : responsive(0, context)),
+                          child: Transportpackage(
+                            index: i,
+                          ),
+                        );
+                        // }
+                      })
+                      : widget.packagecontroller.package!.results!.isEmpty
+                      ? Center(
+                    child: Padding(
+                      padding:
+                      EdgeInsets.only(top: responsive(140, context)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            "assets/images/empty_box.svg",
+                            height: responsive(160, context),
+                            width: responsive(154, context),
+                          ),
+                          verticalSpace(20, context),
+                          customFonts(
+                              text: "${tabList[isSelect]} is Empty",
+                              size: 14,
+                              color: Colors.black,
+                              context: context)
+                        ],
+                      ),
+                    ),
+                  )
+                      :
+      
+                  // Padding(
+                  //   padding: EdgeInsets.only(
+                  //       left: responsive(20, context), top: responsive(29, context)),
+                  //   child: Row(
+                  //     children: List.generate(
+                  //         tabList.length,
+                  //         (index) => Padding(
+                  //               padding:
+                  //                   EdgeInsets.only(right: responsive(10, context)),
+                  //               child: tabBarContainer(
+                  //                   index: index,
+                  //                   onTap: () {
+                  //                     setState(() {
+                  //                       isSelect = index;
+                  //                     });
+                  //                   },
+                  //                   text: tabList[index],
+                  //                   isSelect: isSelect),
+                  //             )),
+                  //   ),
+                  // ),
+      
+                  // vertical space
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      verticalSpace(20, context),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: responsive(19.5, context)),
+                        child: customFonts(
+                            text: "Recommended Packages",
                             size: 19,
                             fontWeight: FontWeight.w600,
                             context: context),
-                        customFonts(
-                            text: "See all",
-                            size: 19,
-                            color: AppColors.GlobelColor,
-                            fontWeight: FontWeight.w700,
-                            context: context),
-                      ],
-                    ),
-                  ),
-                  verticalSpace(20, context),
-                  SizedBox(
-                    // height: responsive(300, context),
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        primary: true,
-                        physics: NeverScrollableScrollPhysics(),
+                      ),
+                      verticalSpace(20, context),
+                      PageBuilder(
+                          hotel: widget.hotel,
+                          total:
+                          widget.packagecontroller.package!.results!.length,
+                          package: widget.packagecontroller,
+                          pageController: pageController,
+                          tabList: tabList,
+                          isSelect: isSelect),
+                      verticalSpace(20, context),
+                      verticalSpace(20, context),
+                      Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: responsive(20, context)),
-                        // itemCount: list.length,
-                        itemCount: widget.packagecontroller
-                            .package?.results!.length,
-                        itemBuilder: (context, index) {
-                          int lengt = widget.packagecontroller
-                              .package!.results!.length;
-
-                          var pkg = widget.packagecontroller
-                              .package?.results?[index];
-                          var hotel1, hotel2;
-
-                          // getImages(hotel, packagecontroller, index);
-
-                          bool isFav = toggle(wishController.list,
-                              pkg?.huzToken, false);
-
-                          return Padding(
-                            padding: EdgeInsets.only(
-                                bottom: responsive(16, context)),
-                            child: GestureDetector(
-                              onTap: () {
-                                widget.packagecontroller.details = null;
-                                widget.packagecontroller.isApiCalled = false;
-                                widget.packagecontroller.notifyListeners();
-
-                                Get.to(() => DetailScreen(
-                                  token: pkg?.huzToken,
-                                ));
-                              },
-                              child: PackageContainer(
-                                onTapFav: () {
-                                  isFav = toggle(wishController.list,
-                                      pkg?.huzToken, true);
-                                  if (isFav) {
-                                  } else {
-                                    _addTask(
-                                      packageImage: getImages(widget.hotel,
-                                          widget.packagecontroller, index),
-                                      hotel2: hotel1,
-                                      id: pkg?.huzToken,
-                                      rating: pkg
-                                          ?.ratingCount?.averageStars,
-                                      packageName: pkg?.packageName,
-                                      include: widget.packagecontroller
-                                          ?.allincludes[index],
-                                      startDate: pkg?.startDate,
-                                      endDate: pkg?.endDate,
-                                      cost: pkg?.packageBaseCost,
-                                    );
-                                  }
-                                },
-                                isFav: isFav,
-                                image: getImages(
-                                    widget.hotel, widget.packagecontroller, index),
-                                id: pkg?.huzToken,
-                                packageName: pkg?.packageName,
-                                rating:
-                                pkg?.ratingCount?.averageStars,
-                                startDate: pkg?.startDate,
-                                endDate: pkg?.endDate,
-                                amount: formatCurrency(
-                                    pkg?.packageBaseCost.toInt()),
-                                inlcudes: widget.packagecontroller
-                                    ?.allincludes[index],
-                              ),
-                            ),
-                          );
-                        }),
-                  ),
-                  SizedBox(
-                    height: responsive(30, context),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: [
+                            customFonts(
+                                text: "${tabList[isSelect]} Packages",
+                                size: 19,
+                                fontWeight: FontWeight.w600,
+                                context: context),
+                            customFonts(
+                                text: "See all",
+                                size: 19,
+                                color: AppColors.GlobelColor,
+                                fontWeight: FontWeight.w700,
+                                context: context),
+                          ],
+                        ),
+                      ),
+                      verticalSpace(20, context),
+                      SizedBox(
+                        // height: responsive(300, context),
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            primary: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: responsive(20, context)),
+                            // itemCount: list.length,
+                            itemCount: widget.packagecontroller
+                                .package?.results!.length,
+                            itemBuilder: (context, index) {
+                              int lengt = widget.packagecontroller
+                                  .package!.results!.length;
+      
+                              var pkg = widget.packagecontroller
+                                  .package?.results?[index];
+                              var hotel1, hotel2;
+      
+                              // getImages(hotel, packagecontroller, index);
+      
+                              bool isFav = toggle(wishController.list,
+                                  pkg?.huzToken, false);
+      
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: responsive(16, context)),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    widget.packagecontroller.details = null;
+                                    widget.packagecontroller.isApiCalled = false;
+                                    widget.packagecontroller.notifyListeners();
+      
+                                    Get.to(() => DetailScreen(
+                                      token: pkg?.huzToken,
+                                    ));
+                                  },
+                                  child: PackageContainer(
+                                    onTapFav: () {
+                                      isFav = toggle(wishController.list,
+                                          pkg?.huzToken, true);
+                                      if (isFav) {
+                                      } else {
+                                        _addTask(
+                                          packageImage: getImages(widget.hotel,
+                                              widget.packagecontroller, index),
+                                          hotel2: hotel1,
+                                          id: pkg?.huzToken,
+                                          rating: pkg
+                                              ?.ratingCount?.averageStars,
+                                          packageName: pkg?.packageName,
+                                          include: widget.packagecontroller
+                                              ?.allincludes[index],
+                                          startDate: pkg?.startDate,
+                                          endDate: pkg?.endDate,
+                                          cost: pkg?.packageBaseCost,
+                                        );
+                                      }
+                                    },
+                                    isFav: isFav,
+                                    image: getImages(
+                                        widget.hotel, widget.packagecontroller, index),
+                                    id: pkg?.huzToken,
+                                    packageName: pkg?.packageName,
+                                    rating:
+                                    pkg?.ratingCount?.averageStars,
+                                    startDate: pkg?.startDate,
+                                    endDate: pkg?.endDate,
+                                    amount: formatCurrency(
+                                        pkg?.packageBaseCost.toInt()),
+                                    inlcudes: widget.packagecontroller
+                                        ?.allincludes[index],
+                                  ),
+                                ),
+                              );
+                            }),
+                      ),
+                      SizedBox(
+                        height: responsive(30, context),
+                      )
+                    ],
                   )
                 ],
-              )
-            ],
+              ),
+            ),
           ),
-        ));
+    );
   }
 
 

@@ -298,76 +298,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                         ),
                                       ),
                                     ),
-                                    verticalSpace(10, context),
-                                    customFonts(
-                                        text:
-                                        "Additional Members Cost",
-                                        size: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.primaryBlackColor,
-                                        context: context),
-                                    verticalSpace(10, context),
-                                    BoxWidget(
-                                        formatCurrency(packages.details!.costForChild.toInt()),
-                                        'Child',
-                                        context,
-                                        isCost: true
-                                    ),
-                                    verticalSpace(10, context),
-                                    BoxWidget(
-                                        formatCurrency(packages.details!.costForInfants.toInt()),
-                                        'Infant',
-                                        context,
-                                        isCost: true
-                                    ),
-                                    verticalSpace(10, context),
-                                    customFonts(
-                                        text:
-                                        "Additional Room Cost",
-                                        size: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.primaryBlackColor,
-                                        context: context),
-                                    verticalSpace(10, context),
-                                    BoxWidget(
-                                      formatCurrency(packages.details!.costForSingle.toInt()),
-                                      'Single room',
-                                      context,
-                                      isCost: true
-                                    ),
-                                    verticalSpace(10, context),
-                                    BoxWidget(
-                                        formatCurrency(packages.details!.costForDouble.toInt()),
-                                        'Double room',
-                                        context,
-                                        isCost: true
-                                    ),
-                                    verticalSpace(10, context),
-                                    BoxWidget(
-                                        formatCurrency(packages.details!.costForTriple.toInt()),
-                                        'Triple Room',
-                                        context,
-                                        isCost: true
-                                    ),
-                                    verticalSpace(10, context),
-                                    BoxWidget(
-                                        formatCurrency(packages.details!.costForQuad.toInt()),
-                                        'Quad room',
-                                        context,
-                                        isCost: true
-                                    ),
-                                    verticalSpace(10, context),
-                                    BoxWidget(
-                                        formatCurrency(packages.details!.costForTriple.toInt()),
-                                        'Sharing room',
-                                        context,
-                                        isCost: true
-                                    ),
 
-
-                                    SizedBox(
-                                      height: responsive(20, context),
-                                    ),
 
                                   ],
                                 ),
@@ -720,9 +651,97 @@ class _DetailScreenState extends State<DetailScreen> {
                                   ),
                                 ],
                               ),
+                              verticalSpace(10, context),
+                              customFonts(
+                                  text:
+                                  "Additional Members Cost",
+                                  size: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primaryBlackColor,
+                                  context: context),
+                              verticalSpace(10, context),
+                              Wrap(
+                                spacing: 4,
+                                runSpacing: 4,
+                                children: [
+                                BoxWidget2(
+                                    formatCurrency(packages.details!.costForChild.toInt()),
+                                    'Child',
+                                    context,
+                                    isCost: true
+                                ),
+
+                                BoxWidget2(
+                                    formatCurrency(packages.details!.costForInfants.toInt()),
+                                    'Infant',
+                                    context,
+                                    isCost: true
+                                ),
+                              ],),
+
+                              verticalSpace(10, context),
+                              customFonts(
+                                  text:
+                                  "Additional Room Cost",
+                                  size: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primaryBlackColor,
+                                  context: context),
+                              verticalSpace(10, context),
+                              Wrap(
+                                spacing: 4,
+                                runSpacing: 4,
+                                children: [
+                                  BoxWidget2(
+                                      formatCurrency(packages.details!.costForSingle.toInt()),
+                                      'Single room',
+                                      context,
+                                      isCost: true
+                                  ),
+                                  BoxWidget2(
+                                      formatCurrency(packages.details!.costForDouble.toInt()),
+                                      'Double room',
+                                      context,
+                                      isCost: true
+                                  ),
+                                  BoxWidget2(
+                                      formatCurrency(packages.details!.costForTriple.toInt()),
+                                      'Triple Room',
+                                      context,
+                                      isCost: true
+                                  ),
+
+                                  BoxWidget2(
+                                      formatCurrency(packages.details!.costForQuad.toInt()),
+                                      'Quad room',
+                                      context,
+                                      isCost: true
+                                  ),
+                                  BoxWidget2(
+                                      formatCurrency(packages.details!.costForTriple.toInt()),
+                                      'Sharing room',
+                                      context,
+                                      isCost: true
+                                  ),
+
+                                ],),
+
+
+
+
+
+
+
+
+
+                              SizedBox(
+                                height: responsive(20, context),
+                              ),
+
                             ],
                           ),
                         ),
+
                         SizedBox(
                           height: responsive(30, context),
                         ),
@@ -965,7 +984,59 @@ Widget BoxWidget(var number, status ,context, {bool isCost = false}) {
             ),
           )));
 }
-
+Widget BoxWidget2(var number, status ,context, {bool isCost = false}) {
+  return Container(
+    // height: MediaQuery.of(context).size.height * (82 / 667),
+    //   width: MediaQuery.of(context).size.width * (164 / 375),
+      height: responsive(40, context),
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(5),
+          topRight: Radius.circular(5),
+          bottomLeft: Radius.circular(5),
+          bottomRight: Radius.circular(5),
+        ),
+        color: const Color(0xffF1F1F1),
+        border: Border.all(
+          color: const Color(0xffE5E4E4),
+          width: 2,
+        ),
+      ),
+      child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: responsive(10, context)),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: isCost ? MainAxisAlignment.start : MainAxisAlignment.center,
+              children: [
+                Text(
+                  isCost ? '$status: ' : '$status',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: AppColors.primaryBlackColor,
+                      fontFamily: 'Poppins',
+                      fontSize: responsive(14, context),
+                      letterSpacing:
+                      0 /*percentages not used in flutter. defaulting to zero*/,
+                      fontWeight: FontWeight.w400,
+                      height: 1),
+                ),
+                horizontalSpace(5, context),
+                Text(
+                  isCost ? "PKR $number" : "$number",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: AppColors.GlobelColor,
+                      fontFamily: isCost ? AppFonts.poppinsSemiBold : AppFonts.poppinsExtraBold,
+                      fontSize: responsive(14, context),
+                      letterSpacing:
+                      0 /*p6ercentages not used in flutter. defaulting to zero*/,
+                      height: 1),
+                ),
+              ],
+            ),
+          )));
+}
 Widget HotelWidget(var url, status, context) {
   return Container(
       // height: MediaQuery.of(context).size.height * (82 / 667),

@@ -40,6 +40,7 @@ class Bookingedite with ChangeNotifier{
   var selectedRoom = "Single";
   var finalRoom = "";
   var updatePrice = "";
+  var roomtype;
 
   void updatedate({var startdate, enddate}){
     startDate = startdate;
@@ -238,6 +239,8 @@ Future<bool> submitobjection(
       "huz_token": huztoken,
       "adults": adults,
       "child": childrens,
+      "infants":infents,
+      "room_type": finalRoom,
       "start_date": sdate,
       "end_date":edate,
       "total_price":price,

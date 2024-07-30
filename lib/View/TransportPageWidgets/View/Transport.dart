@@ -41,6 +41,7 @@ class _TransportpackageState extends State<Transportpackage> {
     return Consumer<pakagecontrollers>(
         builder: (context, transports, child){
           var data = transports.transport?.results?[widget.index];
+          if(data!=null)
           if(availability.isEmpty){
 
               String string = data?.availability;
@@ -165,7 +166,7 @@ class _TransportpackageState extends State<Transportpackage> {
                         Row(
                           children: [
                             Heading4(
-                                text: 'PKR ${formatCurrency(data?.cost.toInt())} /',
+                                text: 'PKR ${formatCurrency(data?.cost.toInt()??0)} /',
                                 context: context,
                                 center: false,
                                 color: AppColors.GlobelColor

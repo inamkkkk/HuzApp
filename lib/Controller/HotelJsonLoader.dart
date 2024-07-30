@@ -28,7 +28,7 @@ var image;
       makkahotels = makkahotelss;
       madinaHotels = madinaHotelss;
       for(var m in madinaHotels){
-        print("hotels names are ${m.hotelName}");
+
 
       }
 

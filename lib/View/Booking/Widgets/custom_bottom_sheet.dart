@@ -56,9 +56,10 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
   String quadRoom = "Quad";
   String sharingRoom = "Sharing";
   bool isSelect = false;
-
+var roomtype = "Single";
   @override
   Widget build(BuildContext context) {
+
     return Container(
       height: MediaQuery.of(context).size.height /
           responsive(widget.isFlexible ? 2.5 : 2.5, context),
@@ -77,6 +78,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
           builder: (contexts, booking, pkg, user, child) {
         if (price == 0) {
           price = booking.price;
+         price = price+pkg.details?.costForSingle;
         }
         return Column(
           children: [
@@ -407,7 +409,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                   if (infantCounts > 0) {
                                     setState(() {
                                       infantCounts--;
-                                      price = price - booking.subtractprice;
+                                      price = price - booking.price;
                                     });
                                   }
                                 });
@@ -558,6 +560,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                         booking.infents = infantCounts;
                         booking.price = price;
                         booking.finalRoom = booking.selectedRoom;
+                        booking.roomtype = roomtype;
                         booking.notifyListeners();
                         print(booking.finalRoom);
                       });
@@ -606,7 +609,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
       }),
     );
   }
-
+var previouscost=0.0;
   Widget roomTypeRow(
       {required roomTitle,
       required cost,
@@ -625,7 +628,27 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
           onChanged: (dynamic value) {
            booking.roomChange(value);
            setState(() {
-             price = price + cost ;
+             if(roomTitle == "Single"){
+
+               price =  price - previouscost ;
+               print('previous cost $previouscost');
+               print(price);
+               // price = price + cost;
+                previouscost = 0.0;
+               roomtype = roomTitle;
+
+               print(price);
+             } else {
+               price =  price - previouscost ;
+               price = price + cost;
+               previouscost = cost;
+               roomtype = roomTitle;
+               print(price);
+             }
+
+
+
+             print(price);
            });
            print(booking.selectedRoom);
            print(booking.finalRoom);
