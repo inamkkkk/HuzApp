@@ -11,6 +11,8 @@ import 'package:huz/View/TransportPageWidgets/controller/transportController.dar
 import 'package:huz/View/auth/view/finish_signing_up/finish_signing_up.dart';
 import 'package:huz/View/auth/view/sign_up_with_mobile_number/signup_with_number.dart';
 import 'package:huz/View/auth/view/verify_otp_screen/verify_otp_screen.dart';
+import 'package:huz/View/eVisa/view/evisa_screen.dart';
+import 'package:huz/View/eVisa/view/visa_requirment_screen.dart';
 import 'package:huz/View/hajj_umrah_guide/controller/umrah_guide_controller.dart';
 
 import 'package:provider/provider.dart';
@@ -81,33 +83,15 @@ Future<void> main() async {
           initialRoute: '/',
           getPages: [
             GetPage(name: '/', page: () => SplashScreen()),
-            // GetPage(name: '/', page: () => VoiceRecorderPlayer()),
+            // GetPage(name: '/', page: () => EVisaScreen()),
             GetPage(name: '/Rtobook', page: () => RequestToBook()),
 
 
           ],
             debugShowCheckedModeBanner:false,
-           // home:UserLocationScreen(type: 'Company'),
-          // HomeScreen(),
-               // SignUpWithMobile()),
-            // const RequestToBook(),
-            //  VerifyOTPScreen(code: "1111"),
-          // FinishSignUp(),
-          // VerifyPaymentScreen(),
-
 
        home: const SplashScreen(),
-        //   HomeScreen(),
-        //   home: RatingScreen(),
-        // Home(),
 
-        // const SplashScreen(),
-        //   HomeScreen(),
-        //   SignUpWithNumber(),
-          // Home(),
-          // home: VoiceNoteScreen(),
-
-           // Home(),
         theme: ThemeData(
           drawerTheme: DrawerThemeData(
             backgroundColor: Colors.white,

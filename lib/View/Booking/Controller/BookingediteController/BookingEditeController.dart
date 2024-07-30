@@ -33,6 +33,8 @@ class Bookingedite with ChangeNotifier{
   var editemessage = "error" ;
   var edite= false;
   var bmessage = "";
+  var roomType;
+  var roomCost;
 
   void updatedate({var startdate, enddate}){
     startDate = startdate;
@@ -40,6 +42,11 @@ class Bookingedite with ChangeNotifier{
 
     notifyListeners();
 
+  }
+
+  void roomChange(value){
+    roomType = value;
+    notifyListeners();
   }
 
   void Updateguests ({var Infents , Adults , Childrens }){
@@ -84,6 +91,8 @@ class Bookingedite with ChangeNotifier{
       "huz_token": huztoken,
       "adults": adults,
       "child": childrens,
+      "infants":infents,
+      "room_type": "Sharing",
       "start_date": sdate,
       "end_date":edate,
       "total_price":price,

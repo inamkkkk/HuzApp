@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:huz/Responsive/ResponsiveClass.dart';
@@ -25,12 +26,14 @@ class WishListScreen extends StatefulWidget {
 }
 
 class _WishListScreenState extends State<WishListScreen> {
+
+
   WishListController wishListController = WishListController();
 
   @override
   void initState() {
-    super.initState();
     _loadTasks();
+    super.initState();
   }
 
   void _loadTasks() async {
@@ -124,7 +127,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                     token: wishListController.list[index].id,
                                   ));
                                 },
-                                child: packagesContainer(
+                                child: PackageContainer(
                                     onClose: () {
                                       if (wishListController.list.isNotEmpty) {
                                         for (var m in wishListController.list) {
@@ -160,204 +163,224 @@ class _WishListScreenState extends State<WishListScreen> {
         );
   }
 
-  Widget packagesContainer(
-      {required var image,
-      required var packageName,
-      required var startDate,
-      required var endDate,
-      var includeList,
-      var excludeList,
-      required VoidCallback onClose,
-      required var amount,
-      var rating}) {
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Positioned(
-          right: responsive(5, context),
-          bottom: 0,
-          top: 0,
-          child: Opacity(
-            opacity: 0.1,
-            child: SvgPicture.asset(
-              "images/heart_icon_round.svg",
-              height: responsive(96, context),
-            ),
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.all(responsive(5, context)),
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-              borderRadius: BorderRadius.circular(responsive(6, context)),
-              border: Border.all(color: const Color(0xFFDEDEDE))),
-          height: responsive(128, context),
-          child: Row(
+
+}
+
+class PackageContainer extends StatefulWidget {
+   var image;
+
+       var packageName;
+       var startDate;
+       var endDate;
+  var includeList;
+  var excludeList;
+       VoidCallback onClose;
+       var amount;
+   var rating;
+   PackageContainer({super.key, required var image,
+    required this.packageName,
+    required this.startDate,
+    required this.endDate,
+    this.includeList,
+    this.excludeList,
+    required this.onClose,
+    required this.amount,
+    this.rating});
+
+  @override
+  State<PackageContainer> createState() => _PackageContainerState();
+}
+
+class _PackageContainerState extends State<PackageContainer> {
+
+  final GlobalKey _containerKey = GlobalKey();
+
+  double _containerHeight = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _getContainerHeight());
+  }
+
+  void _getContainerHeight() {
+    final RenderBox? renderBox = _containerKey.currentContext?.findRenderObject() as RenderBox?;
+    if (renderBox != null) {
+      setState(() {
+        _containerHeight = renderBox.size.height;
+        print(" ************** COntainer height : $_containerHeight");
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      key: _containerKey,
+      padding: EdgeInsets.all(responsive(5, context)),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(responsive(6, context)),
+          border: Border.all(color: const Color(0xFFDEDEDE))),
+      // height: responsive(150, context),
+      // width: responsive(382, context),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Stack(
+
             children: [
-              Stack(
-                children: [
-                  Container(
-                    height: responsive(118, context),
-                    width: responsive(139, context),
-                    child:  ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(responsive(10, context)),
-                        topRight: Radius.circular(responsive(10, context)),
-                        bottomRight: Radius.circular(responsive(10, context)),
-                        bottomLeft: Radius.circular(responsive(10, context)),
-                      ),
-                      child: CachedNetworkImage(
-                        imageUrl:
-                        "${image}",
-                        placeholder: (context, url) =>
-                            Image.asset(
-                              'images/placeholder-image.png',
-                              fit: BoxFit.cover,
-                            ),
-                        errorWidget: (context, url, error) =>
-                            Image.asset(
-                              'images/placeholder-image.png',
-                              fit: BoxFit.cover,
-                            ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+              Container(
+
+                height: responsive(_containerHeight, context),
+                width: responsive(139, context),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(responsive(10, context)),
+                    topRight: Radius.circular(responsive(10, context)),
+                    bottomRight: Radius.circular(responsive(10, context)),
+                    bottomLeft: Radius.circular(responsive(10, context)),
                   ),
-                  Positioned(
-                    top: responsive(0, context),
-                    right: responsive(0, context),
-                    child: Padding(
-                      padding:  EdgeInsets.only(top: responsive(08, context),right: responsive(08, context),left: responsive(50, context),bottom: responsive(50, context)),
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: responsive(20, context),
-                        width: responsive(20, context),
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                        ),
-                        child: SvgPicture.asset(
-                          "images/heart_icon_fill.svg",
-                          height: responsive(13 , context),
-                        ),
-                      ),
+                  child: CachedNetworkImage(
+                    imageUrl: "${widget.image}",
+                    placeholder: (context, url) => Image.asset(
+                      'images/placeholder-image.png',
+                      fit: BoxFit.cover,
                     ),
+                    errorWidget: (context, url, error) => Image.asset(
+                      'images/placeholder-image.png',
+                      fit: BoxFit.fitHeight,
+                    ),
+                    fit: BoxFit.fitHeight,
                   ),
-                ],
+                ),
               ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: responsive(10, context),
-                      vertical: responsive(5, context)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              // Positioned(
+              //   top: responsive(0, context),
+              //   right: responsive(0, context),
+              //   child: GestureDetector(
+              //     onTap: widget.onTapFav,
+              //     child: Padding(
+              //       padding: EdgeInsets.only(
+              //           top: responsive(08, context),
+              //           right: responsive(08, context),
+              //           left: responsive(50, context),
+              //           bottom: responsive(50, context)),
+              //       child: Container(
+              //
+              //         alignment: Alignment.center,
+              //         height: responsive(25, context),
+              //         width: responsive(25, context),
+              //         decoration: const BoxDecoration(
+              //           color: Colors.white,
+              //           shape: BoxShape.circle,
+              //         ),
+              //         child: widget.isFav
+              //             ? SvgPicture.asset(
+              //           "images/heart_icon_fill.svg",
+              //           height: responsive(15, context),
+              //         )
+              //             : SvgPicture.asset(
+              //           "images/Shape.svg",
+              //           height: responsive(15, context),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+            ],
+          ),
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: responsive(10, context),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  customFonts(
+                      text: widget.packageName,
+                      size: 14,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primaryBlackColor.withOpacity(0.90),
+                      context: context),
+                  customFonts(
+                      text:
+                      "${widget.startDate} to ${widget.endDate}",
+                      size: 13,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primaryBlackColor,
+                      context: context),
+                  verticalSpace(5, context),
+                  Wrap(
+                    spacing: 0.0,
+                    children: List.generate(
+                      widget.includeList.length,
+                          (index) => index == 0
+                          ? customFonts(
+                          text: "Includes: ",
+                          size: 13,
+                          color: AppColors.primaryBlackColor,
+                          fontWeight: FontWeight.bold,
+                          context: context)
+                          : customFonts(
+                          text: "${widget.includeList[index]}",
+                          size: 13,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.primaryBlackColor,
+                          context: context),
+                    ),
+                  ),
+                  verticalSpace(5, context),
+                  // Spacer(),
+                  // Wrap(
+                  //   spacing: 10,
+                  //   children: List.generate(
+                  //     7,
+                  //         (index) =>  customFonts(
+                  //         text: "Dinner",
+                  //         size: 10,
+                  //         fontWeight: FontWeight.w500,
+                  //         color: AppColors.primaryBlackColor,
+                  //         context: context),
+                  //   ),
+                  // ),
+
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          customFonts(
-                              text: packageName,
-                              size: 13,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primaryBlackColor
-                                  .withOpacity(0.90),
-                              context: context),
-                          customFonts(
-                              text: "$startDate to $endDate",
-                              size: 11,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.primaryBlackColor,
-                              context: context),
-                        ],
-                      ),
-                      Wrap(
-                        spacing: 0.0,
-                        children: List.generate(
-                          includeList.length,
-                          (index) => index == 0
-                              ? customFonts(
-                                  text: "Includes: ",
-                                  size: 10,
-                                  color: AppColors.primaryBlackColor,
-                                  fontWeight: FontWeight.bold,
-                                  context: context)
-                              : customFonts(
-                                  text: "${includeList[index]}",
-                                  size: 10,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.primaryBlackColor,
-                                  context: context),
-                        ),
-                      ),
-                      // Wrap(
-                      //   spacing: 10,
-                      //   children: List.generate(
-                      //     7,
-                      //         (index) =>  customFonts(
-                      //         text: "Dinner",
-                      //         size: 10,
-                      //         fontWeight: FontWeight.w500,
-                      //         color: AppColors.primaryBlackColor,
-                      //         context: context),
-                      //   ),
-                      // ),
-                              
+                      customFonts(
+                          text: 'PKR ${widget.amount}',
+                          size: 16,
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0xFF484848),
+                          context: context),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          customFonts(
-                              text: "PKR $amount",
-                              size: 16,
-                              fontWeight: FontWeight.bold,
-                              color: const Color(0xFF484848),
-                              context: context),
-                          Row(
-                            children: [
-                              SvgPicture.asset(
-                                "images/star.svg",
-                              ),
-                              horizontalSpace(5, context),
-                              customFonts(
-                                  text: rating.toString(),
-                                  size: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.primaryBlackColor
-                                      .withOpacity(0.9),
-                                  context: context),
-                            ],
+                          SvgPicture.asset(
+                            "images/star.svg",
                           ),
+                          horizontalSpace(5, context),
+                          customFonts(
+                              text: "${widget.rating}",
+                              size: 16,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.primaryBlackColor
+                                  .withOpacity(0.9),
+                              context: context),
                         ],
                       ),
                     ],
                   ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Positioned(
-          right: responsive(-7, context),
-          top: responsive(-7, context),
-          child: GestureDetector(
-            onTap: onClose,
-            child: Container(
-              alignment: Alignment.center,
-              height: responsive(20, context),
-              width: responsive(20, context),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: const Color(0xFFDEDEDE))),
-              child: Icon(
-                Icons.close,
-                size: responsive(14, context),
+                ],
               ),
             ),
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
 }
+

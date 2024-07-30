@@ -15,8 +15,8 @@ Widget  Heading1({var center, text,context,Color? color}){
     style: TextStyle(
       color: color,
       fontSize: responsive(40, context),
-        fontFamily: GoogleFonts.cairo(textStyle: TextStyle(
-            fontWeight: FontWeight.bold
+        fontFamily: GoogleFonts.cairo(textStyle: const TextStyle(
+            fontWeight:  FontWeight.bold
         )).fontFamily,
       // fontFamily: AppFonts.poppinsSemiBold,
       fontWeight: FontWeight.w600,
@@ -31,7 +31,7 @@ Widget  Heading2({var center, text,context,Color? color}){
     style: TextStyle(
       color: color,
       fontSize: responsive(20, context),
-      fontFamily: GoogleFonts.cairo(textStyle: TextStyle(
+      fontFamily: GoogleFonts.cairo(textStyle: const TextStyle(
           fontWeight: FontWeight.bold
       )).fontFamily,
       // fontFamily: AppFonts.poppinsSemiBold,
@@ -47,7 +47,7 @@ Widget  Heading3({var center, text,context,Color? color, isbold, isunderline}){
     style: TextStyle(
       decoration: isunderline==null?null:TextDecoration.underline,
       color: color,
-      fontSize: responsive(15, context),
+      fontSize: responsive(16, context),
       fontFamily: GoogleFonts.cairo(textStyle: TextStyle(
           fontWeight: isbold == null ? FontWeight.bold:FontWeight.normal,
       )).fontFamily,
@@ -130,7 +130,7 @@ Widget  cardsubtitle({var center, text,context,Color? color}){
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
       color: color,
-      fontSize: responsive(14, context),
+      fontSize: responsive(15, context),
       fontFamily: GoogleFonts.cairo(textStyle: TextStyle(
           fontWeight: FontWeight.bold
       )).fontFamily,
@@ -357,7 +357,7 @@ Widget  cardtrailingsubtitle({var center, text,context,Color? color,isbold,isund
     style: TextStyle(
       decoration: isunderline==null?null:TextDecoration.underline,
       color: color,
-      fontSize: responsive(13, context),
+      fontSize: responsive(14, context),
       fontFamily: GoogleFonts.cairo(textStyle: TextStyle(
           fontWeight: isbold==null ? FontWeight.bold :FontWeight.normal
       )).fontFamily,

@@ -351,7 +351,7 @@ class _VerifyPaymentScreenState extends State<VerifyPaymentScreen> {
         children: [
           customFonts(
               text: "Thank you $name !.",
-              size: 14,
+              size: 16,
               fontWeight: FontWeight.bold,
               color: AppColors.GlobelColor,
               context: context),
@@ -414,7 +414,7 @@ class _VerifyPaymentScreenState extends State<VerifyPaymentScreen> {
                       child: customFonts(
                         textOverflow: TextOverflow.ellipsis,
                           text: "$packageName",
-                          size: 14,
+                          size: 16,
                           fontWeight: FontWeight.bold,
                           color: AppColors.GlobelColor,
                           context: context),
@@ -600,8 +600,8 @@ class _VerifyPaymentScreenState extends State<VerifyPaymentScreen> {
                         },
                         child: Container(
                           alignment: Alignment.center,
-                          height: responsive(21, context),
-                          width: responsive(56, context),
+                          height: responsive(25, context),
+                          width: responsive(60, context),
                           padding: EdgeInsets.symmetric(
                               horizontal: responsive(6, context)),
                           decoration: BoxDecoration(
@@ -612,7 +612,7 @@ class _VerifyPaymentScreenState extends State<VerifyPaymentScreen> {
                               )),
                           child: customFonts(
                               text: "Cancel",
-                              size: 12,
+                              size: 14,
                               fontWeight: FontWeight.w500,
                               color: const Color(0xFFFF0606),
                               context: context),
@@ -632,9 +632,10 @@ class _VerifyPaymentScreenState extends State<VerifyPaymentScreen> {
                                 booking.endDate = enddate;
                                 booking.specialreq = booking.booking?.specialRequest;
                                 return CustomBottomSheet(
+                                  room: booking.roomType,
                                   previousclasscontext: contexts,
                                 isFromEdit: true,
-                                isFlexible: isFlex, startDate: booking.startDate??booking.initialstartdate, endDate: booking.startDate??booking.initialenddate, adults: booking.adults, childs: booking.childrens);
+                                isFlexible: isFlex, startDate: booking.startDate??booking.initialstartdate, endDate: booking.startDate??booking.initialenddate, adults: booking.adults, childs: booking.childrens, infants: booking.infents,);
                               //   return bottomSheet(
                               //     // isFlexible: isFlex,
                               //     isFlexible: true,
@@ -648,8 +649,8 @@ class _VerifyPaymentScreenState extends State<VerifyPaymentScreen> {
                         },
                         child: Container(
                           alignment: Alignment.center,
-                          height: responsive(21, context),
-                          width: responsive(46, context),
+                          height: responsive(25, context),
+                          width: responsive(50, context),
                           padding: EdgeInsets.symmetric(
                               horizontal: responsive(6, context)),
                           decoration: BoxDecoration(
@@ -660,7 +661,7 @@ class _VerifyPaymentScreenState extends State<VerifyPaymentScreen> {
                               )),
                           child: customFonts(
                               text: "Edit",
-                              size: 12,
+                              size: 14,
                               fontWeight: FontWeight.w500,
                               color: AppColors.GlobelColor,
                               context: context),
@@ -693,8 +694,7 @@ class _VerifyPaymentScreenState extends State<VerifyPaymentScreen> {
       required BuildContext context}) {
     return Container(
       width: MediaQuery.sizeOf(context).width,
-      height: responsive(51, context),
-      padding: EdgeInsets.symmetric(horizontal: responsive(20, context)),
+      padding: EdgeInsets.symmetric(horizontal: responsive(20, context), vertical: responsive(8, context)),
       alignment: Alignment.centerLeft,
       decoration: const BoxDecoration(
         color: AppColors.GlobelColor,
@@ -708,10 +708,11 @@ class _VerifyPaymentScreenState extends State<VerifyPaymentScreen> {
             children: [
               customFonts(
                   text: "Status",
-                  size: 10,
+                  size: 13,
                   fontWeight: FontWeight.w500,
                   color: Colors.white,
                   context: context),
+              verticalSpace(3, context),
               customFonts(
                   text: status,
                   size: 16,
@@ -726,10 +727,11 @@ class _VerifyPaymentScreenState extends State<VerifyPaymentScreen> {
             children: [
               customFonts(
                   text: "Booking number",
-                  size: 10,
+                  size: 13,
                   fontWeight: FontWeight.w500,
                   color: Colors.white,
                   context: context),
+              verticalSpace(3, context),
               customFonts(
                   text: "$bookingNumber",
                   size: 16,

@@ -430,8 +430,8 @@ class _BookingDetailState extends State<BookingDetail> {
       required BuildContext context}) {
     return Container(
       width: MediaQuery.sizeOf(context).width,
-      height: responsive(51, context),
-      padding: EdgeInsets.symmetric(horizontal: responsive(20, context)),
+      
+      padding: EdgeInsets.symmetric(horizontal: responsive(20, context), vertical: responsive(8, context)),
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
         color: AppColors.GlobelColor.withOpacity(0.15),
@@ -445,10 +445,11 @@ class _BookingDetailState extends State<BookingDetail> {
             children: [
               customFonts(
                   text: "Status",
-                  size: 10,
+                  size: 13,
                   fontWeight: FontWeight.w500,
                   color: AppColors.primaryBlackColor.withOpacity(0.8),
                   context: context),
+              verticalSpace(3, context),
               customFonts(
                   text: status,
                   size: 16,
@@ -463,10 +464,11 @@ class _BookingDetailState extends State<BookingDetail> {
             children: [
               customFonts(
                   text: "Booking number",
-                  size: 10,
+                  size: 13,
                   fontWeight: FontWeight.w500,
                   color: AppColors.primaryBlackColor.withOpacity(0.8),
                   context: context),
+              verticalSpace(3, context),
               customFonts(
                   text: "$bookingNumber",
                   size: 16,
@@ -509,27 +511,27 @@ class _BookingDetailState extends State<BookingDetail> {
                       children: [
                         customFonts(
                             text: "Start date & End date",
-                            size: 12,
+                            size: 13,
                             color: AppColors.primaryBlackColor.withOpacity(0.8),
                             context: context),
                         Row(
                           children: [
                             customFonts(
                                 text: startDate,
-                                size: 13,
+                                size: 14,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.primaryBlackColor
                                     .withOpacity(0.9),
                                 context: context),
                             customFonts(
                                 text: " to ",
-                                size: 13,
+                                size: 14,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.GlobelColor,
                                 context: context),
                             customFonts(
                                 text: endDate,
-                                size: 13,
+                                size: 14,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.primaryBlackColor
                                     .withOpacity(0.9),
@@ -543,21 +545,21 @@ class _BookingDetailState extends State<BookingDetail> {
                       children: [
                         customFonts(
                             text: "Adults & child",
-                            size: 12,
+                            size: 13,
                             color: AppColors.primaryBlackColor.withOpacity(0.8),
                             context: context),
                         Row(
                           children: [
                             customFonts(
                                 text: "$adults - ",
-                                size: 13,
+                                size: 14,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.primaryBlackColor
                                     .withOpacity(0.9),
                                 context: context),
                             customFonts(
                                 text: "$childs",
-                                size: 13,
+                                size: 14,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.primaryBlackColor
                                     .withOpacity(0.9),
@@ -574,12 +576,12 @@ class _BookingDetailState extends State<BookingDetail> {
                   children: [
                     customFonts(
                         text: "Special Request",
-                        size: 12,
+                        size: 13,
                         color: AppColors.primaryBlackColor.withOpacity(0.8),
                         context: context),
                     customFonts(
                         text: "$specialRequest",
-                        size: 13,
+                        size: 14,
                         fontWeight: FontWeight.w500,
                         color: AppColors.primaryBlackColor.withOpacity(0.9),
                         context: context)
@@ -596,7 +598,7 @@ class _BookingDetailState extends State<BookingDetail> {
             color: Colors.white,
             child: customFonts(
                 text: "Booking details",
-                size: 14,
+                size: 16,
                 color: AppColors.primaryBlackColor.withOpacity(0.9),
                 fontWeight: FontWeight.w600,
                 context: context),

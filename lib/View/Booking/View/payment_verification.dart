@@ -67,7 +67,7 @@ class _PaymentVerificationState extends State<PaymentVerification> {
 
    }
               if(transection.filePaths.isNotEmpty && transferIDController.text.isEmpty){
-                transection.uploadtransection(sessiontoken:user.isUser?.sessionToken,bookingnumber: booking.booking?.bookingNumber,amount: booking.booking?.packageCost).then((value) {
+                transection.uploadtransection(sessiontoken:user.isUser?.sessionToken,bookingnumber: booking.booking?.bookingNumber,amount: booking.booking?.totalPrice).then((value) {
                   if(value == true){
                     endLoading();
                     booking.price = null;
@@ -80,6 +80,8 @@ class _PaymentVerificationState extends State<PaymentVerification> {
                     Get.to(() => HomeScreen(
                       selectedIndex: 2,
                     ));
+
+
                   }
                   else {
                     endLoading();
@@ -88,7 +90,7 @@ class _PaymentVerificationState extends State<PaymentVerification> {
                 });
               } else if(transection.filePaths.isEmpty && transferIDController.text.isNotEmpty){
 
-                transection.uploadtransectionbynumber(sessiontoken:user.isUser?.sessionToken,bookingnumber: booking.booking?.bookingNumber,amount: booking.booking?.packageCost,id: transferIDController.text).then((value) {
+                transection.uploadtransectionbynumber(sessiontoken:user.isUser?.sessionToken,bookingnumber: booking.booking?.bookingNumber,amount: booking.booking?.totalPrice,id: transferIDController.text).then((value) {
                   if(value == true){
                     endLoading();
                     transection.imageFileList = [];
@@ -100,14 +102,26 @@ class _PaymentVerificationState extends State<PaymentVerification> {
                     Get.offAll(() => HomeScreen(
                       selectedIndex: 2,
                     ));
+
+                    print("**************** totasl price: ${booking.booking?.totalPrice}");
+                    print("****************  package cost price: ${booking.booking?.packageCost}");
+                    print("****************  ptransfer id: ${transferIDController.text}");
+
+
                   }
                   else {
                     endLoading();
                     showSnackbar(context, transection.trasectionmessage);
+                    print("**************** totasl price: ${booking.booking?.totalPrice}");
+                    print("****************  package cost price: ${booking.booking?.packageCost}");
+                    print("****************  ptransfer id: ${transferIDController.text}");
                   }
                 });
               } else {
                 showSnackbar(context, 'Please Select one Either Transection id or transection photes');
+                print("**************** totasl price: ${booking.booking?.totalPrice}");
+                print("****************  package cost price: ${booking.booking?.packageCost}");
+                print("****************  ptransfer id: ${transferIDController.text}");
               }
 
 
@@ -171,6 +185,8 @@ class _PaymentVerificationState extends State<PaymentVerification> {
       child: Consumer4<IsUserExitsController, Bookingedite, pakagecontrollers,transectioncontroller>(
           builder: (context, user,  booking, pkg,transection, child) {
 
+
+
             return Scaffold(
               appBar: AppBar(
                 automaticallyImplyLeading: false,
@@ -210,9 +226,7 @@ class _PaymentVerificationState extends State<PaymentVerification> {
                             height: responsive(10, context),
                           ),
                           // transfer ID Textfield
-                          SizedBox(
-                            height: responsive(10, context),
-                          ),
+
 
                           customFonts(
                               text:
@@ -443,8 +457,8 @@ class _PaymentVerificationState extends State<PaymentVerification> {
         required BuildContext context}) {
     return Container(
       width: MediaQuery.sizeOf(context).width,
-      height: responsive(51, context),
-      padding: EdgeInsets.symmetric(horizontal: responsive(20, context)),
+
+      padding: EdgeInsets.symmetric(horizontal: responsive(20, context), vertical: responsive(8, context)),
       alignment: Alignment.centerLeft,
       decoration: const BoxDecoration(
         color: AppColors.GlobelColor,
@@ -458,10 +472,11 @@ class _PaymentVerificationState extends State<PaymentVerification> {
             children: [
               customFonts(
                   text: "Status",
-                  size: 10,
+                  size: 13,
                   fontWeight: FontWeight.w500,
                   color: Colors.white,
                   context: context),
+              verticalSpace(3, context),
               customFonts(
                   text: status,
                   size: 16,
@@ -476,10 +491,11 @@ class _PaymentVerificationState extends State<PaymentVerification> {
             children: [
               customFonts(
                   text: "Booking number",
-                  size: 10,
+                  size: 13,
                   fontWeight: FontWeight.w500,
                   color: Colors.white,
                   context: context),
+              verticalSpace(3, context),
               customFonts(
                   text: "$bookingNumber",
                   size: 16,
@@ -570,6 +586,7 @@ class _PaymentVerificationState extends State<PaymentVerification> {
       ),
       cursorColor: AppColors.GlobelColor,
       textAlign: TextAlign.left,
+      textAlignVertical: TextAlignVertical.center,
       inputFormatters: formater,
       decoration: InputDecoration(
           border: InputBorder.none,

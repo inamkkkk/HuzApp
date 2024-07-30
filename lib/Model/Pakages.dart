@@ -1,7 +1,7 @@
 class Pakages {
   var count;
-  var next;
-  var previous;
+  Null? next;
+  Null? previous;
   List<Results>? results;
 
   Pakages({this.count, this.next, this.previous, this.results});
@@ -34,7 +34,14 @@ class Results {
   var huzToken;
   var packageType;
   var packageName;
-  var packageCost;
+  var packageBaseCost;
+  var costForChild;
+  var costForInfants;
+  var costForSharing;
+  var costForQuad;
+  var costForTriple;
+  var costForDouble;
+  var costForSingle;
   var meccaNights;
   var madinahNights;
   var startDate;
@@ -47,6 +54,7 @@ class Results {
   var isLunchIncluded;
   var isDinnerIncluded;
   var isPackageOpenForOtherDate;
+  var packageValidity;
   var packageStatus;
   var packageStage;
   var partnerSessionToken;
@@ -58,7 +66,14 @@ class Results {
       {this.huzToken,
         this.packageType,
         this.packageName,
-        this.packageCost,
+        this.packageBaseCost,
+        this.costForChild,
+        this.costForInfants,
+        this.costForSharing,
+        this.costForQuad,
+        this.costForTriple,
+        this.costForDouble,
+        this.costForSingle,
         this.meccaNights,
         this.madinahNights,
         this.startDate,
@@ -71,6 +86,7 @@ class Results {
         this.isLunchIncluded,
         this.isDinnerIncluded,
         this.isPackageOpenForOtherDate,
+        this.packageValidity,
         this.packageStatus,
         this.packageStage,
         this.partnerSessionToken,
@@ -82,7 +98,14 @@ class Results {
     huzToken = json['huz_token'];
     packageType = json['package_type'];
     packageName = json['package_name'];
-    packageCost = json['package_cost'];
+    packageBaseCost = json['package_base_cost'];
+    costForChild = json['cost_for_child'];
+    costForInfants = json['cost_for_infants'];
+    costForSharing = json['cost_for_sharing'];
+    costForQuad = json['cost_for_quad'];
+    costForTriple = json['cost_for_triple'];
+    costForDouble = json['cost_for_double'];
+    costForSingle = json['cost_for_single'];
     meccaNights = json['mecca_nights'];
     madinahNights = json['madinah_nights'];
     startDate = json['start_date'];
@@ -95,6 +118,7 @@ class Results {
     isLunchIncluded = json['is_lunch_included'];
     isDinnerIncluded = json['is_dinner_included'];
     isPackageOpenForOtherDate = json['is_package_open_for_other_date'];
+    packageValidity = json['package_validity'];
     packageStatus = json['package_status'];
     packageStage = json['package_stage'];
     partnerSessionToken = json['partner_session_token'];
@@ -117,7 +141,14 @@ class Results {
     data['huz_token'] = this.huzToken;
     data['package_type'] = this.packageType;
     data['package_name'] = this.packageName;
-    data['package_cost'] = this.packageCost;
+    data['package_base_cost'] = this.packageBaseCost;
+    data['cost_for_child'] = this.costForChild;
+    data['cost_for_infants'] = this.costForInfants;
+    data['cost_for_sharing'] = this.costForSharing;
+    data['cost_for_quad'] = this.costForQuad;
+    data['cost_for_triple'] = this.costForTriple;
+    data['cost_for_double'] = this.costForDouble;
+    data['cost_for_single'] = this.costForSingle;
     data['mecca_nights'] = this.meccaNights;
     data['madinah_nights'] = this.madinahNights;
     data['start_date'] = this.startDate;
@@ -130,6 +161,7 @@ class Results {
     data['is_lunch_included'] = this.isLunchIncluded;
     data['is_dinner_included'] = this.isDinnerIncluded;
     data['is_package_open_for_other_date'] = this.isPackageOpenForOtherDate;
+    data['package_validity'] = this.packageValidity;
     data['package_status'] = this.packageStatus;
     data['package_stage'] = this.packageStage;
     data['partner_session_token'] = this.partnerSessionToken;
@@ -165,7 +197,6 @@ class HotelInfoDetail {
   var isEnglishToilet;
   var isIndianToilet;
   var isLaundry;
-  List<Null>? hotelPhotos;
 
   HotelInfoDetail(
       {this.hotelId,
@@ -184,8 +215,7 @@ class HotelInfoDetail {
         this.isWashroomAmenities,
         this.isEnglishToilet,
         this.isIndianToilet,
-        this.isLaundry,
-        this.hotelPhotos});
+        this.isLaundry});
 
   HotelInfoDetail.fromJson(Map<String, dynamic> json) {
     hotelId = json['hotel_id'];
@@ -197,7 +227,7 @@ class HotelInfoDetail {
     distanceType = json['distance_type'];
     isShuttleServicesIncluded = json['is_shuttle_services_included'];
     isAirCondition = json['is_air_condition'];
-    isTelevision = json['is_Television'];
+    isTelevision = json['is_television'];
     isWifi = json['is_wifi'];
     isElevator = json['is_elevator'];
     isAttachBathroom = json['is_attach_bathroom'];
@@ -205,7 +235,6 @@ class HotelInfoDetail {
     isEnglishToilet = json['is_english_toilet'];
     isIndianToilet = json['is_indian_toilet'];
     isLaundry = json['is_laundry'];
-
   }
 
   Map<String, dynamic> toJson() {
@@ -219,7 +248,7 @@ class HotelInfoDetail {
     data['distance_type'] = this.distanceType;
     data['is_shuttle_services_included'] = this.isShuttleServicesIncluded;
     data['is_air_condition'] = this.isAirCondition;
-    data['is_Television'] = this.isTelevision;
+    data['is_television'] = this.isTelevision;
     data['is_wifi'] = this.isWifi;
     data['is_elevator'] = this.isElevator;
     data['is_attach_bathroom'] = this.isAttachBathroom;
@@ -227,7 +256,6 @@ class HotelInfoDetail {
     data['is_english_toilet'] = this.isEnglishToilet;
     data['is_indian_toilet'] = this.isIndianToilet;
     data['is_laundry'] = this.isLaundry;
-
     return data;
   }
 }
@@ -237,18 +265,24 @@ class CompanyDetail {
   var totalExperience;
   var companyBio;
   var companyLogo;
+  var contactName;
+  var contactNumber;
 
   CompanyDetail(
       {this.companyName,
         this.totalExperience,
         this.companyBio,
-        this.companyLogo});
+        this.companyLogo,
+        this.contactName,
+        this.contactNumber});
 
   CompanyDetail.fromJson(Map<String, dynamic> json) {
     companyName = json['company_name'];
     totalExperience = json['total_experience'];
     companyBio = json['company_bio'];
     companyLogo = json['company_logo'];
+    contactName = json['contact_name'];
+    contactNumber = json['contact_number'];
   }
 
   Map<String, dynamic> toJson() {
@@ -257,6 +291,8 @@ class CompanyDetail {
     data['total_experience'] = this.totalExperience;
     data['company_bio'] = this.companyBio;
     data['company_logo'] = this.companyLogo;
+    data['contact_name'] = this.contactName;
+    data['contact_number'] = this.contactNumber;
     return data;
   }
 }
@@ -282,3 +318,9 @@ class RatingCount {
     return data;
   }
 }
+
+
+
+
+
+

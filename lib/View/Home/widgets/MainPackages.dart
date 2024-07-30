@@ -71,16 +71,22 @@ class _MainPackagesState extends State<MainPackages> {
                             children: data!.map((item) => Container(
                               width: double.infinity,
                               // color: currentIndex == context.watch<int>() ? Colors.blue : Colors.white,
-                              child: item.hotelPhotos!.isEmpty?CachedNetworkImage(
-                                imageUrl: "1231",
-                                placeholder: (context, url) => Image.asset('images/placeholder-image.png',
-                                  fit: BoxFit.cover,
-                                ),
-                                errorWidget: (context, url, error) => Image.asset('images/placeholder-image.png',
-                                  fit: BoxFit.cover,
-                                ),
-                                fit: BoxFit.cover,
-                              ): CachedNetworkImage(
+                              child:
+
+                              // item.hotelPhotos!.isEmpty?
+                              //
+                              // CachedNetworkImage(
+                              //   imageUrl: "1231",
+                              //   placeholder: (context, url) => Image.asset('images/placeholder-image.png',
+                              //     fit: BoxFit.cover,
+                              //   ),
+                              //   errorWidget: (context, url, error) => Image.asset('images/placeholder-image.png',
+                              //     fit: BoxFit.cover,
+                              //   ),
+                              //   fit: BoxFit.cover,
+                              // ):
+
+                              CachedNetworkImage(
                                 imageUrl: "",
                                 placeholder: (context, url) => Image.asset('images/placeholder-image.png',
                                   fit: BoxFit.cover,
