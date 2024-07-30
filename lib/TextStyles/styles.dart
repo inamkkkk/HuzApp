@@ -15,8 +15,8 @@ Widget  Heading1({var center, text,context,Color? color}){
     style: TextStyle(
       color: color,
       fontSize: responsive(40, context),
-        fontFamily: GoogleFonts.cairo(textStyle: TextStyle(
-            fontWeight: FontWeight.bold
+        fontFamily: GoogleFonts.cairo(textStyle: const TextStyle(
+            fontWeight:  FontWeight.bold
         )).fontFamily,
       // fontFamily: AppFonts.poppinsSemiBold,
       fontWeight: FontWeight.w600,
@@ -31,7 +31,7 @@ Widget  Heading2({var center, text,context,Color? color}){
     style: TextStyle(
       color: color,
       fontSize: responsive(20, context),
-      fontFamily: GoogleFonts.cairo(textStyle: TextStyle(
+      fontFamily: GoogleFonts.cairo(textStyle: const TextStyle(
           fontWeight: FontWeight.bold
       )).fontFamily,
       // fontFamily: AppFonts.poppinsSemiBold,

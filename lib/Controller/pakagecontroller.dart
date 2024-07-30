@@ -36,8 +36,10 @@ class pakagecontrollers with ChangeNotifier {
       if (response.statusCode == 200) {
         isApiCalled = true;
         var map = jsonDecode(response.body);
-        transport = TransportModel.fromJson(map);
 
+        print(
+            "************************* respne body form Get Transport: ${response.body}");
+        transport = TransportModel.fromJson(map);
 
         notifyListeners();
         print(transport!.results?.length);
@@ -45,7 +47,9 @@ class pakagecontrollers with ChangeNotifier {
         print('transport data = "${transport?.results?[0].plateNo}');
       } else {
         isApiCalled = true;
-        print(response.reasonPhrase);
+        print(
+            "**************************** respone phrase : ${response.reasonPhrase}");
+
         notifyListeners();
       }
     } catch (e) {
@@ -54,15 +58,15 @@ class pakagecontrollers with ChangeNotifier {
     }
   }
 
-var include = [];
- var  exclude = [];
+  var include = [];
+  var exclude = [];
   List<List<String>> photes = [];
   List<String> photess = [];
   Details? details;
   List<Widget> routs = [];
   List<Widget> ziarat = [];
-  var allincludes = []; var allexclude = [];
-
+  var allincludes = [];
+  var allexclude = [];
 
   void getnull() {
     isApiCalled = false;
@@ -85,58 +89,53 @@ var include = [];
       var response = await http.Response.fromStream(Streamresponse);
       if (Streamresponse.statusCode == 200) {
         print('hello');
+
+        print("**************** Status Code: ${Streamresponse.statusCode}");
+
+        print(
+            "*************************** Pakcge respone body: ${response.body} and respone: $response");
         var map = jsonDecode(response.body);
         print('map is : $map');
         package = Pakages.fromJson(map);
         length = package!.results!.length;
-        for(var m in package!.results!){
-          var include2 =[]; var exclude2 = [];
+        for (var m in package!.results!) {
+          var include2 = [];
+          var exclude2 = [];
 
-            include2.clear();
-            exclude2.clear();
-          if(m.isTourGuideIncluded!){
+          include2.clear();
+          exclude2.clear();
+          if (m.isTourGuideIncluded!) {
             include2.add('Tour guide - ');
-
           }
-          if(m.isTourGuideIncluded!){
+          if (m.isTourGuideIncluded!) {
             include2.add('Tour guide - ');
-
           }
 
-            if(m.isVisaIncluded!){
-              print('visa includes');
-              include2.add('eVisa-');
-            }
+          if (m.isVisaIncluded!) {
+            print('visa includes');
+            include2.add('eVisa-');
+          }
 
-          if(m.isBreakfastIncluded!){
+          if (m.isBreakfastIncluded!) {
             include2.add('Breakfast - ');
-
           }
-          if(m.isInsuranceIncluded!){
+          if (m.isInsuranceIncluded!) {
             include2.add('Insurance - ');
-
           }
-          if(m.isDinnerIncluded!){
+          if (m.isDinnerIncluded!) {
             include2.add('Dinner - ');
-
           }
-          if(m.isLunchIncluded!){
+          if (m.isLunchIncluded!) {
             include2.add('Lunch - ');
-
           }
 
-
-
-          if(m.isAirportReceptionIncluded!){
+          if (m.isAirportReceptionIncluded!) {
             include2.add('Reception');
-
           }
           allincludes.add(include2);
 
           print(allincludes);
-
         }
-
 
         print(photes);
         print("phoes length : ${photess.length}");
@@ -152,9 +151,9 @@ var include = [];
       notifyListeners();
     } catch (e) {
       isApiCalled = true;
+      print("******************************* Print in catch");
       notifyListeners();
       debugPrint('catch error : $e');
-
     }
   }
 
@@ -201,7 +200,8 @@ var include = [];
                     SizedBox(
                       width: responsive(08, context),
                     ),
-                    customFonts(text:  '$m',
+                    customFonts(
+                        text: '$m',
                         size: 15,
                         color: AppColors.primaryBlackColor,
                         fontWeight: FontWeight.w500,
@@ -217,65 +217,59 @@ var include = [];
         List<String> result2 = string2.split(", ");
         print("ziarat is $string2");
         // if(ziarat.isNotEmpty)
-        if(result2[0].isNotEmpty)
-        for (var m in result2) {
-          ziarat.add(
-            Container(
-                child: Row(
-              children: [
-                SvgPicture.asset(
-                  width: responsive(12, context),
-                  height: responsive(12, context),
-                  'images/include.svg',
-                  semanticsLabel: 'vector',
-                  // fit: BoxFit.fitHeight,
-                ),
-                SizedBox(
-                  width: responsive(08, context),
-                ),
+        if (result2[0].isNotEmpty)
+          for (var m in result2) {
+            ziarat.add(
+              Container(
+                  child: Row(
+                children: [
+                  SvgPicture.asset(
+                    width: responsive(12, context),
+                    height: responsive(12, context),
+                    'images/include.svg',
+                    semanticsLabel: 'vector',
+                    // fit: BoxFit.fitHeight,
+                  ),
+                  SizedBox(
+                    width: responsive(08, context),
+                  ),
 
-                Discriptions(
-                  center: false,
-                  text: '${m}',
-                  context: context,
-                ),
-                // SizedBox(width: responsive(02, context),)
-              ],
-            )),
-          );
-        }
+                  Discriptions(
+                    center: false,
+                    text: '${m}',
+                    context: context,
+                  ),
+                  // SizedBox(width: responsive(02, context),)
+                ],
+              )),
+            );
+          }
 
         print("ziarat is $ziarat");
         print(result);
-        if(details?.isTourGuideIncluded!){
+        if (details?.isTourGuideIncluded!) {
           include.add('Tour guide - ');
-
         }
-        if(details?.isTourGuideIncluded!){
+        if (details?.isTourGuideIncluded!) {
           include.add('Tour guide - ');
-
         }
 
-        if(details?.isVisaIncluded!){
+        if (details?.isVisaIncluded!) {
           print('visa includes');
           include.add('eVisa-');
         }
 
-        if(details?.isBreakfastIncluded!){
+        if (details?.isBreakfastIncluded!) {
           include.add('Breakfast - ');
-
         }
-        if(details?.isInsuranceIncluded!){
+        if (details?.isInsuranceIncluded!) {
           include.add('Insurance - ');
-
         }
-        if(details?.isDinnerIncluded!){
+        if (details?.isDinnerIncluded!) {
           include.add('Dinner - ');
-
         }
-        if(details?.isLunchIncluded!){
+        if (details?.isLunchIncluded!) {
           include.add('Lunch - ');
-
         }
 
         //------
@@ -304,9 +298,8 @@ var include = [];
         // }
         //-------------
 
-        if(details?.isAirportReceptionIncluded!){
+        if (details?.isAirportReceptionIncluded!) {
           include.add('Reception');
-
         }
         print('widget length is : ${include.length}');
         // print(package?.count);

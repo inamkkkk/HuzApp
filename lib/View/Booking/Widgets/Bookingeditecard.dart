@@ -25,7 +25,8 @@ class bookingdetail extends StatefulWidget {
       adults,
       child,
       infent,
-      descriptions;
+      descriptions,
+      room;
 
   bookingdetail({
     super.key,
@@ -38,6 +39,7 @@ class bookingdetail extends StatefulWidget {
     this.child,
     this.infent,
     this.descriptions,
+    this.room
   });
 
   @override
@@ -93,11 +95,13 @@ class _bookingdetailState extends State<bookingdetail> {
                                 return CustomBottomSheet(
                                   previousclasscontext: context,
                                   isFromEdit: false,
+                                  room: widget.room,
                                   isFlexible: widget.isFlex,
                                   startDate: widget.startdate,
                                   endDate: widget.enddate,
                                   adults: widget.adults,
                                   childs: widget.child,
+                                  infants: widget.infent,
                                 );
                               });
                         },

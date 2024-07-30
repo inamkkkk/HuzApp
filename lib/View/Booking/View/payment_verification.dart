@@ -67,7 +67,7 @@ class _PaymentVerificationState extends State<PaymentVerification> {
 
    }
               if(transection.filePaths.isNotEmpty && transferIDController.text.isEmpty){
-                transection.uploadtransection(sessiontoken:user.isUser?.sessionToken,bookingnumber: booking.booking?.bookingNumber,amount: booking.booking?.packageCost).then((value) {
+                transection.uploadtransection(sessiontoken:user.isUser?.sessionToken,bookingnumber: booking.booking?.bookingNumber,amount: booking.booking?.totalPrice).then((value) {
                   if(value == true){
                     endLoading();
                     booking.price = null;
@@ -80,6 +80,8 @@ class _PaymentVerificationState extends State<PaymentVerification> {
                     Get.to(() => HomeScreen(
                       selectedIndex: 2,
                     ));
+
+
                   }
                   else {
                     endLoading();
@@ -88,7 +90,7 @@ class _PaymentVerificationState extends State<PaymentVerification> {
                 });
               } else if(transection.filePaths.isEmpty && transferIDController.text.isNotEmpty){
 
-                transection.uploadtransectionbynumber(sessiontoken:user.isUser?.sessionToken,bookingnumber: booking.booking?.bookingNumber,amount: booking.booking?.packageCost,id: transferIDController.text).then((value) {
+                transection.uploadtransectionbynumber(sessiontoken:user.isUser?.sessionToken,bookingnumber: booking.booking?.bookingNumber,amount: booking.booking?.totalPrice,id: transferIDController.text).then((value) {
                   if(value == true){
                     endLoading();
                     transection.imageFileList = [];
@@ -100,14 +102,26 @@ class _PaymentVerificationState extends State<PaymentVerification> {
                     Get.offAll(() => HomeScreen(
                       selectedIndex: 2,
                     ));
+
+                    print("**************** totasl price: ${booking.booking?.totalPrice}");
+                    print("****************  package cost price: ${booking.booking?.packageCost}");
+                    print("****************  ptransfer id: ${transferIDController.text}");
+
+
                   }
                   else {
                     endLoading();
                     showSnackbar(context, transection.trasectionmessage);
+                    print("**************** totasl price: ${booking.booking?.totalPrice}");
+                    print("****************  package cost price: ${booking.booking?.packageCost}");
+                    print("****************  ptransfer id: ${transferIDController.text}");
                   }
                 });
               } else {
                 showSnackbar(context, 'Please Select one Either Transection id or transection photes');
+                print("**************** totasl price: ${booking.booking?.totalPrice}");
+                print("****************  package cost price: ${booking.booking?.packageCost}");
+                print("****************  ptransfer id: ${transferIDController.text}");
               }
 
 
@@ -572,6 +586,7 @@ class _PaymentVerificationState extends State<PaymentVerification> {
       ),
       cursorColor: AppColors.GlobelColor,
       textAlign: TextAlign.left,
+      textAlignVertical: TextAlignVertical.center,
       inputFormatters: formater,
       decoration: InputDecoration(
           border: InputBorder.none,

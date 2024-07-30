@@ -32,38 +32,45 @@ class transectioncontroller with ChangeNotifier{
 
 
   Future<bool> uploadtransectionbynumber({sessiontoken,bookingnumber,id,amount}) async {
-    print(amount);
-    Loading();
-    var headers = {
-      'Content-Type': 'application/json',
-      'Authorization': '${NetworkServices.token}',
-    };
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            '${NetworkServices.bookingurl}pay_booking_amount_by_transaction_number/'));
-    request.body = json.encode({
-      "session_token": "$sessiontoken",
-      "booking_number": "$bookingnumber",
-      "transaction_number": "$id",
-      "transaction_amount": double.parse("$amount"),
-    });
-    request.headers.addAll(headers);
+   try{
+     print(amount);
+     Loading();
+     var headers = {
+       'Content-Type': 'application/json',
+       'Authorization': '${NetworkServices.token}',
+     };
+     var request = http.Request(
+         'POST',
+         Uri.parse(
+             '${NetworkServices.bookingurl}pay_booking_amount_by_transaction_number/'));
+     request.body = json.encode({
+       "session_token": "$sessiontoken",
+       "booking_number": "$bookingnumber",
+       "transaction_number": "$id",
+       "transaction_amount": double.parse("$amount"),
+     });
+     request.headers.addAll(headers);
 
-    http.StreamedResponse response = await request.send();
+     http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200||response.statusCode == 201) {
+     if (response.statusCode == 200||response.statusCode == 201) {
 
 
-      print(await response.stream.bytesToString());
-      return true;
-    } else {
+       print(await response.stream.bytesToString());
+       return true;
+     } else {
 
-      var data = jsonDecode(await response.stream.bytesToString());
-      trasectionmessage = data['message'];
-      return false;
-      print(response.reasonPhrase);
-    }
+       var data = jsonDecode(await response.stream.bytesToString());
+       trasectionmessage = data['message'];
+       print("&&&&&&&&&&&&& try: ${response.reasonPhrase}");
+
+
+     }
+   }catch(e){
+
+     print("***************** catch : $e");
+   }
+   return false;
   }
 
 

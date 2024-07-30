@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:huz/Model/Details.dart';
 
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,7 @@ import '../Controller/BookingediteController/BookingEditeController.dart';
 import 'Bookingeditecard.dart';
 
 class CustomBottomSheet extends StatefulWidget {
-  var adults, childs, startDate, endDate, isFlexible;
+  var adults, infants,childs, startDate, endDate, room,isFlexible;
   var isFromEdit, previousclasscontext;
 
   CustomBottomSheet({
@@ -30,6 +31,8 @@ class CustomBottomSheet extends StatefulWidget {
     required this.endDate,
     required this.adults,
     required this.childs,
+    required this.infants,
+    required this.room
   });
 
   @override
@@ -40,12 +43,13 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
   num price = 0;
   int adultsCount = 1;
   int childsCount = 0;
+  int infantCounts = 0;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height /
-          responsive(widget.isFlexible ? 2.8 : 3.3, context),
+          responsive(widget.isFlexible ? 2.5 : 2.5, context),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           boxShadow: const [
@@ -93,7 +97,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
               height: responsive(2, context),
             ),
             Expanded(
-              child: Padding(
+              child: SingleChildScrollView(
                 padding: EdgeInsets.symmetric(
                     horizontal: responsive(25, context),
                     vertical: responsive(widget.isFlexible ? 25 : 10, context)),
@@ -363,7 +367,101 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                         )
                       ],
                     ),
-                    // SizedBox(height: responsive(20, context),),
+                    SizedBox(
+                      height: responsive(25, context),
+                    ),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            customFonts(
+                                text: "Infants",
+                                size: 16,
+                                fontWeight: FontWeight.bold,
+                                context: context),
+                            customFonts(
+                                text: "Age 0-2", size: 14, context: context),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  if (infantCounts > 0) {
+                                    setState(() {
+                                      infantCounts--;
+                                      price = price - booking.subtractprice;
+                                    });
+                                  }
+                                });
+                                // booking.childrens = childCount;
+                                booking.isedite = true;
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                height: responsive(42, context),
+                                width: responsive(42, context),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: Colors.black12)),
+                                child: SvgPicture.asset(
+                                  "images/minus.svg",
+                                  height: responsive(2, context),
+                                  width: responsive(2, context),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: responsive(15, context),
+                            ),
+                            customFonts(
+                                text: "$infantCounts",
+                                size: 15,
+                                context: context),
+                            SizedBox(
+                              width: responsive(15, context),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  if (infantCounts >= 0) {
+                                    setState(() {
+                                      infantCounts++;
+                                      price = price + booking.subtractprice;
+                                    });
+                                  }
+                                });
+
+                                booking.isedite = true;
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                height: responsive(42, context),
+                                width: responsive(42, context),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: Colors.black12)),
+                                child: SvgPicture.asset(
+                                  "images/plus.svg",
+                                  height: responsive(12, context),
+                                  width: responsive(12, context),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    verticalSpace(25, context),
+
+                    roomTypeRow(roomType: "Single Room", cost: widget.room, value: widget.room, booking: booking),
+
+
+
                   ],
                 ),
               ),
@@ -423,6 +521,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                         booking.isOpened = false;
                         booking.adults = adultsCount;
                         booking.childrens = childsCount;
+                        booking.infents = infantCounts;
                         booking.price = price;
                         booking.notifyListeners();
                       });
@@ -458,7 +557,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                         height: responsive(40, context),
                         alignment: Alignment.center,
                         child: customFonts(
-                            text: "Save",
+                            text: "Confirm",
                             size: 16,
                             color: Colors.white,
                             context: context)),
@@ -470,5 +569,36 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
         );
       }),
     );
+  }
+
+  GestureDetector roomTypeRow({required roomType, required cost, required value, required Bookingedite booking}) {
+    return GestureDetector(
+                    onTap: (){
+                      booking.roomChange(value);
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(color: AppColors.GlobelColor,
+                          shape: BoxShape.circle),
+                          height: responsive(20, context),
+                          width: responsive(20, context),
+                        ),
+                        horizontalSpace(20, context),
+                        customFonts(
+                            text: "Single Room",
+                            size: 16,
+                            fontWeight: FontWeight.bold,
+                            context: context),
+                        Spacer(),
+                        customFonts(
+                            text: "PKR 800",
+                            size: 16,
+                            fontWeight: FontWeight.bold,
+                            context: context),
+                      ],
+                    ),
+                  );
   }
 }

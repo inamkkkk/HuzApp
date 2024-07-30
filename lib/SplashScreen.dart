@@ -1,8 +1,4 @@
-
-
-
 import 'dart:async';
-
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +31,6 @@ class _SplashScreenState extends State<SplashScreen> {
     PermissionStatus status = await Permission.location.request();
 
     if (status.isGranted) {
-
       // Permission granted, proceed with location access
       // _accessLocation();
     } else if (status.isDenied) {
@@ -47,19 +42,19 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-var num;
+  var num;
+
   Future<void> getUser(var context) async {
-    try{
-      num =  await prefs.getString('phone');
+    try {
+      num = await prefs.getString('phone');
       print(num);
-    }catch(e){
+    } catch (e) {
       print(e);
     }
 
-
     debugPrint('getting location getCurrentUserLocation');
-
   }
+
   @override
   void initState() {
     getUser(context);
@@ -69,18 +64,18 @@ var num;
     // TODO: implement initState
     super.initState();
     Timer(const Duration(seconds: 3), () async {
-      if(num!=null){
-        await Provider.of<IsUserExitsController>(context, listen: false).checkuserfromsplash(phoneNumber: num,context: context);
-      } else{
+      if (num != null) {
+        await Provider.of<IsUserExitsController>(context, listen: false)
+            .checkuserfromsplash(phoneNumber: num, context: context);
+      } else {
         print('api hit');
-        Get.offAll(
-                ()=> const IntroScreen()
-        );
+        Get.offAll(() => const IntroScreen());
       }
     });
   }
 
   DateTime currentDate = DateTime.now();
+
   // var a = DateFormat('yyyy-MM-dd').format(currentDate);
   @override
   Widget build(BuildContext context) {
@@ -115,47 +110,42 @@ var num;
 
     // print("date is : ${}");
     // print("shahzaib bhai :${MediaQuery.of(context).size.height}");
-    return   Consumer<hotelcontroller >(
-        builder: (context, hotel, child) {
-          if(hotel.madinaHotels.isEmpty || hotel.makkahotels.isEmpty){
-            hotel.LoadHotels(context);
-          }
-        return Scaffold(
-            backgroundColor: Colors.white,
-            body: SizedBox(
-              width: MediaQuery.sizeOf(context).width,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Spacer(),
-                  Padding(
-                    padding:  EdgeInsets.only(top: responsive(50, context)),
-                    child: Image(
-                      image: AssetImage(
-                        'images/huz_logo.png',
-
-                      ),
-                      height: responsive(140, context),
-                      width: responsive(110, context),
-                    ),
-                  ),
-                  Spacer(),
-                  Image(
-                    image: AssetImage(
-                      'images/poweredby.png',
-
-                    ),
-                    width: responsive(330, context),
-
-                  ),
-                  SizedBox(height: responsive(40, context),)
-                ]
-              ),
-            ),
-          );
+    return Consumer<hotelcontroller>(builder: (context, hotel, child) {
+      if (hotel.madinaHotels.isEmpty || hotel.makkahotels.isEmpty) {
+        hotel.LoadHotels(context);
       }
-    );
-
+      return Scaffold(
+        backgroundColor: Colors.white,
+        body: SizedBox(
+          width: MediaQuery.sizeOf(context).width,
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Spacer(),
+                Padding(
+                  padding: EdgeInsets.only(top: responsive(50, context)),
+                  child: Image(
+                    image: AssetImage(
+                      'images/huz_logo.png',
+                    ),
+                    height: responsive(140, context),
+                    width: responsive(110, context),
+                  ),
+                ),
+                Spacer(),
+                Image(
+                  image: AssetImage(
+                    'images/poweredby.png',
+                  ),
+                  width: responsive(330, context),
+                ),
+                SizedBox(
+                  height: responsive(40, context),
+                )
+              ]),
+        ),
+      );
+    });
   }
 }

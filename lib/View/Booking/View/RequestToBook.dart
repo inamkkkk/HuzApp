@@ -146,200 +146,197 @@ class _RequestToBookState extends State<RequestToBook> {
 
         ),
       ),
-      body: SingleChildScrollView(
-        child: Consumer2<Bookingedite, pakagecontrollers>(
-            builder: (context, booking, pkg, child) {
-              return Stack(
-                children: [
-                  Container(
-                    color: Color(0xFFF2F2F2),
-                    height: responsive(85, context),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: responsive(20, context),
-                        vertical: responsive(10, context)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        verticalSpace(29, context),
-                        CustomContainer(
-                          onView: (){
-                            Get.to(()=> DetailScreen(token: pkg.details?.huzToken, isView: true));
-                          },
-                          pkg:pkg,
-                          title: pkg.details?.packageName,
-                          madinanights: pkg.details?.madinahNights,
-                          meccanights: pkg.details?.meccaNights,
-                          starDate: DateFormat('dd MMM yyyy')
-                              .format(DateTime.parse(pkg.details?.startDate)),
-                          endDate: DateFormat('dd MMM yyyy')
-                              .format(DateTime.parse(pkg.details?.endDate)),
-                          amount: formatCurrency(pkg?.details?.packageCost.toInt()),
-                        ),
-                        SizedBox(
-                          height: responsive(10, context),
-                        ),
-                        bookingdetail(
-                          isFlex: pkg.details?.isPackageOpenForOtherDate,
-                          // isFlex: true,
+      body: Consumer2<Bookingedite, pakagecontrollers>(
+          builder: (context, booking, pkg, child) {
+            return Stack(
+              children: [
+                Container(
+                  color: Color(0xFFF2F2F2),
+                  height: responsive(85, context),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: responsive(20, context),
+                      vertical: responsive(10, context)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      verticalSpace(29, context),
+                      CustomContainer(
+                        onView: (){
+                          Get.to(()=> DetailScreen(token: pkg.details?.huzToken, isView: true));
+                        },
+                        pkg:pkg,
+                        title: pkg.details?.packageName,
+                        madinanights: pkg.details?.madinahNights,
+                        meccanights: pkg.details?.meccaNights,
+                        starDate: DateFormat('dd MMM yyyy')
+                            .format(DateTime.parse(pkg.details?.startDate)),
+                        endDate: DateFormat('dd MMM yyyy')
+                            .format(DateTime.parse(pkg.details?.endDate)),
+                        amount: formatCurrency(pkg?.details?.packageBaseCost.toInt()),
+                      ),
+                      SizedBox(
+                        height: responsive(10, context),
+                      ),
+                      bookingdetail(
+                        isFlex: pkg.details?.isPackageOpenForOtherDate,
+                        // isFlex: true,
 
-
-
-                          startdate: booking.startDate ??
-                              DateFormat('dd MMM yyyy')
-                                  .format(DateTime.parse(pkg.details?.startDate)),
-                          enddate: booking.endDate ??
-                              DateFormat('dd MMM yyyy')
-                                  .format(DateTime.parse(pkg.details?.endDate)),
-                          adults: booking.adults,
-                          child: booking.childrens,
-                          infent: booking.infents,
-                          combineNights: booking.combineNights,
-                          packageName: pkg.details?.packageName,
-                        ),
-                        SizedBox(
-                          height: responsive(15, context),
-                        ),
-                        customFonts(
-                            text: "Your Price summary",
-                            size: 16,
-                            fontWeight: FontWeight.bold,
-                            context: context),
-                        verticalSpace(10, context),
-                        PriceSummery(
-                          price: formatCurrency(booking.price.toInt()) ?? formatCurrency(pkg?.details?.packageCost.toInt()),
-                        ),
-                        SizedBox(
-                          height: responsive(10, context),
-                        ),
-                        Visibility(
-                          visible:  booking.isedite,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              customFonts(
-                                  text: "Special request",
-                                  size: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.primaryBlackColor.withOpacity(0.9),
-                                  context: context),
-                              SizedBox(
-                                height: responsive(05, context),
+                        room: booking.roomType,
+                        startdate: booking.startDate ??
+                            DateFormat('dd MMM yyyy')
+                                .format(DateTime.parse(pkg.details?.startDate)),
+                        enddate: booking.endDate ??
+                            DateFormat('dd MMM yyyy')
+                                .format(DateTime.parse(pkg.details?.endDate)),
+                        adults: booking.adults,
+                        child: booking.childrens,
+                        infent: booking.infents,
+                        combineNights: booking.combineNights,
+                        packageName: pkg.details?.packageName,
+                      ),
+                      SizedBox(
+                        height: responsive(15, context),
+                      ),
+                      customFonts(
+                          text: "Your Price summary",
+                          size: 16,
+                          fontWeight: FontWeight.bold,
+                          context: context),
+                      verticalSpace(10, context),
+                      PriceSummery(
+                        price: formatCurrency(booking.price.toInt()) ?? formatCurrency(pkg?.details?.packageBaseCost.toInt()),
+                      ),
+                      SizedBox(
+                        height: responsive(10, context),
+                      ),
+                      Visibility(
+                        visible:  booking.isedite,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            customFonts(
+                                text: "Special request",
+                                size: 16,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.primaryBlackColor.withOpacity(0.9),
+                                context: context),
+                            SizedBox(
+                              height: responsive(05, context),
+                            ),
+                            RoundedBorderTextField(
+                              controller: specialreqcontroller,
+                              hintText: 'Write a special request',
+                            ),
+                            SizedBox(
+                              height: responsive(10, context),
+                            ),
+                            customFonts(
+                                text:
+                                "Special requests cannot be guaranteed - but the organization will do its best to meet your needs.",
+                                size: 14,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.primaryBlackColor.withOpacity(0.9),
+                                context: context),
+                            SizedBox(
+                              height: responsive(10, context),
+                            ),
+                            customFonts(
+                                text: "How would you like to pay?",
+                                size: 16,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.primaryBlackColor.withOpacity(0.9),
+                                context: context),
+                            SizedBox(
+                              height: responsive(10, context),
+                            ),
+                            _buildPaymentMethodTile(
+                                'Bank Transfer', _selectedMethod, 0),
+                            _buildPaymentMethodTile('By Cheque', _selectedMethod, 1),
+                            _buildPaymentMethodTile('By Voucher', _selectedMethod, 2),
+                            SizedBox(
+                              height: responsive(20, context),
+                            ),
+                            Container(
+                              height: responsive(74, context),
+                              width: MediaQuery.sizeOf(context).width,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE6F4F0),
                               ),
-                              RoundedBorderTextField(
-                                controller: specialreqcontroller,
-                                hintText: 'Write a special request',
-                              ),
-                              SizedBox(
-                                height: responsive(10, context),
-                              ),
-                              customFonts(
-                                  text:
-                                  "Special requests cannot be guaranteed - but the organization will do its best to meet your needs.",
-                                  size: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.primaryBlackColor.withOpacity(0.9),
-                                  context: context),
-                              SizedBox(
-                                height: responsive(10, context),
-                              ),
-                              customFonts(
-                                  text: "How would you like to pay?",
-                                  size: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.primaryBlackColor.withOpacity(0.9),
-                                  context: context),
-                              SizedBox(
-                                height: responsive(10, context),
-                              ),
-                              _buildPaymentMethodTile(
-                                  'Bank Transfer', _selectedMethod, 0),
-                              _buildPaymentMethodTile('By Cheque', _selectedMethod, 1),
-                              _buildPaymentMethodTile('By Voucher', _selectedMethod, 2),
-                              SizedBox(
-                                height: responsive(20, context),
-                              ),
-                              Container(
-                                height: responsive(74, context),
-                                width: MediaQuery.sizeOf(context).width,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFE6F4F0),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: responsive(20, context),
-                                      vertical: responsive(10, context)),
-                                  child: RichText(
-                                    text: TextSpan(
-                                      style: TextStyle(
-                                        color: AppColors.black,
-                                        fontSize: responsive(13, context),
-                                        fontFamily: GoogleFonts.cairo(
-                                            textStyle: const TextStyle(
-                                                fontWeight: FontWeight.normal))
-                                            .fontFamily,
-                                        // fontFamily: AppFonts.poppinsMedium,
-                                        fontWeight: FontWeight.normal,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: responsive(20, context),
+                                    vertical: responsive(10, context)),
+                                child: RichText(
+                                  text: TextSpan(
+                                    style: TextStyle(
+                                      color: AppColors.black,
+                                      fontSize: responsive(13, context),
+                                      fontFamily: GoogleFonts.cairo(
+                                          textStyle: const TextStyle(
+                                              fontWeight: FontWeight.normal))
+                                          .fontFamily,
+                                      // fontFamily: AppFonts.poppinsMedium,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: AppColors.primaryBlackColor
+                                              .withOpacity(0.8),
+                                        ),
+                                        text:
+                                        "By selecting the button below, I agree to the Hajjumrah.co ",
                                       ),
-                                      children: [
-                                        TextSpan(
+                                      TextSpan(
+                                        text: "Refund policy",
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          color: AppColors.GlobelColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () => print("Clicked!"),
+                                      ),
+                                      TextSpan(
                                           style: TextStyle(
                                             fontSize: 12,
                                             color: AppColors.primaryBlackColor
                                                 .withOpacity(0.8),
                                           ),
-                                          text:
-                                          "By selecting the button below, I agree to the Hajjumrah.co ",
+                                          text: " and "),
+                                      TextSpan(
+                                        text: "Cancelation policy.",
+                                        style: const TextStyle(
+                                          color: AppColors.GlobelColor,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                        TextSpan(
-                                          text: "Refund policy",
-                                          style: const TextStyle(
-                                            fontSize: 12,
-                                            color: AppColors.GlobelColor,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          recognizer: TapGestureRecognizer()
-                                            ..onTap = () => print("Clicked!"),
-                                        ),
-                                        TextSpan(
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: AppColors.primaryBlackColor
-                                                  .withOpacity(0.8),
-                                            ),
-                                            text: " and "),
-                                        TextSpan(
-                                          text: "Cancelation policy.",
-                                          style: const TextStyle(
-                                            color: AppColors.GlobelColor,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          recognizer: TapGestureRecognizer()
-                                            ..onTap = () => print("Clicked!"),
-                                        ),
-                                      ],
-                                    ),
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () => print("Clicked!"),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                height: responsive(20, context),
-                              ),
-                            ],
+                            ),
+                            SizedBox(
+                              height: responsive(20, context),
+                            ),
+                          ],
 
-                          ),
-                        )
+                        ),
+                      )
 
 
 
-                      ],
-                    ),
+                    ],
                   ),
-                ],
-              );
-            }),
-      ),
+                ),
+              ],
+            );
+          }),
     );
   }
 

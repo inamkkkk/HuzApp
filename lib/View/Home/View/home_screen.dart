@@ -736,7 +736,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 token: pkg?.huzToken,
                                               ));
                                         },
-                                        child: packagesContainer(
+                                        child: PackageContainer(
                                           onTapFav: () {
                                             isFav = toggle(wishController.list,
                                                 pkg?.huzToken, true);
@@ -754,7 +754,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ?.allincludes[index],
                                                 startDate: pkg?.startDate,
                                                 endDate: pkg?.endDate,
-                                                cost: pkg?.packageCost,
+                                                cost: pkg?.packageBaseCost,
                                               );
                                             }
                                           },
@@ -768,7 +768,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           startDate: pkg?.startDate,
                                           endDate: pkg?.endDate,
                                           amount: formatCurrency(
-                                              pkg?.packageCost.toInt()),
+                                              pkg?.packageBaseCost.toInt()),
                                           inlcudes: packagecontroller
                                               ?.allincludes[index],
                                         ),
@@ -800,186 +800,188 @@ class _HomeScreenState extends State<HomeScreen> {
     return false;
   }
 
-  Container packagesContainer({
-    required var id,
-    required var isFav,
-    required var onTapFav,
-    required var image,
-    required var packageName,
-    required var startDate,
-    required var endDate,
-    var includeList,
-    var excludeList,
-    required var amount,
-    var rating,
-    var inlcudes,
-  }) {
-    print('images are ${image}');
-    return Container(
-
-      padding: EdgeInsets.all(responsive(5, context)),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(responsive(6, context)),
-          border: Border.all(color: const Color(0xFFDEDEDE))),
-      // height: responsive(150, context),
-      // width: responsive(382, context),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-
-            children: [
-              Container(
-                // height: responsive(150, context),
-                width: responsive(139, context),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(responsive(10, context)),
-                    topRight: Radius.circular(responsive(10, context)),
-                    bottomRight: Radius.circular(responsive(10, context)),
-                    bottomLeft: Radius.circular(responsive(10, context)),
-                  ),
-                  child: CachedNetworkImage(
-                    imageUrl: "${image}",
-                    placeholder: (context, url) => Image.asset(
-                      'images/placeholder-image.png',
-                      fit: BoxFit.fitHeight,
-                    ),
-                    errorWidget: (context, url, error) => Image.asset(
-                      'images/placeholder-image.png',
-                      fit: BoxFit.fitHeight,
-                    ),
-                    fit: BoxFit.fitHeight,
-                  ),
-                ),
-              ),
-              Positioned(
-                top: responsive(0, context),
-                right: responsive(0, context),
-                child: GestureDetector(
-                  onTap: onTapFav,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        top: responsive(08, context),
-                        right: responsive(08, context),
-                        left: responsive(50, context),
-                        bottom: responsive(50, context)),
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: responsive(25, context),
-                      width: responsive(25, context),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: isFav
-                          ? SvgPicture.asset(
-                              "images/heart_icon_fill.svg",
-                              height: responsive(15, context),
-                            )
-                          : SvgPicture.asset(
-                              "images/Shape.svg",
-                              height: responsive(15, context),
-                            ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: responsive(10, context),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  customFonts(
-                      text: packageName,
-                      size: 14,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primaryBlackColor.withOpacity(0.90),
-                      context: context),
-                  customFonts(
-                      text:
-                          "${formatDateString(startDate)} to ${formatDateString(endDate)}",
-                      size: 13,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.primaryBlackColor,
-                      context: context),
-                  verticalSpace(5, context),
-                  Wrap(
-                    spacing: 0.0,
-                    children: List.generate(
-                      inlcudes.length,
-                          (index) => index == 0
-                          ? customFonts(
-                          text: "Includes: ",
-                          size: 13,
-                          color: AppColors.primaryBlackColor,
-                          fontWeight: FontWeight.bold,
-                          context: context)
-                          : customFonts(
-                          text: "${inlcudes[index]}",
-                          size: 13,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.primaryBlackColor,
-                          context: context),
-                    ),
-                  ),
-                  verticalSpace(5, context),
-                  // Spacer(),
-                  // Wrap(
-                  //   spacing: 10,
-                  //   children: List.generate(
-                  //     7,
-                  //         (index) =>  customFonts(
-                  //         text: "Dinner",
-                  //         size: 10,
-                  //         fontWeight: FontWeight.w500,
-                  //         color: AppColors.primaryBlackColor,
-                  //         context: context),
-                  //   ),
-                  // ),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      customFonts(
-                          text: 'PKR $amount',
-                          size: 16,
-                          fontWeight: FontWeight.bold,
-                          color: const Color(0xFF484848),
-                          context: context),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            "images/star.svg",
-                          ),
-                          horizontalSpace(5, context),
-                          customFonts(
-                              text: "$rating",
-                              size: 16,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.primaryBlackColor
-                                  .withOpacity(0.9),
-                              context: context),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Container packagesContainer({
+  //   required var id,
+  //   required var isFav,
+  //   required var onTapFav,
+  //   required var image,
+  //   required var packageName,
+  //   required var startDate,
+  //   required var endDate,
+  //   var includeList,
+  //   var excludeList,
+  //   required var amount,
+  //   var rating,
+  //   var inlcudes,
+  // }) {
+  //   print('images are ${image}');
+  //   return Container(
+  //
+  //     padding: EdgeInsets.all(responsive(5, context)),
+  //     decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(responsive(6, context)),
+  //         border: Border.all(color: const Color(0xFFDEDEDE))),
+  //     // height: responsive(150, context),
+  //     // width: responsive(382, context),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.start,
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Stack(
+  //
+  //           children: [
+  //             Container(
+  //
+  //               // height: responsive(150, context),
+  //               width: responsive(139, context),
+  //               child: ClipRRect(
+  //                 borderRadius: BorderRadius.only(
+  //                   topLeft: Radius.circular(responsive(10, context)),
+  //                   topRight: Radius.circular(responsive(10, context)),
+  //                   bottomRight: Radius.circular(responsive(10, context)),
+  //                   bottomLeft: Radius.circular(responsive(10, context)),
+  //                 ),
+  //                 child: CachedNetworkImage(
+  //                   imageUrl: "${image}",
+  //                   placeholder: (context, url) => Image.asset(
+  //                     'images/placeholder-image.png',
+  //                     fit: BoxFit.cover,
+  //                   ),
+  //                   errorWidget: (context, url, error) => Image.asset(
+  //                     'images/placeholder-image.png',
+  //                     fit: BoxFit.fitHeight,
+  //                   ),
+  //                   fit: BoxFit.fitHeight,
+  //                 ),
+  //               ),
+  //             ),
+  //             Positioned(
+  //               top: responsive(0, context),
+  //               right: responsive(0, context),
+  //               child: GestureDetector(
+  //                 onTap: onTapFav,
+  //                 child: Padding(
+  //                   padding: EdgeInsets.only(
+  //                       top: responsive(08, context),
+  //                       right: responsive(08, context),
+  //                       left: responsive(50, context),
+  //                       bottom: responsive(50, context)),
+  //                   child: Container(
+  //
+  //                     alignment: Alignment.center,
+  //                     height: responsive(25, context),
+  //                     width: responsive(25, context),
+  //                     decoration: const BoxDecoration(
+  //                       color: Colors.white,
+  //                       shape: BoxShape.circle,
+  //                     ),
+  //                     child: isFav
+  //                         ? SvgPicture.asset(
+  //                             "images/heart_icon_fill.svg",
+  //                             height: responsive(15, context),
+  //                           )
+  //                         : SvgPicture.asset(
+  //                             "images/Shape.svg",
+  //                             height: responsive(15, context),
+  //                           ),
+  //                   ),
+  //                 ),
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //         Expanded(
+  //           flex: 2,
+  //           child: Padding(
+  //             padding: EdgeInsets.symmetric(
+  //                 horizontal: responsive(10, context),
+  //             ),
+  //             child: Column(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               mainAxisAlignment: MainAxisAlignment.start,
+  //               children: [
+  //                 customFonts(
+  //                     text: packageName,
+  //                     size: 14,
+  //                     fontWeight: FontWeight.bold,
+  //                     color: AppColors.primaryBlackColor.withOpacity(0.90),
+  //                     context: context),
+  //                 customFonts(
+  //                     text:
+  //                         "${formatDateString(startDate)} to ${formatDateString(endDate)}",
+  //                     size: 13,
+  //                     fontWeight: FontWeight.w500,
+  //                     color: AppColors.primaryBlackColor,
+  //                     context: context),
+  //                 verticalSpace(5, context),
+  //                 Wrap(
+  //                   spacing: 0.0,
+  //                   children: List.generate(
+  //                     inlcudes.length,
+  //                         (index) => index == 0
+  //                         ? customFonts(
+  //                         text: "Includes: ",
+  //                         size: 13,
+  //                         color: AppColors.primaryBlackColor,
+  //                         fontWeight: FontWeight.bold,
+  //                         context: context)
+  //                         : customFonts(
+  //                         text: "${inlcudes[index]}",
+  //                         size: 13,
+  //                         fontWeight: FontWeight.w500,
+  //                         color: AppColors.primaryBlackColor,
+  //                         context: context),
+  //                   ),
+  //                 ),
+  //                 verticalSpace(5, context),
+  //                 // Spacer(),
+  //                 // Wrap(
+  //                 //   spacing: 10,
+  //                 //   children: List.generate(
+  //                 //     7,
+  //                 //         (index) =>  customFonts(
+  //                 //         text: "Dinner",
+  //                 //         size: 10,
+  //                 //         fontWeight: FontWeight.w500,
+  //                 //         color: AppColors.primaryBlackColor,
+  //                 //         context: context),
+  //                 //   ),
+  //                 // ),
+  //
+  //                 Row(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                   children: [
+  //                     customFonts(
+  //                         text: 'PKR $amount',
+  //                         size: 16,
+  //                         fontWeight: FontWeight.bold,
+  //                         color: const Color(0xFF484848),
+  //                         context: context),
+  //                     Row(
+  //                       children: [
+  //                         SvgPicture.asset(
+  //                           "images/star.svg",
+  //                         ),
+  //                         horizontalSpace(5, context),
+  //                         customFonts(
+  //                             text: "$rating",
+  //                             size: 16,
+  //                             fontWeight: FontWeight.w500,
+  //                             color: AppColors.primaryBlackColor
+  //                                 .withOpacity(0.9),
+  //                             context: context),
+  //                       ],
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget tabBarContainer(
       {required String text,
@@ -1010,3 +1012,231 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+
+class PackageContainer extends StatefulWidget {
+
+   var id;
+        var isFav,
+        onTapFav,
+        image,
+        packageName,
+        startDate,
+        endDate,
+   includeList,
+   excludeList,
+        amount,
+   rating,
+   inlcudes;
+
+   PackageContainer({super.key,   required  this.id,
+     this.isFav = false,
+    required  this.onTapFav,
+    required this.image,
+    required this.packageName,
+    required this.startDate,
+    required this.endDate,
+    this.includeList,
+    this.excludeList,
+    required this.amount,
+    this.rating,
+   this.inlcudes,});
+
+  @override
+  State<PackageContainer> createState() => _PackageContainerState();
+}
+
+class _PackageContainerState extends State<PackageContainer> {
+
+  final GlobalKey _containerKey = GlobalKey();
+
+  double _containerHeight = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _getContainerHeight());
+  }
+
+  void _getContainerHeight() {
+    final RenderBox? renderBox = _containerKey.currentContext?.findRenderObject() as RenderBox?;
+    if (renderBox != null) {
+      setState(() {
+        _containerHeight = renderBox.size.height;
+        print(" ************** COntainer height : $_containerHeight");
+      });
+    }
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      key: _containerKey,
+      padding: EdgeInsets.all(responsive(5, context)),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(responsive(6, context)),
+          border: Border.all(color: const Color(0xFFDEDEDE))),
+      // height: responsive(150, context),
+      // width: responsive(382, context),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Stack(
+
+            children: [
+              Container(
+
+                height: responsive(_containerHeight, context),
+                width: responsive(139, context),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(responsive(10, context)),
+                    topRight: Radius.circular(responsive(10, context)),
+                    bottomRight: Radius.circular(responsive(10, context)),
+                    bottomLeft: Radius.circular(responsive(10, context)),
+                  ),
+                  child: CachedNetworkImage(
+                    imageUrl: "${widget.image}",
+                    placeholder: (context, url) => Image.asset(
+                      'images/placeholder-image.png',
+                      fit: BoxFit.cover,
+                    ),
+                    errorWidget: (context, url, error) => Image.asset(
+                      'images/placeholder-image.png',
+                      fit: BoxFit.fitHeight,
+                    ),
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: responsive(0, context),
+                right: responsive(0, context),
+                child: GestureDetector(
+                  onTap: widget.onTapFav,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        top: responsive(08, context),
+                        right: responsive(08, context),
+                        left: responsive(50, context),
+                        bottom: responsive(50, context)),
+                    child: Container(
+
+                      alignment: Alignment.center,
+                      height: responsive(25, context),
+                      width: responsive(25, context),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: widget.isFav
+                          ? SvgPicture.asset(
+                        "images/heart_icon_fill.svg",
+                        height: responsive(15, context),
+                      )
+                          : SvgPicture.asset(
+                        "images/Shape.svg",
+                        height: responsive(15, context),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: responsive(10, context),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  customFonts(
+                      text: widget.packageName,
+                      size: 14,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primaryBlackColor.withOpacity(0.90),
+                      context: context),
+                  customFonts(
+                      text:
+                      "${formatDateString(widget.startDate)} to ${formatDateString(widget.endDate)}",
+                      size: 13,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primaryBlackColor,
+                      context: context),
+                  verticalSpace(5, context),
+                  Wrap(
+                    spacing: 0.0,
+                    children: List.generate(
+                      widget.inlcudes.length,
+                          (index) => index == 0
+                          ? customFonts(
+                          text: "Includes: ",
+                          size: 13,
+                          color: AppColors.primaryBlackColor,
+                          fontWeight: FontWeight.bold,
+                          context: context)
+                          : customFonts(
+                          text: "${widget.inlcudes[index]}",
+                          size: 13,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.primaryBlackColor,
+                          context: context),
+                    ),
+                  ),
+                  verticalSpace(5, context),
+                  // Spacer(),
+                  // Wrap(
+                  //   spacing: 10,
+                  //   children: List.generate(
+                  //     7,
+                  //         (index) =>  customFonts(
+                  //         text: "Dinner",
+                  //         size: 10,
+                  //         fontWeight: FontWeight.w500,
+                  //         color: AppColors.primaryBlackColor,
+                  //         context: context),
+                  //   ),
+                  // ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      customFonts(
+                          text: 'PKR ${widget.amount}',
+                          size: 16,
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0xFF484848),
+                          context: context),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            "images/star.svg",
+                          ),
+                          horizontalSpace(5, context),
+                          customFonts(
+                              text: "${widget.rating}",
+                              size: 16,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.primaryBlackColor
+                                  .withOpacity(0.9),
+                              context: context),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+

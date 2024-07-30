@@ -41,7 +41,7 @@ class IsUserExitsController with ChangeNotifier{
       "phone_number": "$phonenumber",
       "name": "$name",
       "email": "$email",
-      "user_type": "User",
+      "user_type": "user",
       "firebase_token": "firebase_token"
     });
     request.headers.addAll(headers);
@@ -173,6 +173,9 @@ class IsUserExitsController with ChangeNotifier{
     } else {
       vissible = true;
       message = "User ${response.reasonPhrase}";
+      Get.offAll(
+          HomeScreen()
+      );
       notifyListeners();
       // showDialog(context: context, builder: (context)=>AlertDialog(
       //   title: Text('$response'),

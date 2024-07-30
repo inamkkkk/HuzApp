@@ -36,8 +36,10 @@ class PageBuilder extends StatefulWidget {
   State<PageBuilder> createState() => _PageBuilderState();
 }
 
+
 class _PageBuilderState extends State<PageBuilder> {
   int currentPage = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +147,7 @@ class _PageBuilderState extends State<PageBuilder> {
                                             context: context,
                                           ),
                                           customFonts(
-                                            text: "${formatCurrency(pkg?.packageCost.toInt())}",
+                                            text: "${formatCurrency(pkg?.packageBaseCost.toInt())}",
                                             size: 16,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white,

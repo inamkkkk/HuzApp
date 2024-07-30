@@ -53,8 +53,8 @@ class _DetailScreenState extends State<DetailScreen> {
         builder: (context, packages, booking, user, child) {
       return InkWell(
         onTap: () {
-          booking.price = packages.details?.packageCost;
-          booking.subtractprice = packages.details?.packageCost;
+          booking.price = packages.details?.packageBaseCost;
+          booking.subtractprice = packages.details?.packageBaseCost;
           booking.initialstartdate =
               formatDateString(packages.details?.startDate);
 
@@ -209,7 +209,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                       packages.details?.packageName,
                                       "${formatDateString(packages.details?.startDate ?? "2023-01-01T00:00")} to ${formatDateString(packages.details?.endDate ?? "2023-01-01T00:00")}",
                                       formatCurrency(packages
-                                              .details?.packageCost
+                                              .details?.packageBaseCost
                                               .toInt() ??
                                           0),
                                       () {
@@ -298,6 +298,90 @@ class _DetailScreenState extends State<DetailScreen> {
                                         ),
                                       ),
                                     ),
+                                    verticalSpace(10, context),
+                                    customFonts(
+                                        text:
+                                        "Additional Members Cost",
+                                        size: 15,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.primaryBlackColor,
+                                        context: context),
+                                    verticalSpace(10, context),
+                                    Row(
+                                      children: [
+                                        BoxWidget(
+                                            formatCurrency(packages.details!.costForChild.toInt()),
+                                            'Child',
+                                            context,
+                                            isCost: true
+                                        ),
+                                        SizedBox(
+                                          width: responsive(10, context),
+                                        ),
+                                        BoxWidget(
+                                            formatCurrency(packages.details!.costForInfants.toInt()),
+                                            'Infant',
+                                            context,
+                                            isCost: true
+                                        ),
+                                      ],
+                                    ),
+                                    verticalSpace(10, context),
+                                    customFonts(
+                                        text:
+                                        "Additional Room Cost",
+                                        size: 15,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.primaryBlackColor,
+                                        context: context),
+                                    verticalSpace(10, context),
+                                    Row(
+                                      children: [
+                                        BoxWidget(
+                                          formatCurrency(packages.details!.costForSingle.toInt()),
+                                          'Single room',
+                                          context,
+                                          isCost: true
+                                        ),
+                                        SizedBox(
+                                          width: responsive(10, context),
+                                        ),
+                                        BoxWidget(
+                                            formatCurrency(packages.details!.costForDouble.toInt()),
+                                            'Double room',
+                                            context,
+                                            isCost: true
+                                        ),
+                                      ],
+                                    ),
+                                    verticalSpace(10, context),
+                                    Row(
+                                      children: [
+                                        BoxWidget(
+                                            formatCurrency(packages.details!.costForTriple.toInt()),
+                                            'Triple Room',
+                                            context,
+                                            isCost: true
+                                        ),
+                                        SizedBox(
+                                          width: responsive(10, context),
+                                        ),
+                                        BoxWidget(
+                                            formatCurrency(packages.details!.costForQuad.toInt()),
+                                            'Quad room',
+                                            context,
+                                            isCost: true
+                                        ),
+                                      ],
+                                    ),
+                                    verticalSpace(10, context),
+                                    BoxWidget(
+                                        formatCurrency(packages.details!.costForTriple.toInt()),
+                                        'Sharing room',
+                                        context,
+                                        isCost: true
+                                    ),
+
 
                                     SizedBox(
                                       height: responsive(20, context),
@@ -846,7 +930,7 @@ String formatDateString(String inputString) {
   return formattedDate;
 }
 
-Widget BoxWidget(var number, status, context) {
+Widget BoxWidget(var number, status ,context, {bool isCost = false}) {
   return Container(
       // height: MediaQuery.of(context).size.height * (82 / 667),
       width: MediaQuery.of(context).size.width * (164 / 375),
@@ -866,34 +950,37 @@ Widget BoxWidget(var number, status, context) {
       ),
       child: Padding(
           padding: EdgeInsets.symmetric(horizontal: responsive(20, context)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '$status',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: AppColors.primaryBlackColor,
-                    fontFamily: 'Poppins',
-                    fontSize: responsive(14, context),
-                    letterSpacing:
-                        0 /*percentages not used in flutter. defaulting to zero*/,
-                    fontWeight: FontWeight.w400,
-                    height: 1),
-              ),
-              horizontalSpace(5, context),
-              Text(
-                "$number",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: AppColors.GlobelColor,
-                    fontFamily: AppFonts.poppinsExtraBold,
-                    fontSize: responsive(14, context),
-                    letterSpacing:
-                        0 /*p6ercentages not used in flutter. defaulting to zero*/,
-                    height: 1),
-              ),
-            ],
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: isCost ? MainAxisAlignment.start : MainAxisAlignment.center,
+              children: [
+                Text(
+                  isCost ? '$status: ' : '$status',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: AppColors.primaryBlackColor,
+                      fontFamily: 'Poppins',
+                      fontSize: responsive(14, context),
+                      letterSpacing:
+                          0 /*percentages not used in flutter. defaulting to zero*/,
+                      fontWeight: FontWeight.w400,
+                      height: 1),
+                ),
+                horizontalSpace(5, context),
+                Text(
+                  isCost ? "PKR $number" : "$number",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: AppColors.GlobelColor,
+                      fontFamily: isCost ? AppFonts.poppinsSemiBold : AppFonts.poppinsExtraBold,
+                      fontSize: responsive(14, context),
+                      letterSpacing:
+                          0 /*p6ercentages not used in flutter. defaulting to zero*/,
+                      height: 1),
+                ),
+              ],
+            ),
           )));
 }
 
@@ -991,7 +1078,7 @@ class _HotelContainerState extends State<HotelContainer> {
   Widget build(BuildContext context) {
     return Consumer<pakagecontrollers>(builder: (context, packages, child) {
       String hotelname = widget.hotelName.replaceAll(' ', '_');
-      var data = packages.details?.hotelDetail?[widget.index].hotelPhotos;
+
       List<String> list = widget.city == "Mecca"?widget.hotellist[0]:widget.hotellist[1];
       print("list is ${widget.hotellist}");
 
@@ -1251,211 +1338,211 @@ class _HotelContainerState extends State<HotelContainer> {
     });
   }
 }
-
-class MainPackagess extends StatefulWidget {
-  var url, title, subtitle, amount, service, distance, city;
-
-  MainPackagess(
-      {super.key,
-      this.url,
-      this.title,
-      this.subtitle,
-      this.amount,
-      required this.service,
-      required this.distance,
-      required this.city});
-
-  @override
-  State<MainPackagess> createState() => _MainPackagessState();
-}
-
-class _MainPackagessState extends State<MainPackagess> {
-  var currentImageUrl = "";
-  var randomIndex;
-
-  final PageController pageController = PageController();
-  int currentIndex = 0;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<pakagecontrollers>(builder: (context, packages, child) {
-      var data = packages.details?.hotelDetail?[widget.url].hotelPhotos;
-      return Padding(
-        padding: EdgeInsets.symmetric(vertical: responsive(20, context)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                    width: responsive(405, context),
-                    height: responsive(374, context),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(responsive(10, context)),
-                        topRight: Radius.circular(responsive(10, context)),
-                      ),
-                      child: PageView(
-                        controller: pageController,
-                        scrollDirection: Axis.horizontal,
-                        children: data!
-                            .map((item) => Container(
-                                  width: double.infinity,
-                                  // color: currentIndex == context.watch<int>() ? Colors.blue : Colors.white,
-                                  child: CachedNetworkImage(
-                                    imageUrl:
-                                        "${NetworkServices.ibaseUrl}${item.hotelPhotos}",
-                                    placeholder: (context, url) => Image.asset(
-                                      'images/placeholder-image.png',
-                                      fit: BoxFit.cover,
-                                    ),
-                                    errorWidget: (context, url, error) =>
-                                        Image.asset(
-                                      'images/placeholder-image.png',
-                                      fit: BoxFit.cover,
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ))
-                            .toList(),
-                        onPageChanged: (int index) =>
-                            setState(() => currentIndex = index),
-                      ),
-                    )),
-                Positioned(
-                  bottom: responsive(10, context),
-                  child: Row(
-                    children: List.generate(data.length,
-                        (index) => round(context, index != currentIndex)),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: responsive(15, context),
-            ),
-            Row(
-              children: [
-                Heading4(
-                  text: '${widget.title}',
-                  context: context,
-                  center: false,
-                ),
-                SizedBox(
-                  width: responsive(10, context),
-                ),
-                SvgPicture.asset(
-                  width: responsive(12, context),
-                  height: responsive(12, context),
-                  'images/${widget.amount}.svg',
-                  semanticsLabel: 'vector',
-                  // fit: BoxFit.fitHeight,
-                ),
-              ],
-            ),
-            SizedBox(
-              height: responsive(03, context),
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: responsive(02, context)),
-              child: Wrap(
-                spacing: 04.0,
-                children: [
-                  widgts('${widget.subtitle}', context, 80),
-                  widgts(
-                    '${widget.distance ?? 0} from ${widget.city}',
-                    context,
-                    210,
-                  ),
-                  Visibility(
-                    visible: packages
-                            .details?.hotelDetail?[widget.url].isAirCondition
-                        ? true
-                        : false,
-                    child: widgts(
-                      'Air Condition',
-                      context,
-                      140,
-                    ),
-                  ),
-                  Visibility(
-                    visible: packages
-                            .details?.hotelDetail?[widget.url].isAttachBathroom
-                        ? true
-                        : false,
-                    child: widgts('Attached Bathroom', context, 150),
-                  ),
-                  Visibility(
-                    visible:
-                        packages.details?.hotelDetail?[widget.url].isElevator
-                            ? true
-                            : false,
-                    child: widgts('Elevator', context, 80),
-                  ),
-                  Visibility(
-                    visible:
-                        packages.details?.hotelDetail?[widget.url].isLaundry
-                            ? true
-                            : false,
-                    child: widgts('Laundry', context, 80),
-                  ),
-                  Visibility(
-                    visible:
-                        packages.details?.hotelDetail?[widget.url].isTelevision
-                            ? true
-                            : false,
-                    child: widgts('Television', context, 100),
-                  ),
-                  Visibility(
-                    visible: packages
-                            .details?.hotelDetail?[widget.url].isEnglishToilet
-                        ? true
-                        : false,
-                    child: widgts('English toilet', context, 140),
-                  ),
-                  Visibility(
-                    visible: packages
-                            .details?.hotelDetail?[widget.url].isIndianToilet
-                        ? true
-                        : false,
-                    child: widgts('Indian toilet', context, 105),
-                  ),
-                  Visibility(
-                    visible: packages.details?.hotelDetail?[widget.url]
-                            .isShuttleServicesIncluded
-                        ? true
-                        : false,
-                    child: widgts('Shuttel service', context, 150),
-                  ),
-                  Visibility(
-                    visible: packages.details?.hotelDetail?[widget.url]
-                            .isWashroomAmenities
-                        ? true
-                        : false,
-                    child: widgts('Amentities', context, 100),
-                  ),
-                  Visibility(
-                    visible: packages.details?.hotelDetail?[widget.url].isWifi
-                        ? true
-                        : false,
-                    child: widgts('wifi', context, 80),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      );
-    });
-  }
-}
+//
+// class MainPackagess extends StatefulWidget {
+//   var url, title, subtitle, amount, service, distance, city;
+//
+//   MainPackagess(
+//       {super.key,
+//       this.url,
+//       this.title,
+//       this.subtitle,
+//       this.amount,
+//       required this.service,
+//       required this.distance,
+//       required this.city});
+//
+//   @override
+//   State<MainPackagess> createState() => _MainPackagessState();
+// }
+//
+// class _MainPackagessState extends State<MainPackagess> {
+//   var currentImageUrl = "";
+//   var randomIndex;
+//
+//   final PageController pageController = PageController();
+//   int currentIndex = 0;
+//
+//   @override
+//   void initState() {
+//     // TODO: implement initState
+//     super.initState();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Consumer<pakagecontrollers>(builder: (context, packages, child) {
+//
+//       return Padding(
+//         padding: EdgeInsets.symmetric(vertical: responsive(20, context)),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             Stack(
+//               alignment: Alignment.center,
+//               children: [
+//                 Container(
+//                     width: responsive(405, context),
+//                     height: responsive(374, context),
+//                     child: ClipRRect(
+//                       borderRadius: BorderRadius.only(
+//                         topLeft: Radius.circular(responsive(10, context)),
+//                         topRight: Radius.circular(responsive(10, context)),
+//                       ),
+//                       child: PageView(
+//                         controller: pageController,
+//                         scrollDirection: Axis.horizontal,
+//                         children: data!
+//                             .map((item) => Container(
+//                                   width: double.infinity,
+//                                   // color: currentIndex == context.watch<int>() ? Colors.blue : Colors.white,
+//                                   child: CachedNetworkImage(
+//                                     imageUrl:
+//                                         "${NetworkServices.ibaseUrl}${item.hotelPhotos}",
+//                                     placeholder: (context, url) => Image.asset(
+//                                       'images/placeholder-image.png',
+//                                       fit: BoxFit.cover,
+//                                     ),
+//                                     errorWidget: (context, url, error) =>
+//                                         Image.asset(
+//                                       'images/placeholder-image.png',
+//                                       fit: BoxFit.cover,
+//                                     ),
+//                                     fit: BoxFit.cover,
+//                                   ),
+//                                 ))
+//                             .toList(),
+//                         onPageChanged: (int index) =>
+//                             setState(() => currentIndex = index),
+//                       ),
+//                     )),
+//                 Positioned(
+//                   bottom: responsive(10, context),
+//                   child: Row(
+//                     children: List.generate(data.length,
+//                         (index) => round(context, index != currentIndex)),
+//                   ),
+//                 )
+//               ],
+//             ),
+//             SizedBox(
+//               height: responsive(15, context),
+//             ),
+//             Row(
+//               children: [
+//                 Heading4(
+//                   text: '${widget.title}',
+//                   context: context,
+//                   center: false,
+//                 ),
+//                 SizedBox(
+//                   width: responsive(10, context),
+//                 ),
+//                 SvgPicture.asset(
+//                   width: responsive(12, context),
+//                   height: responsive(12, context),
+//                   'images/${widget.amount}.svg',
+//                   semanticsLabel: 'vector',
+//                   // fit: BoxFit.fitHeight,
+//                 ),
+//               ],
+//             ),
+//             SizedBox(
+//               height: responsive(03, context),
+//             ),
+//             Padding(
+//               padding: EdgeInsets.only(right: responsive(02, context)),
+//               child: Wrap(
+//                 spacing: 04.0,
+//                 children: [
+//                   widgts('${widget.subtitle}', context, 80),
+//                   widgts(
+//                     '${widget.distance ?? 0} from ${widget.city}',
+//                     context,
+//                     210,
+//                   ),
+//                   Visibility(
+//                     visible: packages
+//                             .details?.hotelDetail?[widget.url].isAirCondition
+//                         ? true
+//                         : false,
+//                     child: widgts(
+//                       'Air Condition',
+//                       context,
+//                       140,
+//                     ),
+//                   ),
+//                   Visibility(
+//                     visible: packages
+//                             .details?.hotelDetail?[widget.url].isAttachBathroom
+//                         ? true
+//                         : false,
+//                     child: widgts('Attached Bathroom', context, 150),
+//                   ),
+//                   Visibility(
+//                     visible:
+//                         packages.details?.hotelDetail?[widget.url].isElevator
+//                             ? true
+//                             : false,
+//                     child: widgts('Elevator', context, 80),
+//                   ),
+//                   Visibility(
+//                     visible:
+//                         packages.details?.hotelDetail?[widget.url].isLaundry
+//                             ? true
+//                             : false,
+//                     child: widgts('Laundry', context, 80),
+//                   ),
+//                   Visibility(
+//                     visible:
+//                         packages.details?.hotelDetail?[widget.url].isTelevision
+//                             ? true
+//                             : false,
+//                     child: widgts('Television', context, 100),
+//                   ),
+//                   Visibility(
+//                     visible: packages
+//                             .details?.hotelDetail?[widget.url].isEnglishToilet
+//                         ? true
+//                         : false,
+//                     child: widgts('English toilet', context, 140),
+//                   ),
+//                   Visibility(
+//                     visible: packages
+//                             .details?.hotelDetail?[widget.url].isIndianToilet
+//                         ? true
+//                         : false,
+//                     child: widgts('Indian toilet', context, 105),
+//                   ),
+//                   Visibility(
+//                     visible: packages.details?.hotelDetail?[widget.url]
+//                             .isShuttleServicesIncluded
+//                         ? true
+//                         : false,
+//                     child: widgts('Shuttel service', context, 150),
+//                   ),
+//                   Visibility(
+//                     visible: packages.details?.hotelDetail?[widget.url]
+//                             .isWashroomAmenities
+//                         ? true
+//                         : false,
+//                     child: widgts('Amentities', context, 100),
+//                   ),
+//                   Visibility(
+//                     visible: packages.details?.hotelDetail?[widget.url].isWifi
+//                         ? true
+//                         : false,
+//                     child: widgts('wifi', context, 80),
+//                   ),
+//                 ],
+//               ),
+//             )
+//           ],
+//         ),
+//       );
+//     });
+//   }
+// }
 
 Widget widgts(name, context, size) {
   return Container(

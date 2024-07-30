@@ -521,7 +521,7 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
                                 packageName: pkg?.packageName,
                                 startDate: pkg?.startDate,
                                 endDate: pkg?.endDate,
-                                amount: pkg?.packageCost));
+                                amount: pkg?.packageBaseCost));
                           }
 
                           print("Start date from pakcgae : ${pStartDate}");
