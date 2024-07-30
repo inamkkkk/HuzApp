@@ -39,12 +39,11 @@ class Bookingedite with ChangeNotifier{
   var bmessage = "";
   var selectedRoom = "Single";
   var finalRoom = "";
-  var roomCost;
+  var updatePrice = "";
 
   void updatedate({var startdate, enddate}){
     startDate = startdate;
     endDate = enddate;
-
     notifyListeners();
 
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:huz/Constatns/Constants.dart';
 import 'package:huz/Model/Details.dart';
 
 import 'package:intl/intl.dart';
@@ -519,28 +520,18 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
               padding: EdgeInsets.only(
                   top: 10,
                   right: responsive(20, context),
-                  left: responsive(05, context),
+                  left: responsive(20, context),
                   bottom: responsive(15, context)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // GestureDetector(
-                  //   onTap: () {},
-                  //   child: Container(
-                  //       padding: EdgeInsets.symmetric(
-                  //           horizontal: responsive(20, context)),
-                  //       decoration: BoxDecoration(
-                  //           color: Colors.transparent,
-                  //           borderRadius:
-                  //           BorderRadius.circular(responsive(5, context))),
-                  //       height: responsive(60, context),
-                  //       alignment: Alignment.center,
-                  //       child: customFonts(
-                  //           text: "Clear",
-                  //           size: 15,
-                  //           isUnderLine: true,
-                  //           context: context)),
-                  // ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    customFonts(text: "Total Cost", size: 16, context: context),
+                    customFonts(text: price.toString(), size: 22, color: AppColors.GlobelColor,fontWeight: FontWeight.bold, context: context),
+                  ],
+                ),
                   Spacer(),
                   GestureDetector(
                     onTap: () {
@@ -568,7 +559,6 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                         booking.price = price;
                         booking.finalRoom = booking.selectedRoom;
                         booking.notifyListeners();
-
                         print(booking.finalRoom);
                       });
 
@@ -622,6 +612,8 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
       required cost,
       required value,
       required Bookingedite booking}) {
+
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -632,6 +624,9 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
           groupValue: booking.selectedRoom,
           onChanged: (dynamic value) {
            booking.roomChange(value);
+           setState(() {
+             price = price + cost ;
+           });
            print(booking.selectedRoom);
            print(booking.finalRoom);
           },

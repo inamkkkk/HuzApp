@@ -1327,7 +1327,7 @@ class _HomeButtonState extends State<HomeButton> {
                   scrollDirection: Axis.vertical,
                   itemCount: widget.packagecontroller.transport?.results!.length,
                   itemBuilder: (context, i) {
-                    int lengt =
+                    var lengt =
                         widget.packagecontroller.transport!.results!.length;
 
                     // if(i >= packagecontroller.length){
