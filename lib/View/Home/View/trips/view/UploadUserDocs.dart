@@ -52,30 +52,33 @@ class _UploadRequiredDocsState extends State<UploadRequiredDocs> {
 
       return InkWell(
         onTap: () {
-          booking.Uploaduserdocs(
-                  sessiontoken: user.isUser?.sessionToken,
-                  bookingnumber: booking.booking?.bookingNumber,
-                  amount: booking.booking?.packageCost)
-              .then((value) {
-            if (value == true) {
-
-              // booking.Blist =[];
-              booking.getbookingdetail(user.isUser?.sessionToken, booking.booking?.bookingNumber).then((value) {
-
-
-                endLoading();
-                booking.imageFileList = [];
-                booking.filePaths = [];
-                booking.Blist = [];
-                booking.notifyListeners();
-                Get.back();
-              });
-
-            } else {
-              endLoading();
-              showSnackbar(context, booking.uploadphotomessage);
-            }
-          });
+          
+          //
+          //
+          // booking.Uploaduserdocs(
+          //         sessiontoken: user.isUser?.sessionToken,
+          //         bookingnumber: booking.booking?.bookingNumber,
+          //         amount: booking.booking?.totalPrice)
+          //     .then((value) {
+          //   if (value == true) {
+          //
+          //     // booking.Blist =[];
+          //     booking.getbookingdetail(user.isUser?.sessionToken, booking.booking?.bookingNumber).then((value) {
+          //
+          //
+          //       endLoading();
+          //       booking.imageFileList = [];
+          //       booking.filePaths = [];
+          //       booking.Blist = [];
+          //       booking.notifyListeners();
+          //       Get.back();
+          //     });
+          //
+          //   } else {
+          //     endLoading();
+          //     showSnackbar(context, booking.uploadphotomessage);
+          //   }
+          // });
         },
         child: Container(
             height: responsive(52, context),
@@ -96,7 +99,7 @@ class _UploadRequiredDocsState extends State<UploadRequiredDocs> {
             // notchMargin: 20,
             child: Center(
               child: Heading3(
-                text: "Submit",
+                text: "Previous page",
                 context: context,
                 center: true,
                 color: Colors.white,
@@ -170,174 +173,39 @@ class _UploadRequiredDocsState extends State<UploadRequiredDocs> {
                         height: responsive(15, context),
                       ),
 
+                      ListView.builder(
+                        shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          primary: true,
+                          itemCount: booking.booking?.adults,
+                          itemBuilder: (context,index){
+                        return Padding(
+                          padding:  EdgeInsets.only(bottom: responsive(10, context)),
+                          child: DocsContainer(index: index,traveler:'Adult'),
+                        );
+
+
+
+                      }),
+
+
+                      booking.booking?.child!=0?ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          primary: true,
+                          itemCount: booking.booking?.child,
+                          itemBuilder: (context,index){
+                            return Padding(
+                              padding:  EdgeInsets.only(bottom: responsive(10, context)),
+                              child: DocsContainer(index: index,traveler:'Child'),
+                            );
+
+
+
+                          }):Container(),
                       // Upload snapshot container
-                      InkWell(
-                        onTap: () {
-                          booking.pickImages();
-                        },
-                        child: DottedBorder(
-                            radius: Radius.circular(responsive(10, context)),
-                            strokeWidth: 0.5,
-                            color: AppColors.grayboxcolor,
-                            dashPattern: [
-                              responsive(10, context),
-                            ],
-                            child: SizedBox(
-                              width: size.width,
-                              height: responsive(180, context),
-                              child: _image == null
-                                  ? Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        InkWell(
-                                          // onTap: pickImage,
-                                          child: Container(
-                                            padding: EdgeInsets.all(
-                                                responsive(10, context)),
-                                            height: responsive(48, context),
-                                            width: responsive(48, context),
-                                            decoration: BoxDecoration(
-                                                color: const Color(0xFF4B465C)
-                                                    .withOpacity(0.08),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        responsive(
-                                                            6, context))),
-                                            child: SvgPicture.asset(
-                                              height: responsive(28, context),
-                                              width: responsive(28, context),
-                                              'images/upload.svg',
-                                              semanticsLabel: 'vector',
-                                              // fit: BoxFit.fitHeight,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: responsive(10, context),
-                                        ),
-                                        customFonts(
-                                            text:
-                                                "Upload snapshot of Passport and ID",
-                                            size: 17,
-                                            fontWeight: FontWeight.w700,
-                                            color: AppColors.primaryBlackColor
-                                                .withOpacity(0.9),
-                                            context: context),
-                                      ],
-                                    )
-                                  : Center(
-                                      child: Image.file(
-                                      _image!,
-                                      fit: BoxFit.contain,
-                                    )),
-                            )),
-                      ),
-                      SizedBox(
-                        height: responsive(10, context),
-                      ),
-                      booking.imageFileList.isEmpty
-                          ? Container()
-                          : Container(
-                              // height: responsive(300, context),
-                              child: ListView.builder(
-                                  shrinkWrap: true,
-                                  primary: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: booking.imageFileList!.length,
-                                  itemBuilder: (context, index) {
-                                    isImageSizeValid(
-                                        booking.imageFileList![index].path);
-                                    return Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: responsive(05, context)),
-                                      child: Container(
-                                          height: responsive(60, context),
-                                          width: responsive(290, context),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(05),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.black
-                                                    .withOpacity(0.2),
-                                                // Shadow color
-                                                // spreadRadius: , // Spread radius
-                                                blurRadius: 1,
-                                                // Blur radius
-                                                offset: Offset(0,
-                                                    3), // Offset in x and y direction
-                                              ),
-                                            ], // Set the radius here
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal:
-                                                    responsive(10, context)),
-                                            child: Row(
-                                              children: [
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          06.0),
-                                                  child: AspectRatio(
-                                                    aspectRatio: 1.0,
-                                                    // Ensures the image is square
-                                                    child: Image.file(
-                                                      File(booking
-                                                          .imageFileList![index]
-                                                          .path),
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width:
-                                                      responsive(10, context),
-                                                ),
-                                                isshown
-                                                    ? customFonts(
-                                                        text:
-                                                            'Exceeds more then 2 mb ',
-                                                        size: 16,
-                                                        context: context,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color:
-                                                            Color(0xffFCDDDD))
-                                                    : customFonts(
-                                                        text: booking
-                                                            .imageFileList![
-                                                                index]
-                                                            .name,
-                                                        size: 16,
-                                                        context: context,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                Spacer(),
-                                                InkWell(
-                                                  onTap: () {
-                                                    booking.imageFileList
-                                                        .removeAt(index);
-                                                    booking.filePaths
-                                                        .removeAt(index);
-                                                    booking.notifyListeners();
-                                                  },
-                                                  child: SvgPicture.asset(
-                                                    'images/delete.svg',
-                                                    height:
-                                                        responsive(25, context),
-                                                    width:
-                                                        responsive(25, context),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          )),
-                                    );
-                                  }),
-                            ),
+
+
                       verticalSpace(30, context),
                       bottomBar(),
 
@@ -545,3 +413,230 @@ class _UploadRequiredDocsState extends State<UploadRequiredDocs> {
     );
   }
 }
+
+
+
+class DocsContainer extends StatefulWidget {
+  var index,traveler;
+   DocsContainer({super.key,required this.index,required this.traveler});
+
+  @override
+  State<DocsContainer> createState() => _DocsContainerState();
+}
+
+class _DocsContainerState extends State<DocsContainer> {
+  var _image;
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.sizeOf(context);
+    return     Consumer3<IsUserExitsController, Bookingedite, pakagecontrollers>(
+        builder: (context, user, booking, pkg, child) {
+        return Container(
+          decoration: BoxDecoration(
+            // Background color of the container
+            border: Border.all(
+              color: AppColors.grayboxcolor, // Border color
+              width: 0.5, // Border width
+            ),
+            borderRadius: BorderRadius.circular(06.0),),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding:  EdgeInsets.all(responsive(10, context)),
+                child: customFonts(
+                    text:
+                    "Upload documents for ${widget.traveler} ${widget.index+1}",
+                    size: 17,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primaryBlackColor
+                        .withOpacity(0.9),
+                    context: context),
+              ),
+              SizedBox(
+               height: responsive(10, context),
+              ),
+              InkWell(
+                onTap: () {
+                  booking.pickImages();
+                },
+                child: Padding(
+                  padding:  EdgeInsets.all(responsive(10, context)),
+                  child: DottedBorder(
+                      radius: Radius.circular(responsive(20, context)),
+                      strokeWidth: 0.5,
+                      color: AppColors.grayboxcolor,
+                      dashPattern: [
+                        responsive(10, context),
+                      ],
+                      child: SizedBox(
+                        width: size.width,
+                        height: responsive(60, context),
+                        child: _image == null
+                            ? Column(
+                          mainAxisAlignment:
+                          MainAxisAlignment.center,
+                          children: [
+
+                            customFonts(
+                                text:
+                                "Upload Photos",
+                                size: 13,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.primaryBlackColor
+                                    .withOpacity(0.9),
+                                context: context),
+                          ],
+                        )
+                            : Center(
+                            child: Image.file(
+                              _image!,
+                              fit: BoxFit.contain,
+                            )
+
+                        ),
+                      )),
+                ),
+              ),
+              SizedBox(
+                height: responsive(10, context),
+              ),
+              InkWell(
+                onTap: () {
+                  booking.pickImage(doctype: 'user_passport_photo', numb: 'Traveler_${widget.index+1}-${widget.traveler}_${widget.index+1}');
+                },
+                child: Padding(
+                  padding:  EdgeInsets.only(left:responsive(10, context),right: responsive(10, context),bottom: responsive(10, context)),
+                  child: DottedBorder(
+                      radius: Radius.circular(responsive(10, context)),
+                      strokeWidth: 0.5,
+                      color: AppColors.grayboxcolor,
+                      dashPattern: [
+                        responsive(10, context),
+                      ],
+                      child: SizedBox(
+                        width: size.width,
+                        height: responsive(60, context),
+                        child: _image == null
+                            ? Column(
+                          mainAxisAlignment:
+                          MainAxisAlignment.center,
+                          children: [
+
+                            customFonts(
+                                text:
+                                "Upload snapshot of Passport",
+                                size: 13,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.primaryBlackColor
+                                    .withOpacity(0.9),
+                                context: context),
+                          ],
+                        )
+                            : Center(
+                            child: Image.file(
+                              _image!,
+                              fit: BoxFit.contain,
+                            )
+
+                        ),
+                      )),
+                ),
+              ),
+            ],
+          ),
+        );
+      }
+    );
+  }
+}
+
+
+// Padding(
+// padding: EdgeInsets.symmetric(
+// vertical: responsive(05, context)),
+// child: Container(
+// height: responsive(60, context),
+// width: responsive(290, context),
+// decoration: BoxDecoration(
+// color: Colors.white,
+// borderRadius:
+// BorderRadius.circular(05),
+// boxShadow: [
+// BoxShadow(
+// color: Colors.black
+//     .withOpacity(0.2),
+// // Shadow color
+// // spreadRadius: , // Spread radius
+// blurRadius: 1,
+// // Blur radius
+// offset: Offset(0,
+// 3), // Offset in x and y direction
+// ),
+// ], // Set the radius here
+// ),
+// child: Padding(
+// padding: EdgeInsets.symmetric(
+// horizontal:
+// responsive(10, context)),
+// child: Row(
+// children: [
+// ClipRRect(
+// borderRadius:
+// BorderRadius.circular(
+// 06.0),
+// child: AspectRatio(
+// aspectRatio: 1.0,
+// // Ensures the image is square
+// child: Image.file(
+// File(booking
+//     .imageFileList![index]
+//     .path),
+// fit: BoxFit.cover,
+// ),
+// ),
+// ),
+// SizedBox(
+// width:
+// responsive(10, context),
+// ),
+// isshown
+// ? customFonts(
+// text:
+// 'Exceeds more then 2 mb ',
+// size: 16,
+// context: context,
+// fontWeight:
+// FontWeight.bold,
+// color:
+// Color(0xffFCDDDD))
+//     : customFonts(
+// text: booking
+//     .imageFileList![
+// index]
+//     .name,
+// size: 16,
+// context: context,
+// fontWeight:
+// FontWeight.bold),
+// Spacer(),
+// InkWell(
+// onTap: () {
+// booking.imageFileList
+//     .removeAt(index);
+// booking.filePaths
+//     .removeAt(index);
+// booking.notifyListeners();
+// },
+// child: SvgPicture.asset(
+// 'images/delete.svg',
+// height:
+// responsive(25, context),
+// width:
+// responsive(25, context),
+// ),
+// )
+// ],
+// ),
+// )),
+// );

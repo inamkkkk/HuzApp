@@ -3,6 +3,7 @@ class createbooking {
   var bookingNumber;
   var adults;
   var child;
+  var infants;
   var startDate;
   var endDate;
   var totalPrice;
@@ -17,6 +18,7 @@ class createbooking {
   var partnerName;
   var partnerUsername;
   CompanyDetail? companyDetail;
+  PartnerAddressDetail? partnerAddressDetail;
   var userSessionToken;
   var userFullName;
   var userCountryCode;
@@ -27,7 +29,6 @@ class createbooking {
   var huzToken;
   var packageType;
   var packageName;
-  var packageCost;
   var meccaNights;
   var madinahNights;
   var isVisaIncluded;
@@ -37,18 +38,21 @@ class createbooking {
   var isBreakfastIncluded;
   var isLunchIncluded;
   var isDinnerIncluded;
-  List<BookingRequiredDocuments>? bookingRequiredDocuments;
-  List<BookingDocumentsStatus>? bookingDocumentsStatus;
-  List<dynamic>? bookingAirlineDetails;
-  List<dynamic>? bookingHotelAndTransportDetails;
-  List<dynamic>? bookingRating;
   List<PaymentDetail>? paymentDetail;
+  List<Null>? bookingObjections;
+  List<BookingDocumentsStatus>? bookingDocumentsStatus;
+  List<UserDocuments>? userDocuments;
+  List<BookingDocuments>? bookingDocuments;
+  List<BookingAirlineDetails>? bookingAirlineDetails;
+  List<BookingHotelAndTransportDetails>? bookingHotelAndTransportDetails;
+  List<BookingRating>? bookingRating;
 
   createbooking(
       {this.bookingId,
         this.bookingNumber,
         this.adults,
         this.child,
+        this.infants,
         this.startDate,
         this.endDate,
         this.totalPrice,
@@ -63,6 +67,7 @@ class createbooking {
         this.partnerName,
         this.partnerUsername,
         this.companyDetail,
+        this.partnerAddressDetail,
         this.userSessionToken,
         this.userFullName,
         this.userCountryCode,
@@ -73,7 +78,6 @@ class createbooking {
         this.huzToken,
         this.packageType,
         this.packageName,
-        this.packageCost,
         this.meccaNights,
         this.madinahNights,
         this.isVisaIncluded,
@@ -83,18 +87,21 @@ class createbooking {
         this.isBreakfastIncluded,
         this.isLunchIncluded,
         this.isDinnerIncluded,
-        this.bookingRequiredDocuments,
+        this.paymentDetail,
+        this.bookingObjections,
         this.bookingDocumentsStatus,
+        this.userDocuments,
+        this.bookingDocuments,
         this.bookingAirlineDetails,
         this.bookingHotelAndTransportDetails,
-        this.bookingRating,
-        this.paymentDetail});
+        this.bookingRating});
 
   createbooking.fromJson(Map<String, dynamic> json) {
     bookingId = json['booking_id'];
     bookingNumber = json['booking_number'];
     adults = json['adults'];
     child = json['child'];
+    infants = json['infants'];
     startDate = json['start_date'];
     endDate = json['end_date'];
     totalPrice = json['total_price'];
@@ -111,6 +118,9 @@ class createbooking {
     companyDetail = json['company_detail'] != null
         ? new CompanyDetail.fromJson(json['company_detail'])
         : null;
+    partnerAddressDetail = json['partner_address_detail'] != null
+        ? new PartnerAddressDetail.fromJson(json['partner_address_detail'])
+        : null;
     userSessionToken = json['user_session_token'];
     userFullName = json['user_fullName'];
     userCountryCode = json['user_country_code'];
@@ -123,7 +133,6 @@ class createbooking {
     huzToken = json['huz_token'];
     packageType = json['package_type'];
     packageName = json['package_name'];
-    packageCost = json['package_cost'];
     meccaNights = json['mecca_nights'];
     madinahNights = json['madinah_nights'];
     isVisaIncluded = json['is_visa_included'];
@@ -133,40 +142,53 @@ class createbooking {
     isBreakfastIncluded = json['is_breakfast_included'];
     isLunchIncluded = json['is_lunch_included'];
     isDinnerIncluded = json['is_dinner_included'];
-    if (json['booking_required_documents'] != null) {
-      bookingRequiredDocuments = <BookingRequiredDocuments>[];
-      json['booking_required_documents'].forEach((v) {
-        bookingRequiredDocuments!.add(new BookingRequiredDocuments.fromJson(v));
+    if (json['payment_detail'] != null) {
+      paymentDetail = <PaymentDetail>[];
+      json['payment_detail'].forEach((v) {
+        paymentDetail!.add(new PaymentDetail.fromJson(v));
       });
     }
+    // if (json['booking_objections'] != null) {
+    //   bookingObjections = <Null>[];
+    //   json['booking_objections'].forEach((v) {
+    //     bookingObjections!.add(new Null.fromJson(v));
+    //   });
+    // }
     if (json['booking_documents_status'] != null) {
       bookingDocumentsStatus = <BookingDocumentsStatus>[];
       json['booking_documents_status'].forEach((v) {
         bookingDocumentsStatus!.add(new BookingDocumentsStatus.fromJson(v));
       });
     }
-    // if (json['booking_airline_details'] != null) {
-    //   bookingAirlineDetails = <Null>[];
-    //   json['booking_airline_details'].forEach((v) {
-    //     bookingAirlineDetails!.add(new Null.fromJson(v));
-    //   });
-    // }
-    // if (json['booking_hotel_and_transport_details'] != null) {
-    //   bookingHotelAndTransportDetails = <Null>[];
-    //   json['booking_hotel_and_transport_details'].forEach((v) {
-    //     bookingHotelAndTransportDetails!.add(new Null.fromJson(v));
-    //   });
-    // }
-    // if (json['booking_rating'] != null) {
-    //   bookingRating = <Null>[];
-    //   json['booking_rating'].forEach((v) {
-    //     bookingRating!.add(new Null.fromJson(v));
-    //   });
-    // }
-    if (json['payment_detail'] != null) {
-      paymentDetail = <PaymentDetail>[];
-      json['payment_detail'].forEach((v) {
-        paymentDetail!.add(new PaymentDetail.fromJson(v));
+    if (json['user_documents'] != null) {
+      userDocuments = <UserDocuments>[];
+      json['user_documents'].forEach((v) {
+        userDocuments!.add(new UserDocuments.fromJson(v));
+      });
+    }
+    if (json['booking_documents'] != null) {
+      bookingDocuments = <BookingDocuments>[];
+      json['booking_documents'].forEach((v) {
+        bookingDocuments!.add(new BookingDocuments.fromJson(v));
+      });
+    }
+    if (json['booking_airline_details'] != null) {
+      bookingAirlineDetails = <BookingAirlineDetails>[];
+      json['booking_airline_details'].forEach((v) {
+        bookingAirlineDetails!.add(new BookingAirlineDetails.fromJson(v));
+      });
+    }
+    if (json['booking_hotel_and_transport_details'] != null) {
+      bookingHotelAndTransportDetails = <BookingHotelAndTransportDetails>[];
+      json['booking_hotel_and_transport_details'].forEach((v) {
+        bookingHotelAndTransportDetails!
+            .add(new BookingHotelAndTransportDetails.fromJson(v));
+      });
+    }
+    if (json['booking_rating'] != null) {
+      bookingRating = <BookingRating>[];
+      json['booking_rating'].forEach((v) {
+        bookingRating!.add(new BookingRating.fromJson(v));
       });
     }
   }
@@ -177,6 +199,7 @@ class createbooking {
     data['booking_number'] = this.bookingNumber;
     data['adults'] = this.adults;
     data['child'] = this.child;
+    data['infants'] = this.infants;
     data['start_date'] = this.startDate;
     data['end_date'] = this.endDate;
     data['total_price'] = this.totalPrice;
@@ -193,6 +216,9 @@ class createbooking {
     if (this.companyDetail != null) {
       data['company_detail'] = this.companyDetail!.toJson();
     }
+    if (this.partnerAddressDetail != null) {
+      data['partner_address_detail'] = this.partnerAddressDetail!.toJson();
+    }
     data['user_session_token'] = this.userSessionToken;
     data['user_fullName'] = this.userFullName;
     data['user_country_code'] = this.userCountryCode;
@@ -205,7 +231,6 @@ class createbooking {
     data['huz_token'] = this.huzToken;
     data['package_type'] = this.packageType;
     data['package_name'] = this.packageName;
-    data['package_cost'] = this.packageCost;
     data['mecca_nights'] = this.meccaNights;
     data['madinah_nights'] = this.madinahNights;
     data['is_visa_included'] = this.isVisaIncluded;
@@ -215,29 +240,37 @@ class createbooking {
     data['is_breakfast_included'] = this.isBreakfastIncluded;
     data['is_lunch_included'] = this.isLunchIncluded;
     data['is_dinner_included'] = this.isDinnerIncluded;
-    if (this.bookingRequiredDocuments != null) {
-      data['booking_required_documents'] =
-          this.bookingRequiredDocuments!.map((v) => v.toJson()).toList();
+    if (this.paymentDetail != null) {
+      data['payment_detail'] =
+          this.paymentDetail!.map((v) => v.toJson()).toList();
     }
+    // if (this.bookingObjections != null) {
+    //   data['booking_objections'] =
+    //       this.bookingObjections!.map((v) => v.toJson()).toList();
+    // }
     if (this.bookingDocumentsStatus != null) {
       data['booking_documents_status'] =
           this.bookingDocumentsStatus!.map((v) => v.toJson()).toList();
     }
-    // if (this.bookingAirlineDetails != null) {
-    //   data['booking_airline_details'] =
-    //       this.bookingAirlineDetails!.map((v) => v.toJson()).toList();
-    // }
-    // if (this.bookingHotelAndTransportDetails != null) {
-    //   data['booking_hotel_and_transport_details'] =
-    //       this.bookingHotelAndTransportDetails!.map((v) => v.toJson()).toList();
-    // }
-    // if (this.bookingRating != null) {
-    //   data['booking_rating'] =
-    //       this.bookingRating!.map((v) => v.toJson()).toList();
-    // }
-    if (this.paymentDetail != null) {
-      data['payment_detail'] =
-          this.paymentDetail!.map((v) => v.toJson()).toList();
+    if (this.userDocuments != null) {
+      data['user_documents'] =
+          this.userDocuments!.map((v) => v.toJson()).toList();
+    }
+    if (this.bookingDocuments != null) {
+      data['booking_documents'] =
+          this.bookingDocuments!.map((v) => v.toJson()).toList();
+    }
+    if (this.bookingAirlineDetails != null) {
+      data['booking_airline_details'] =
+          this.bookingAirlineDetails!.map((v) => v.toJson()).toList();
+    }
+    if (this.bookingHotelAndTransportDetails != null) {
+      data['booking_hotel_and_transport_details'] =
+          this.bookingHotelAndTransportDetails!.map((v) => v.toJson()).toList();
+    }
+    if (this.bookingRating != null) {
+      data['booking_rating'] =
+          this.bookingRating!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -280,7 +313,7 @@ class CompanyDetail {
   }
 }
 
-class UserAddressDetail {
+class PartnerAddressDetail {
   var addressId;
   var streetAddress;
   var addressLine2;
@@ -291,7 +324,7 @@ class UserAddressDetail {
   var lat;
   var long;
 
-  UserAddressDetail(
+  PartnerAddressDetail(
       {this.addressId,
         this.streetAddress,
         this.addressLine2,
@@ -302,7 +335,7 @@ class UserAddressDetail {
         this.lat,
         this.long});
 
-  UserAddressDetail.fromJson(Map<String, dynamic> json) {
+  PartnerAddressDetail.fromJson(Map<String, dynamic> json) {
     addressId = json['address_id'];
     streetAddress = json['street_address'];
     addressLine2 = json['address_line2'];
@@ -329,25 +362,88 @@ class UserAddressDetail {
   }
 }
 
-class BookingRequiredDocuments {
-  var documentId;
-  var documentFor;
-  var documentLink;
+class UserAddressDetail {
+  var addressId;
+  var streetAddress;
+  var addressLine2;
+  var city;
+  var state;
+  var country;
+  var postalCode;
+  var lat;
+  var long;
+  var fullAddress;
 
-  BookingRequiredDocuments(
-      {this.documentId, this.documentFor, this.documentLink});
+  UserAddressDetail(
+      {this.addressId,
+        this.streetAddress,
+        this.addressLine2,
+        this.city,
+        this.state,
+        this.country,
+        this.postalCode,
+        this.lat,
+        this.long,
+        this.fullAddress});
 
-  BookingRequiredDocuments.fromJson(Map<String, dynamic> json) {
-    documentId = json['document_id'];
-    documentFor = json['document_for'];
-    documentLink = json['document_link'];
+  UserAddressDetail.fromJson(Map<String, dynamic> json) {
+    addressId = json['address_id'];
+    streetAddress = json['street_address'];
+    addressLine2 = json['address_line2'];
+    city = json['city'];
+    state = json['state'];
+    country = json['country'];
+    postalCode = json['postal_code'];
+    lat = json['lat'];
+    long = json['long'];
+    fullAddress = json['full_address'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['document_id'] = this.documentId;
-    data['document_for'] = this.documentFor;
-    data['document_link'] = this.documentLink;
+    data['address_id'] = this.addressId;
+    data['street_address'] = this.streetAddress;
+    data['address_line2'] = this.addressLine2;
+    data['city'] = this.city;
+    data['state'] = this.state;
+    data['country'] = this.country;
+    data['postal_code'] = this.postalCode;
+    data['lat'] = this.lat;
+    data['long'] = this.long;
+    data['full_address'] = this.fullAddress;
+    return data;
+  }
+}
+
+class PaymentDetail {
+  var paymentId;
+  var transactionNumber;
+  var transactionPhoto;
+  var transactionAmount;
+  var transactionTime;
+
+  PaymentDetail(
+      {this.paymentId,
+        this.transactionNumber,
+        this.transactionPhoto,
+        this.transactionAmount,
+        this.transactionTime});
+
+  PaymentDetail.fromJson(Map<String, dynamic> json) {
+    paymentId = json['payment_id'];
+    transactionNumber = json['transaction_number'];
+    transactionPhoto = json['transaction_photo'];
+    transactionAmount = json['transaction_amount'];
+    transactionTime = json['transaction_time'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['payment_id'] = this.paymentId;
+    data['transaction_number'] = this.transactionNumber;
+    data['transaction_photo'] = this.transactionPhoto;
+    data['transaction_amount'] = this.transactionAmount;
+    data['transaction_time'] = this.transactionTime;
     return data;
   }
 }
@@ -389,35 +485,196 @@ class BookingDocumentsStatus {
   }
 }
 
-class PaymentDetail {
-  var paymentId;
-  var transactionNumber;
-  var transactionPhoto;
-  var transactionAmount;
-  var transactionTime;
+class UserDocuments {
+  var userDocumentId;
+  var comment;
+  var userDocument;
+  var documentType;
+  var userDocumentForBookingToken;
 
-  PaymentDetail(
-      {this.paymentId,
-        this.transactionNumber,
-        this.transactionPhoto,
-        this.transactionAmount,
-        this.transactionTime});
+  UserDocuments(
+      {this.userDocumentId,
+        this.comment,
+        this.userDocument,
+        this.documentType,
+        this.userDocumentForBookingToken});
 
-  PaymentDetail.fromJson(Map<String, dynamic> json) {
-    paymentId = json['payment_id'];
-    transactionNumber = json['transaction_number'];
-    transactionPhoto = json['transaction_photo'];
-    transactionAmount = json['transaction_amount'];
-    transactionTime = json['transaction_time'];
+  UserDocuments.fromJson(Map<String, dynamic> json) {
+    userDocumentId = json['user_document_id'];
+    comment = json['comment'];
+    userDocument = json['user_document'];
+    documentType = json['document_type'];
+    userDocumentForBookingToken = json['user_document_for_booking_token'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['payment_id'] = this.paymentId;
-    data['transaction_number'] = this.transactionNumber;
-    data['transaction_photo'] = this.transactionPhoto;
-    data['transaction_amount'] = this.transactionAmount;
-    data['transaction_time'] = this.transactionTime;
+    data['user_document_id'] = this.userDocumentId;
+    data['comment'] = this.comment;
+    data['user_document'] = this.userDocument;
+    data['document_type'] = this.documentType;
+    data['user_document_for_booking_token'] = this.userDocumentForBookingToken;
+    return data;
+  }
+}
+
+class BookingDocuments {
+  var documentId;
+  var documentFor;
+  var documentLink;
+
+  BookingDocuments({this.documentId, this.documentFor, this.documentLink});
+
+  BookingDocuments.fromJson(Map<String, dynamic> json) {
+    documentId = json['document_id'];
+    documentFor = json['document_for'];
+    documentLink = json['document_link'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['document_id'] = this.documentId;
+    data['document_for'] = this.documentFor;
+    data['document_link'] = this.documentLink;
+    return data;
+  }
+}
+
+class BookingAirlineDetails {
+  var bookingAirlineId;
+  var flightDate;
+  var flightTime;
+  var flightFrom;
+  var flightTo;
+
+  BookingAirlineDetails(
+      {this.bookingAirlineId,
+        this.flightDate,
+        this.flightTime,
+        this.flightFrom,
+        this.flightTo});
+
+  BookingAirlineDetails.fromJson(Map<String, dynamic> json) {
+    bookingAirlineId = json['booking_airline_id'];
+    flightDate = json['flight_date'];
+    flightTime = json['flight_time'];
+    flightFrom = json['flight_from'];
+    flightTo = json['flight_to'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['booking_airline_id'] = this.bookingAirlineId;
+    data['flight_date'] = this.flightDate;
+    data['flight_time'] = this.flightTime;
+    data['flight_from'] = this.flightFrom;
+    data['flight_to'] = this.flightTo;
+    return data;
+  }
+}
+
+class BookingHotelAndTransportDetails {
+  var hotelOrTransportId;
+  var detailFor;
+  var jeddahName;
+  var jeddahNumber;
+  var meccaName;
+  var meccaNumber;
+  var madinahName;
+  var madinahNumber;
+  var comment1;
+  var comment2;
+  var sharedTime;
+
+  BookingHotelAndTransportDetails(
+      {this.hotelOrTransportId,
+        this.detailFor,
+        this.jeddahName,
+        this.jeddahNumber,
+        this.meccaName,
+        this.meccaNumber,
+        this.madinahName,
+        this.madinahNumber,
+        this.comment1,
+        this.comment2,
+        this.sharedTime});
+
+  BookingHotelAndTransportDetails.fromJson(Map<String, dynamic> json) {
+    hotelOrTransportId = json['hotel_or_transport_id'];
+    detailFor = json['detail_for'];
+    jeddahName = json['jeddah_name'];
+    jeddahNumber = json['jeddah_number'];
+    meccaName = json['mecca_name'];
+    meccaNumber = json['mecca_number'];
+    madinahName = json['madinah_name'];
+    madinahNumber = json['madinah_number'];
+    comment1 = json['comment_1'];
+    comment2 = json['comment_2'];
+    sharedTime = json['shared_time'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['hotel_or_transport_id'] = this.hotelOrTransportId;
+    data['detail_for'] = this.detailFor;
+    data['jeddah_name'] = this.jeddahName;
+    data['jeddah_number'] = this.jeddahNumber;
+    data['mecca_name'] = this.meccaName;
+    data['mecca_number'] = this.meccaNumber;
+    data['madinah_name'] = this.madinahName;
+    data['madinah_number'] = this.madinahNumber;
+    data['comment_1'] = this.comment1;
+    data['comment_2'] = this.comment2;
+    data['shared_time'] = this.sharedTime;
+    return data;
+  }
+}
+
+class BookingRating {
+  var huzConcierge;
+  var huzSupport;
+  var huzPlatform;
+  var huzServiceQuality;
+  var huzResponseTime;
+  var huzComment;
+  var partnerTotalStars;
+  var partnerComment;
+  var ratingTime;
+
+  BookingRating(
+      {this.huzConcierge,
+        this.huzSupport,
+        this.huzPlatform,
+        this.huzServiceQuality,
+        this.huzResponseTime,
+        this.huzComment,
+        this.partnerTotalStars,
+        this.partnerComment,
+        this.ratingTime});
+
+  BookingRating.fromJson(Map<String, dynamic> json) {
+    huzConcierge = json['huz_concierge'];
+    huzSupport = json['huz_support'];
+    huzPlatform = json['huz_platform'];
+    huzServiceQuality = json['huz_service_quality'];
+    huzResponseTime = json['huz_response_time'];
+    huzComment = json['huz_comment'];
+    partnerTotalStars = json['partner_total_stars'];
+    partnerComment = json['partner_comment'];
+    ratingTime = json['rating_time'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['huz_concierge'] = this.huzConcierge;
+    data['huz_support'] = this.huzSupport;
+    data['huz_platform'] = this.huzPlatform;
+    data['huz_service_quality'] = this.huzServiceQuality;
+    data['huz_response_time'] = this.huzResponseTime;
+    data['huz_comment'] = this.huzComment;
+    data['partner_total_stars'] = this.partnerTotalStars;
+    data['partner_comment'] = this.partnerComment;
+    data['rating_time'] = this.ratingTime;
     return data;
   }
 }

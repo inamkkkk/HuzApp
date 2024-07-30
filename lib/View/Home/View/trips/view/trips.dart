@@ -130,7 +130,7 @@ class _TripsState extends State<Trips> {
                           package: booking.Blist[index].packageName,
                           companyName: 'N/A',
                           status:booking.Blist[index].bookingStatus == "Initialize"?'Not Paid':booking.Blist[index].bookingStatus,
-                          cost: formatCurrency(double.parse(booking.Blist[index].packageCost).toInt()) ,
+                          cost: formatCurrency(double.parse("${booking.Blist[index].totalPrice}").toInt()) ,
                           startDate: formatDateString(booking.Blist[index].startDate),
                           endDate: formatDateString(booking.Blist[index].endDate),
                           bookingNumber: booking.Blist[index].bookingNumber,
@@ -290,21 +290,21 @@ class _TripsState extends State<Trips> {
                        ],
                      ),
 
-                     Stack(
-                       alignment: Alignment.center,
-                       children: [
-                         CircularProgressIndicator(
-                           value: percent/100, // Convert percentage to a value between 0 and 1
-                           backgroundColor: Color(0xFFDAE8E5),
-                           color: AppColors.GlobelColor,
-                           strokeWidth: responsive(5, context),
-                         ),
-
-                         customFonts(context: context, text: '${percent == 0.0?0:percent.toInt()}%', color: AppColors.GlobelColor,size: 15, fontWeight: FontWeight.w500,)
-
-
-                       ],
-                     ),
+                     // Stack(
+                     //   alignment: Alignment.center,
+                     //   children: [
+                     //     CircularProgressIndicator(
+                     //       value: percent/100, // Convert percentage to a value between 0 and 1
+                     //       backgroundColor: Color(0xFFDAE8E5),
+                     //       color: AppColors.GlobelColor,
+                     //       strokeWidth: responsive(5, context),
+                     //     ),
+                     //
+                     //     customFonts(context: context, text: '${percent == 0.0?0:percent.toInt()}%', color: AppColors.GlobelColor,size: 15, fontWeight: FontWeight.w500,)
+                     //
+                     //
+                     //   ],
+                     // ),
 
                      // Container(
                      //     decoration: BoxDecoration(
@@ -333,7 +333,7 @@ class _TripsState extends State<Trips> {
                          color: AppColors.GlobelColor,
                          context: context),
                      GestureDetector(
-                       onTap: (){},
+                       // onTap: (){},
                        child: Container(
                          alignment: Alignment.center,
                          height: responsive(25, context),

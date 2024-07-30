@@ -1,6 +1,8 @@
 
 
 import 'dart:convert';
+import 'dart:io';
+
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -60,6 +62,45 @@ class Bookingedite with ChangeNotifier{
 
   createbooking? booking;
   var isApiCalled = false;
+var docapi = false;
+  File? _image;
+
+  final ImagePicker _picker = ImagePicker();
+
+  Future<bool> pickImage({required doctype, required numb,context}) async {
+    var status = false;
+    Loading();
+    docapi = true;
+    notifyListeners();
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+      if (image != null) {
+        _image = File(image.path);
+      }
+
+    await Uploaduserdocs(
+     doctype: doctype,
+      numb: numb,
+
+    ).then((value){
+      if(value==true){
+        endLoading();
+        docapi = false;
+        status = value;
+        notifyListeners();
+
+      }else{
+endLoading();
+showSnackbar(context, uploadphotomessage);
+
+      }
+
+    });
+return status;
+
+  }
+
+
   Future<bool> createbookings ({sessiontoken,partnertoken,huztoken}) async {
 
 
@@ -203,8 +244,9 @@ class Bookingedite with ChangeNotifier{
       var headers = {
         'Content-Type': 'application/json',
         'Authorization': '${NetworkServices.token}'};
+
       var request = http.Request('GET', Uri.parse('${NetworkServices
-          .bookingurl}get_all_booking_by_user/?session_token=$sessiontoken'));
+          .bookingurl}get_all_booking_short_detail_by_user/?session_token=$sessiontoken'));
       request.headers.addAll(headers);
       http.StreamedResponse response = await request.send();
 
@@ -328,18 +370,18 @@ class Bookingedite with ChangeNotifier{
       notifyListeners();
     }
   }
-  Future<bool> Uploaduserdocs({sessiontoken,bookingnumber,amount}) async {
+  Future<bool> Uploaduserdocs({sessiontoken,bookingnumber,amount,required doctype,required numb}) async {
     Loading();
     var headers = {
       'Authorization': '${NetworkServices.token}',
     };
-    var request = http.MultipartRequest('POST', Uri.parse('https://hajjumrah.org/bookings/manage_booking_documents/'));
+    var request = http.MultipartRequest('POST', Uri.parse('${NetworkServices.bookingurl}manage_booking_documents/'));
     request.headers.addAll(headers);
     request.fields.addAll({
       'session_token': '$sessiontoken',
       'booking_number': '$bookingnumber',
-      'document_for': 'Required_Documents',
-      'partner_session_token': '${booking?.partnerSessionToken}'
+      'document_type': '$doctype',
+      'traveller_number': 'Traveller $numb'
     });
     // List of file paths to upload
 

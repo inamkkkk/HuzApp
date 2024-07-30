@@ -104,7 +104,7 @@ class _PaymentVerificationState extends State<PaymentVerification> {
                     ));
 
                     print("**************** totasl price: ${booking.booking?.totalPrice}");
-                    print("****************  package cost price: ${booking.booking?.packageCost}");
+                    print("****************  package cost price: ${booking.booking?.totalPrice}");
                     print("****************  ptransfer id: ${transferIDController.text}");
 
 
@@ -113,14 +113,14 @@ class _PaymentVerificationState extends State<PaymentVerification> {
                     endLoading();
                     showSnackbar(context, transection.trasectionmessage);
                     print("**************** totasl price: ${booking.booking?.totalPrice}");
-                    print("****************  package cost price: ${booking.booking?.packageCost}");
+                    print("****************  package cost price: ${booking.booking?.totalPrice}");
                     print("****************  ptransfer id: ${transferIDController.text}");
                   }
                 });
               } else {
                 showSnackbar(context, 'Please Select one Either Transection id or transection photes');
                 print("**************** totasl price: ${booking.booking?.totalPrice}");
-                print("****************  package cost price: ${booking.booking?.packageCost}");
+                print("****************  package cost price: ${booking.booking?.totalPrice}");
                 print("****************  ptransfer id: ${transferIDController.text}");
               }
 

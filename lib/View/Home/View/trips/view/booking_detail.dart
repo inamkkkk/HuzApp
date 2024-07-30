@@ -215,7 +215,7 @@ class _BookingDetailState extends State<BookingDetail> {
                                                     return Docviewer(
                                                       name: 'eVisa',
                                                       list: booking.booking
-                                                          ?.bookingRequiredDocuments,
+                                                          ?.bookingDocuments,
                                                       onSelectCountry:
                                                           (String country) {
                                                         setState(() {
@@ -246,7 +246,7 @@ class _BookingDetailState extends State<BookingDetail> {
                                                     return Docviewer(
                                                       name: 'airline',
                                                       list: booking.booking
-                                                          ?.bookingRequiredDocuments,
+                                                          ?.bookingDocuments,
                                                       onSelectCountry:
                                                           (String country) {
                                                         setState(() {
