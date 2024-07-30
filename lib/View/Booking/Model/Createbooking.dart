@@ -39,7 +39,7 @@ class createbooking {
   var isLunchIncluded;
   var isDinnerIncluded;
   List<PaymentDetail>? paymentDetail;
-  List<Null>? bookingObjections;
+  List<BookingObjections>? bookingObjections;
   List<BookingDocumentsStatus>? bookingDocumentsStatus;
   List<UserDocuments>? userDocuments;
   List<BookingDocuments>? bookingDocuments;
@@ -148,12 +148,12 @@ class createbooking {
         paymentDetail!.add(new PaymentDetail.fromJson(v));
       });
     }
-    // if (json['booking_objections'] != null) {
-    //   bookingObjections = <Null>[];
-    //   json['booking_objections'].forEach((v) {
-    //     bookingObjections!.add(new Null.fromJson(v));
-    //   });
-    // }
+    if (json['booking_objections'] != null) {
+      bookingObjections = <BookingObjections>[];
+      json['booking_objections'].forEach((v) {
+        bookingObjections!.add(new BookingObjections.fromJson(v));
+      });
+    }
     if (json['booking_documents_status'] != null) {
       bookingDocumentsStatus = <BookingDocumentsStatus>[];
       json['booking_documents_status'].forEach((v) {
@@ -244,10 +244,10 @@ class createbooking {
       data['payment_detail'] =
           this.paymentDetail!.map((v) => v.toJson()).toList();
     }
-    // if (this.bookingObjections != null) {
-    //   data['booking_objections'] =
-    //       this.bookingObjections!.map((v) => v.toJson()).toList();
-    // }
+    if (this.bookingObjections != null) {
+      data['booking_objections'] =
+          this.bookingObjections!.map((v) => v.toJson()).toList();
+    }
     if (this.bookingDocumentsStatus != null) {
       data['booking_documents_status'] =
           this.bookingDocumentsStatus!.map((v) => v.toJson()).toList();
@@ -675,6 +675,38 @@ class BookingRating {
     data['partner_total_stars'] = this.partnerTotalStars;
     data['partner_comment'] = this.partnerComment;
     data['rating_time'] = this.ratingTime;
+    return data;
+  }
+}
+class BookingObjections {
+  String? objectionId;
+  String? remarksOrReason;
+ var clientRemarks;
+  var requiredDocumentForObjection;
+  String? createTime;
+
+  BookingObjections(
+      {this.objectionId,
+        this.remarksOrReason,
+        this.clientRemarks,
+        this.requiredDocumentForObjection,
+        this.createTime});
+
+  BookingObjections.fromJson(Map<String, dynamic> json) {
+    objectionId = json['objection_id'];
+    remarksOrReason = json['remarks_or_reason'];
+    clientRemarks = json['client_remarks'];
+    requiredDocumentForObjection = json['required_document_for_objection'];
+    createTime = json['create_time'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['objection_id'] = this.objectionId;
+    data['remarks_or_reason'] = this.remarksOrReason;
+    data['client_remarks'] = this.clientRemarks;
+    data['required_document_for_objection'] = this.requiredDocumentForObjection;
+    data['create_time'] = this.createTime;
     return data;
   }
 }

@@ -98,10 +98,46 @@ showSnackbar(context, uploadphotomessage);
       }
 
     });
+      endLoading();
 return status;
 
   }
 
+
+Future<bool> submitobjection(
+      {var message, sessiontoken, bookingnumber,objectionid,image}) async{
+    try{
+      var headers = {
+        'Authorization': '${NetworkServices.token}'
+      };
+      var request = http.MultipartRequest('PUT', Uri.parse('${NetworkServices.bookingurl}objection_response_by_user/'));
+      request.fields.addAll({
+        'session_token': '${booking?.userSessionToken}',
+        'booking_number': '${booking?.bookingNumber}',
+        'client_remarks': '${message}',
+        'objection_id': '${objectionid}'
+      });
+      request.files.add(await http.MultipartFile.fromPath('objection_document', image.path));
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200|| response.statusCode == 201) {
+        print(await response.stream.bytesToString());
+        await getbookingdetail(sessiontoken, bookingnumber);
+        return true;
+      }
+      else {
+        print(response.reasonPhrase);
+        return false;
+      }
+
+    }catch(e){
+      return false;
+    }
+
+
+}
 
   Future<bool> createbookings ({sessiontoken,partnertoken,huztoken}) async {
 
@@ -324,12 +360,14 @@ return status;
       final data = jsonDecode(await response.stream.bytesToString());
       booking = createbooking.fromJson(data);
       notifyListeners();
+      endLoading();
       return true;
     }
     else {
       final data = jsonDecode(await response.stream.bytesToString());
       print(response.statusCode);
       print(data);
+      endLoading();
       print('erroe is ');
       try{
         bmessage = data;
@@ -340,6 +378,7 @@ return status;
       return false;
       print(response.reasonPhrase);
     }}catch(e){
+      endLoading();
       print('erroe is $e');
       bmessage = e.toString();
       return false;
@@ -372,27 +411,60 @@ return status;
       notifyListeners();
     }
   }
+
+  Future<bool> deletedoc({required id,required bookingnumber , required sessiontoken}) async {
+    try{
+      var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': '${NetworkServices.token}'
+      };
+      var request = http.Request('DELETE', Uri.parse('${NetworkServices.bookingurl}delete_passport_or_photo/'));
+      request.body = json.encode({
+        "session_token": "${booking?.userSessionToken}",
+        "user_document_id": "${id}",
+        "booking_number": "${booking?.bookingNumber}"
+      });
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        print(await response.stream.bytesToString());
+      await getbookingdetail(booking?.userSessionToken, booking?.bookingNumber);
+        return true;
+    }
+    else {
+    print(response.reasonPhrase);
+
+    return false;
+    }
+
+  } catch (e){
+      return false;
+
+
+    }
+  }
   Future<bool> Uploaduserdocs({sessiontoken,bookingnumber,amount,required doctype,required numb}) async {
     Loading();
     var headers = {
       'Authorization': '${NetworkServices.token}',
     };
-    var request = http.MultipartRequest('POST', Uri.parse('${NetworkServices.bookingurl}manage_booking_documents/'));
+    var request = http.MultipartRequest('POST', Uri.parse('${NetworkServices.bookingurl}manage_passport_and_photo/'));
     request.headers.addAll(headers);
     request.fields.addAll({
-      'session_token': '$sessiontoken',
-      'booking_number': '$bookingnumber',
+      'session_token': '${booking?.userSessionToken}',
+      'booking_number': '${booking?.bookingNumber}',
       'document_type': '$doctype',
-      'traveller_number': 'Traveller $numb'
+      'traveller_number': '$numb'
     });
     // List of file paths to upload
 
 
     // Add each file to the request
-    for (var path in filePaths) {
-      request.files.add(await http.MultipartFile.fromPath('document_link', path));
-    }
-
+print('image path is ${_image!.path}');
+    request.files.add(await http.MultipartFile.fromPath('user_document', _image!.path));
+    request.headers.addAll(headers);
     // Send the request
     http.StreamedResponse response = await request.send();
 
@@ -404,6 +476,7 @@ return status;
       return true;
     } else {
       final data = jsonDecode(await response.stream.bytesToString());
+      print(data);
       uploadphotomessage = data["message"];
       return false;
     }
