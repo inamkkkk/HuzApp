@@ -184,7 +184,7 @@ class _RequestToBookState extends State<RequestToBook> {
                           isFlex: pkg.details?.isPackageOpenForOtherDate,
                           // isFlex: true,
                     
-                          room: booking.roomType,
+                          roomType: booking.selectedRoom,
                           startdate: booking.startDate ??
                               DateFormat('dd MMM yyyy')
                                   .format(DateTime.parse(pkg.details?.startDate)),

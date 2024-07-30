@@ -632,7 +632,7 @@ class _VerifyPaymentScreenState extends State<VerifyPaymentScreen> {
                                 booking.endDate = enddate;
                                 booking.specialreq = booking.booking?.specialRequest;
                                 return CustomBottomSheet(
-                                  room: booking.roomType,
+                                  roomType: booking.selectedRoom,
                                   previousclasscontext: contexts,
                                 isFromEdit: true,
                                 isFlexible: isFlex, startDate: booking.startDate??booking.initialstartdate, endDate: booking.startDate??booking.initialenddate, adults: booking.adults, childs: booking.childrens, infants: booking.infents,);

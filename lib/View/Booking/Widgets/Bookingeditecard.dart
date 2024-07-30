@@ -26,7 +26,7 @@ class bookingdetail extends StatefulWidget {
       child,
       infent,
       descriptions,
-      room;
+      roomType;
 
   bookingdetail({
     super.key,
@@ -39,7 +39,7 @@ class bookingdetail extends StatefulWidget {
     this.child,
     this.infent,
     this.descriptions,
-    this.room
+    this.roomType
   });
 
   @override
@@ -95,7 +95,7 @@ class _bookingdetailState extends State<bookingdetail> {
                                 return CustomBottomSheet(
                                   previousclasscontext: context,
                                   isFromEdit: false,
-                                  room: widget.room,
+                                  roomType: widget.roomType,
                                   isFlexible: widget.isFlex,
                                   startDate: widget.startdate,
                                   endDate: widget.enddate,

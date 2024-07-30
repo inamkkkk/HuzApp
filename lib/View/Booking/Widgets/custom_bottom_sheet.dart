@@ -19,31 +19,42 @@ import '../Controller/BookingediteController/BookingEditeController.dart';
 import 'Bookingeditecard.dart';
 
 class CustomBottomSheet extends StatefulWidget {
-  var adults, infants,childs, startDate, endDate, room,isFlexible;
+  var adults, infants, childs, startDate, endDate, roomType, isFlexible;
   var isFromEdit, previousclasscontext;
 
-  CustomBottomSheet({
-    super.key,
-    required this.previousclasscontext,
-    required this.isFromEdit,
-    required this.isFlexible,
-    required this.startDate,
-    required this.endDate,
-    required this.adults,
-    required this.childs,
-    required this.infants,
-    required this.room
-  });
+  CustomBottomSheet(
+      {super.key,
+      required this.previousclasscontext,
+      required this.isFromEdit,
+      required this.isFlexible,
+      required this.startDate,
+      required this.endDate,
+      required this.adults,
+      required this.childs,
+      required this.infants,
+      required this.roomType});
 
   @override
   State<CustomBottomSheet> createState() => _CustomBottomSheetState();
 }
 
+
 class _CustomBottomSheetState extends State<CustomBottomSheet> {
+  @override
+  void initState() {
+    Provider.of<Bookingedite>(context, listen: false).selectedRoom;
+    super.initState();
+  }
   num price = 0;
   int adultsCount = 1;
   int childsCount = 0;
   int infantCounts = 0;
+  String singleRoom = "Single";
+  String doubleRoom = "Double";
+  String tripleRoom = "Triple";
+  String quadRoom = "Quad";
+  String sharingRoom = "Sharing";
+  bool isSelect = false;
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +114,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                     vertical: responsive(widget.isFlexible ? 25 : 10, context)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     widget.isFlexible
                         ? InkWell(
@@ -457,11 +469,42 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                       ],
                     ),
                     verticalSpace(25, context),
+                    customFonts(
+                        text: "Room Type",
+                        size: 16,
+                        fontWeight: FontWeight.bold,
+                        context: context),
+                    verticalSpace(10, context),
+                    roomTypeRow(
+                        roomTitle: singleRoom,
+                        cost: pkg.details?.costForSingle,
+                        value: widget.roomType,
+                        booking: booking),
 
-                    roomTypeRow(roomType: "Single Room", cost: widget.room, value: widget.room, booking: booking),
+                    roomTypeRow(
+                        roomTitle: doubleRoom,
+                        cost: pkg.details?.costForDouble,
+                        value: widget.roomType,
+                        booking: booking),
 
+                    roomTypeRow(
+                        roomTitle: tripleRoom,
+                        cost: pkg.details?.costForTriple,
+                        value: widget.roomType,
+                        booking: booking),
 
+                    roomTypeRow(
+                        roomTitle: quadRoom,
+                        cost: pkg.details?.costForQuad,
+                        value: widget.roomType,
+                        booking: booking),
 
+                    roomTypeRow(
+                        roomTitle: sharingRoom,
+                        cost: pkg.details?.costForSharing,
+                        value: widget.roomType,
+                        booking: booking),
+                    verticalSpace(10, context),
                   ],
                 ),
               ),
@@ -523,7 +566,10 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                         booking.childrens = childsCount;
                         booking.infents = infantCounts;
                         booking.price = price;
+                        booking.finalRoom = booking.selectedRoom;
                         booking.notifyListeners();
+
+                        print(booking.finalRoom);
                       });
 
                       if (widget.isFromEdit) {
@@ -571,34 +617,30 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
     );
   }
 
-  GestureDetector roomTypeRow({required roomType, required cost, required value, required Bookingedite booking}) {
-    return GestureDetector(
-                    onTap: (){
-                      booking.roomChange(value);
-                    },
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(color: AppColors.GlobelColor,
-                          shape: BoxShape.circle),
-                          height: responsive(20, context),
-                          width: responsive(20, context),
-                        ),
-                        horizontalSpace(20, context),
-                        customFonts(
-                            text: "Single Room",
-                            size: 16,
-                            fontWeight: FontWeight.bold,
-                            context: context),
-                        Spacer(),
-                        customFonts(
-                            text: "PKR 800",
-                            size: 16,
-                            fontWeight: FontWeight.bold,
-                            context: context),
-                      ],
-                    ),
-                  );
+  Widget roomTypeRow(
+      {required roomTitle,
+      required cost,
+      required value,
+      required Bookingedite booking}) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Radio(
+          activeColor: AppColors.GlobelColor,
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          value: roomTitle,
+          groupValue: booking.selectedRoom,
+          onChanged: (dynamic value) {
+           booking.roomChange(value);
+           print(booking.selectedRoom);
+           print(booking.finalRoom);
+          },
+        ),
+        horizontalSpace(15, context),
+        customFonts(text: "$roomTitle Room", size: 16, context: context),
+        Spacer(),
+        customFonts(text: " PKR $cost", size: 16, context: context),
+      ],
+    );
   }
 }
