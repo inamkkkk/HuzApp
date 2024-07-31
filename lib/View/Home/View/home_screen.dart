@@ -1533,6 +1533,8 @@ class _HomeButtonState extends State<HomeButton> {
                                           pkg?.huzToken, true);
                                       if (isFav) {
                                       } else {
+                                        print("***************** Added to fav: ${getImages(widget.hotel,
+                                            widget.packagecontroller, index)}");
                                         _addTask(
                                           packageImage: getImages(widget.hotel,
                                               widget.packagecontroller, index),

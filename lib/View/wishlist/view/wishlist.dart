@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:huz/Controller/HotelJsonLoader.dart';
 import 'package:huz/Responsive/ResponsiveClass.dart';
 import 'package:huz/TextStyles/styles.dart';
 import 'package:huz/View/Details/View/detail_screen.dart';
@@ -32,6 +33,7 @@ class _WishListScreenState extends State<WishListScreen> {
 
   @override
   void initState() {
+
     _loadTasks();
     super.initState();
   }
@@ -114,6 +116,8 @@ class _WishListScreenState extends State<WishListScreen> {
                           padding: EdgeInsets.all(responsive(20, context)),
                           itemCount: wishListController.list.length,
                           itemBuilder: (context, index) {
+                            print("********* ${wishListController.list[index].toString()}");
+                            print("********* ${wishListController.list[index].packageImage.toString()}");
                             return Padding(
                               padding:
                                   EdgeInsets.only(bottom: responsive(20, context)),
@@ -141,7 +145,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                       }
 
                                       _removeTask(wishListController.list[index]);
-                                      print("**************** clicked");
+                                      print("**************** clicked ");
                                     },
                                     image: wishListController.list[index].packageImage,
                                     includeList:
@@ -177,7 +181,7 @@ class PackageContainer extends StatefulWidget {
        VoidCallback onClose;
        var amount;
    var rating;
-   PackageContainer({super.key, required var image,
+   PackageContainer({super.key, required this.image,
     required this.packageName,
     required this.startDate,
     required this.endDate,
@@ -236,6 +240,8 @@ class _PackageContainerState extends State<PackageContainer> {
                   Container(
 
                     height: responsive(_containerHeight, context),
+
+
                     width: responsive(139, context),
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
@@ -254,7 +260,7 @@ class _PackageContainerState extends State<PackageContainer> {
                           'images/placeholder-image.png',
                           fit: BoxFit.fitHeight,
                         ),
-                        fit: BoxFit.fitHeight,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
