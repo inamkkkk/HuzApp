@@ -229,6 +229,7 @@ class _SignUpWithNumberState extends State<SignUpWithNumber> {
                                        width: responsive(60, context),
                                        height: responsive(50, context),
                                        child: NumberInputTextField(
+                                         contentPadding: EdgeInsets.only(top: responsive(9, context)),
                                          onTap: (){
                                            print('inam');
                                            showModalBottomSheet(
