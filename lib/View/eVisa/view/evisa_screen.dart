@@ -106,7 +106,7 @@ class _EVisaScreenState extends State<EVisaScreen> {
                               fontWeight: FontWeight.bold,
                               context: context),
                           customFonts(
-                              text: "Encourage your loved ones to apply for visas through sastaticket!",
+                              text: "Encourage your loved ones to apply for visas through HUZ!",
                               size: 16,
                       
                               context: context),
